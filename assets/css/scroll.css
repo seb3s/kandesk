@@ -1,0 +1,13 @@
+.thinScroll::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+}
+
+.thinScroll:hover::-webkit-scrollbar-thumb {
+    background: #bbb;
+}
+
+.thinScroll {
+  	scrollbar-width: thin;
+    scrollbar-color: #bbb transparent;
+}
