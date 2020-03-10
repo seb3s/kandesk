@@ -1,0 +1,19 @@
+<div class="buttons">
+  <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_board">Create a new board</button>
+</div>
+
+<div class="columns is-multiline">
+  <%= for board <- @boards do %>
+  <div class="column is-one-third">
+    <div class="card card_board has-cursor-pointer" phx-click="view_board" phx-value-id="<%= board.id %>">
+      <div class="card-content ">
+        <p><%= board.name %></p>
+        <p><%= board.descr %></p>
+        <button class="button" phx-click="delete_board" phx-value-id="<%= board.id %>">Delete board</button>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+
+<%= if @show_modal do render "modal_#{@show_modal}.html", assigns end %>

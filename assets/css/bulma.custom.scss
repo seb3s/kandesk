@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+// Update Bulma's global variables
+// -------------------------------
+$family-sans-serif: "Muli", sans-serif;
+
+$primary: #04aab3;
+$primary-invert: #fff;
+
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
+
+// modals
+// ------
+$modal-background-background-color: rgba(black, 0.6);
+
+$modal-card-head-background-color: $primary;
+$modal-card-head-padding: 30px;
+$modal-card-head-radius: 0;
+$modal-card-head-border-bottom: 0;
+
+$modal-card-title-color: white;
+$modal-card-title-size: 26px;
+
+$modal-card-body-padding: 30px;
+
+$modal-card-foot-radius: 0;
+$modal-card-foot-border-top: 0;
+
+@import "../node_modules/bulma/bulma";
+@import "./bulma.addons";

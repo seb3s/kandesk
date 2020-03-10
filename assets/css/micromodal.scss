@@ -1,0 +1,10 @@
+/**************************\
+  Basic Modal Styles
+\**************************/
+.modal {
+  display: none;
+}
+
+.modal.is-open {
+  display: flex;
+}

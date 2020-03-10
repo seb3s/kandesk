@@ -16,9 +16,14 @@ defmodule KandeskWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :liveview do
+    plug :put_live_layout, {KandeskWeb.LayoutView, "live.html"}
+  end
+
   pipeline :protected do
     plug Pow.Plug.RequireAuthenticated,
       error_handler: Pow.Phoenix.PlugErrorHandler
+    plug KandeskWeb.AssignUser
   end
 
   scope "/" do
@@ -29,9 +34,9 @@ defmodule KandeskWeb.Router do
   end
 
   scope "/", KandeskWeb do
-    pipe_through [:browser, :protected]
+    pipe_through [:browser, :liveview, :protected]
 
-    get "/", PageController, :index
+    live "/", IndexLive, session: %{"page" => "dashboard"}
   end
 
   # Other scopes may use custom stacks.
