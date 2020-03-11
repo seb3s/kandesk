@@ -10,12 +10,12 @@
       <%= for column <- @columns do %>
       <div class="column_container">
         <div class="column_content">
-          <div class="column_header">
+          <div class="column_header" phx-click="edit_column" phx-value-id="<%= column.id %>" title="<%= column.descr %>">
             <%= column.name %>
           </div>
           <div class="column_tasks">
             <%= for task <- column.tasks do %>
-            <div class="column_task" phx-click="edit_task" phx-value-id="<%= task.id %>" >
+            <div class="column_task" phx-click="edit_task" phx-value-id="<%= task.id %>" title="<%= task.descr %>">
               <%= task.name %>
             </div>
             <% end %>

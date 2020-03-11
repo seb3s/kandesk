@@ -113,11 +113,14 @@ defmodule KandeskWeb.IndexLive do
     {:noreply, assign(socket, page: "dashboard")}
   end
 
+
+  ## columns
+  ## -------
   def handle_event("create_column", %{"column" => form_data} = params, %{assigns: assigns} = socket) do
     case create_column(form_data, assigns) do
       {:ok, column} ->
         {:noreply, assign(socket,
-          columns: assigns.columns ++ [column],
+          columns: assigns.columns ++ [%{column | tasks: []}],
           show_modal: nil)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
@@ -139,6 +142,41 @@ defmodule KandeskWeb.IndexLive do
     |> Repo.insert()
   end
 
+  def handle_event("edit_column", %{"id" => id} = params, %{assigns: assigns} = socket) do
+    row = Repo.get(Column, id) |> Repo.preload(:tasks)
+    changeset = Column.changeset(row, %{})
+    {:noreply, assign(socket, changeset: changeset, show_modal: "edit_column", edit_row: row)}
+  end
+
+  def handle_event("update_column", %{"column" => form_data} = params, %{assigns: assigns} = socket) do
+    case update_column(form_data, assigns) do
+      {:ok, up_column} ->
+        cid = assigns.edit_row.id
+        columns = Enum.map(assigns.columns, fn column->
+          if column.id == cid do up_column else column end
+        end)
+        {:noreply, assign(socket,
+          columns: columns,
+          show_modal: nil)}
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  def update_column(form_data, assigns) do
+    attrs = %{
+      name: form_data["name"],
+      descr: form_data["descr"],
+    }
+
+    assigns.edit_row
+    |> Column.changeset(attrs)
+    |> Repo.update
+  end
+
+
+  ## tasks
+  ## -----
   def handle_event("create_task", %{"task" => form_data} = params, %{assigns: assigns} = socket) do
     case create_task(form_data, assigns) do
       {:ok, task} ->
