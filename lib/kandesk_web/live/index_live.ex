@@ -3,6 +3,7 @@ defmodule KandeskWeb.IndexLive do
   alias Kandesk.Schema.{User, Board, Column, Task, Comment, Tag}
   alias Kandesk.Repo
   import Ecto.Query
+  import Kandesk.Convert
   require Logger
 
 
@@ -64,7 +65,7 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("show_modal", %{"modal" => "create_task" = modal, "column_id" => column_id}, socket) do
     {:noreply, assign(socket, show_modal: modal, changeset: Task.changeset(%Task{}, %{}),
-      column_id: Kandesk.Convert.to_integer(column_id))}
+      column_id: to_integer(column_id))}
   end
 
   def handle_event("create_board", %{"board" => form_data} = params, %{assigns: assigns} = socket) do
@@ -94,7 +95,7 @@ defmodule KandeskWeb.IndexLive do
   end
 
   def handle_event("delete_board", %{"id" => id} = params, %{assigns: assigns} = socket) do
-    id = Kandesk.Convert.to_integer(id)
+    id = to_integer(id)
     %Board{id: id}
     |> Repo.delete()
 
@@ -103,7 +104,7 @@ defmodule KandeskWeb.IndexLive do
   end
 
   def handle_event("view_board", %{"id" => id} = params, %{assigns: assigns} = socket) do
-    id = Kandesk.Convert.to_integer(id)
+    id = to_integer(id)
     board = Repo.get(Board, id)
     columns = Repo.all(from(Column, where: [board_id: ^id])) |> Repo.preload(:tasks)
     {:noreply, assign(socket, page: "board", board: board, columns: columns)}
@@ -143,7 +144,8 @@ defmodule KandeskWeb.IndexLive do
   end
 
   def handle_event("edit_column", %{"id" => id} = params, %{assigns: assigns} = socket) do
-    row = Repo.get(Column, id) |> Repo.preload(:tasks)
+    id = to_integer(id)
+    row = Enum.find(assigns.columns, fn column -> column.id == id end)
     changeset = Column.changeset(row, %{})
     {:noreply, assign(socket, changeset: changeset, show_modal: "edit_column", edit_row: row)}
   end
