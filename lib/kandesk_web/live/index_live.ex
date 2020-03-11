@@ -15,7 +15,7 @@ defmodule KandeskWeb.IndexLive do
   end
 
   def connected_mount(_params, %{"page" => "dashboard" = page, "user_id" => user_id}, socket) do
-    boards = Repo.all(from(Board, where: [creator_id: ^user_id]))
+    boards = Repo.all(from(Board, where: [creator_id: ^user_id], order_by: :id))
 
     {:ok, assign(socket,
       page: page,
