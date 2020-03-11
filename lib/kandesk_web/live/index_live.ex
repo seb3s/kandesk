@@ -68,12 +68,14 @@ defmodule KandeskWeb.IndexLive do
       column_id: to_integer(column_id))}
   end
 
+
+  ## boards
+  ## ------
   def handle_event("create_board", %{"board" => form_data} = params, %{assigns: assigns} = socket) do
     case create_board(form_data, assigns) do
       {:ok, board} ->
-        {:noreply, assign(socket,
-          boards: assigns.boards ++ [board],
-          show_modal: nil)}
+        {:noreply, assign(socket, show_modal: nil,
+          boards: assigns.boards ++ [board])}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
@@ -99,14 +101,14 @@ defmodule KandeskWeb.IndexLive do
     %Board{id: id}
     |> Repo.delete()
 
-    boards = Enum.filter(assigns.boards, fn el -> el.id !== id end)
+    boards = for b <- assigns.boards, b.id !== id, do: b
     {:noreply, assign(socket, boards: boards)}
   end
 
   def handle_event("view_board", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
-    board = Repo.get(Board, id)
-    columns = Repo.all(from(Column, where: [board_id: ^id])) |> Repo.preload(:tasks)
+    board = Enum.find(assigns.boards, & &1.id == id)
+    columns = Repo.all(from(Column, where: [board_id: ^id], order_by: :position)) |> Repo.preload(:tasks)
     {:noreply, assign(socket, page: "board", board: board, columns: columns)}
   end
 
@@ -120,9 +122,8 @@ defmodule KandeskWeb.IndexLive do
   def handle_event("create_column", %{"column" => form_data} = params, %{assigns: assigns} = socket) do
     case create_column(form_data, assigns) do
       {:ok, column} ->
-        {:noreply, assign(socket,
-          columns: assigns.columns ++ [%{column | tasks: []}],
-          show_modal: nil)}
+        columns = assigns.columns ++ [%{column | tasks: []}]
+        {:noreply, assign(socket, show_modal: nil, columns: columns)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
@@ -145,21 +146,17 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("edit_column", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
-    row = Enum.find(assigns.columns, fn column -> column.id == id end)
+    row = Enum.find(assigns.columns, & &1.id == id)
     changeset = Column.changeset(row, %{})
     {:noreply, assign(socket, changeset: changeset, show_modal: "edit_column", edit_row: row)}
   end
 
   def handle_event("update_column", %{"column" => form_data} = params, %{assigns: assigns} = socket) do
     case update_column(form_data, assigns) do
-      {:ok, up_column} ->
+      {:ok, column} ->
         cid = assigns.edit_row.id
-        columns = Enum.map(assigns.columns, fn column->
-          if column.id == cid do up_column else column end
-        end)
-        {:noreply, assign(socket,
-          columns: columns,
-          show_modal: nil)}
+        columns = for c <- assigns.columns, do: if c.id == cid, do: column, else: c
+        {:noreply, assign(socket, show_modal: nil, columns: columns)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
@@ -182,17 +179,10 @@ defmodule KandeskWeb.IndexLive do
   def handle_event("create_task", %{"task" => form_data} = params, %{assigns: assigns} = socket) do
     case create_task(form_data, assigns) do
       {:ok, task} ->
-        column_id = assigns.column_id
-        columns = Enum.map(assigns.columns, fn column->
-          if column.id == column_id do
-            %{column | tasks: column.tasks ++ [task]}
-          else
-            column
-          end
-        end)
-        {:noreply, assign(socket,
-          columns: columns,
-          show_modal: nil)}
+        cid = assigns.column_id
+        columns = for c <- assigns.columns, do:
+          if c.id == cid, do: %{c | tasks: c.tasks ++ [task]}, else: c
+        {:noreply, assign(socket, show_modal: nil, columns: columns)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
@@ -214,28 +204,21 @@ defmodule KandeskWeb.IndexLive do
   end
 
   def handle_event("edit_task", %{"id" => id} = params, %{assigns: assigns} = socket) do
-    row = Repo.get(Task, id)
+    id = to_integer(id)
+    row = Enum.find(Enum.flat_map(assigns.columns, & &1.tasks), & &1.id == id)
     changeset = Task.changeset(row, %{})
     {:noreply, assign(socket, changeset: changeset, show_modal: "edit_task", edit_row: row)}
   end
 
   def handle_event("update_task", %{"task" => form_data} = params, %{assigns: assigns} = socket) do
     case update_task(form_data, assigns) do
-      {:ok, up_task} ->
+      {:ok, task} ->
         cid = assigns.edit_row.column_id
         tid = assigns.edit_row.id
-        columns = Enum.map(assigns.columns, fn column->
-          if column.id == cid do
-            %{column | tasks: Enum.map(column.tasks, fn task ->
-              if task.id == tid do up_task else task end
-            end)}
-          else
-            column
-          end
-        end)
-        {:noreply, assign(socket,
-          columns: columns,
-          show_modal: nil)}
+        columns = for c <- assigns.columns, do: if c.id == cid, do:
+          %{c | tasks: (for t <- c.tasks, do: if t.id == tid, do: task, else: t)},
+          else: c
+        {:noreply, assign(socket, show_modal: nil, columns: columns)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
