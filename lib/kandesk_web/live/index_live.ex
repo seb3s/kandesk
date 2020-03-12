@@ -28,7 +28,6 @@ defmodule KandeskWeb.IndexLive do
       column_id: nil,
       edit_row: nil
     )}
-
   end
 
   def connected_mount(_params, _session, socket) do
@@ -165,7 +164,7 @@ defmodule KandeskWeb.IndexLive do
   def update_column(form_data, assigns) do
     attrs = %{
       name: form_data["name"],
-      descr: form_data["descr"],
+      descr: form_data["descr"]
     }
 
     assigns.edit_row
@@ -227,7 +226,7 @@ defmodule KandeskWeb.IndexLive do
   def update_task(form_data, assigns) do
     attrs = %{
       name: form_data["name"],
-      descr: form_data["descr"],
+      descr: form_data["descr"]
     }
 
     assigns.edit_row
