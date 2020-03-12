@@ -1,14 +1,16 @@
 .thinScroll::-webkit-scrollbar {
     width: 7px;
     height: 7px;
-    background: transparent;
+    background: #ddd;
+    border-radius: 7px;
 }
 
-.thinScroll:hover::-webkit-scrollbar-thumb {
+.thinScroll::-webkit-scrollbar-thumb {
     background: #bbb;
+    border-radius: 7px;
 }
 
 .thinScroll {
   	scrollbar-width: thin;
-    scrollbar-color: #bbb transparent;
+    scrollbar-color: #bbb #ddd;
 }
