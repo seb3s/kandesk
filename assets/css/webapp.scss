@@ -38,7 +38,6 @@ main {
       user-select: none;
       white-space: nowrap;
       overflow-x: auto;
-      overflow-y: hidden;
       padding-bottom: 8px;
       position: absolute;
       top: 0;
@@ -51,7 +50,7 @@ main {
 
 .column_container {
   width: 300px;
-  margin: 5px;
+  margin: 0 5px;
   height: 100%;
   box-sizing: border-box;
   display: inline-block;
@@ -65,9 +64,13 @@ main {
 
 .column_content{
   background-color: #ebecf0;
+  display: flex;
+  max-height: 100%;
+  flex-direction: column;
 
   .column_header, .column_footer {
     padding: 0.75rem 0.75rem;
+    flex: 0 0 auto;
   }
 
   .column_header {
@@ -75,8 +78,8 @@ main {
   }
 
   .column_tasks{
+    flex: 1 1 auto;
     overflow-y: auto;
-    max-height: calc(100vh - 200px);
     margin: 0 0.375rem 0 0.75rem;
   }
 
