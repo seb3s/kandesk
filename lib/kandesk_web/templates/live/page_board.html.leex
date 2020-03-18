@@ -1,4 +1,4 @@
-<div class="board">
+<div class="board" data-board_id="<%= @board.id %>">
   <div class="board_header">
     <div class="buttons">
       <button class="button is-primary" phx-click="view_dashboard">View dashboard</button>
@@ -6,14 +6,14 @@
     </div>
   </div>
   <div class="board_content">
-    <div class="board_columns thinScroll" phx-hook="slide_scroll">
+    <div class="board_columns thinScroll" phx-hook="sortable_columns">
       <%= for column <- @columns do %>
       <div class="column_container">
         <div class="column_content">
           <div class="column_header" phx-click="edit_column" phx-value-id="<%= column.id %>" title="<%= column.descr %>">
             <%= column.name %>
           </div>
-          <div class="column_tasks">
+          <div class="column_tasks thinScroll" phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= column.id %>" >
             <%= for task <- column.tasks do %>
             <div class="column_task" phx-click="edit_task" phx-value-id="<%= task.id %>" title="<%= task.descr %>">
               <%= task.name %>

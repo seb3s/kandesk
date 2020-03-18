@@ -4,7 +4,7 @@ defmodule KandeskWeb.IndexLive do
   alias Kandesk.Repo
   import Ecto.Query
   import Kandesk.Convert
-  require Logger
+  #require Logger Logger.info "params: #{inspect params}"
 
 
   def mount(params, session, socket) do
@@ -107,7 +107,8 @@ defmodule KandeskWeb.IndexLive do
   def handle_event("view_board", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
     board = Enum.find(assigns.boards, & &1.id == id)
-    columns = Repo.all(from(Column, where: [board_id: ^id], order_by: :position)) |> Repo.preload(:tasks)
+    columns = Repo.all(from(Column, where: [board_id: ^id], order_by: :position))
+      |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
     {:noreply, assign(socket, page: "board", board: board, columns: columns)}
   end
 
@@ -172,6 +173,24 @@ defmodule KandeskWeb.IndexLive do
     |> Repo.update
   end
 
+  def handle_event("move_column", %{"board_id" => board_id, "old_pos" => old_pos, "new_pos" => new_pos} = params, %{assigns: assigns} = socket)
+  do
+    {:ok, res} = Repo.query("select sp_move_column($1, $2, $3);", [board_id, old_pos, new_pos])
+    columns =
+    if new_pos > old_pos do
+      {l1, lres} = Enum.split(assigns.columns, old_pos - 1)
+      {moved_column, lres} = List.pop_at(lres, 0)
+      {l2, l3} = Enum.split(lres, new_pos - old_pos)
+      l1 ++ l2 ++ [moved_column] ++ l3
+    else
+      {l1, lres} = Enum.split(assigns.columns, new_pos - 1)
+      {l2, lres} = Enum.split(lres, old_pos - new_pos)
+      {moved_column, l3} = List.pop_at(lres, 0)
+      l1 ++ [moved_column] ++ l2  ++ l3
+    end
+    {:noreply, assign(socket, columns: columns)}
+  end
+
 
   ## tasks
   ## -----
@@ -188,10 +207,12 @@ defmodule KandeskWeb.IndexLive do
   end
 
   def create_task(form_data, assigns) do
+    cid = assigns.column_id
+    [column] = for c <- assigns.columns, c.id == cid, do: c
     attrs = %{
       name: form_data["name"],
       descr: form_data["descr"],
-      position: 1,
+      position: length(column.tasks) + 1,
       is_active: true,
       creator_id: assigns.user_id,
       column_id: assigns.column_id
@@ -232,6 +253,14 @@ defmodule KandeskWeb.IndexLive do
     assigns.edit_row
     |> Task.changeset(attrs)
     |> Repo.update
+  end
+
+  def handle_event("move_task", %{"task_id" => task_id, "old_col" => old_col, "new_col" => new_col, "old_pos" => old_pos, "new_pos" => new_pos} = params, %{assigns: assigns} = socket)
+  do
+    {:ok, res} = Repo.query("select sp_move_task($1, $2, $3, $4, $5);", [task_id, old_col, new_col, old_pos, new_pos])
+    columns = Repo.all(from(Column, where: [board_id: ^assigns.board.id], order_by: :position))
+      |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
+    {:noreply, assign(socket, columns: columns)}
   end
 
 end

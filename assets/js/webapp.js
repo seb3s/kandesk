@@ -10,7 +10,8 @@ let webapp = (function (webapp) {
 // --------------------------------------------------------------------------------------
 // live_view hooks
 // --------------------------------------------------------------------------------------
-let phx_hooks = {}
+let phx_hooks = {};
+
 phx_hooks.show_modal = {
     mounted() { MicroModal.show(this.el.id, {
         disableScroll: true,
@@ -19,12 +20,53 @@ phx_hooks.show_modal = {
             this.el.querySelector('.modal-card-head')); },
         onClose: () => { this.pushEvent('close_modal'); }
     })}
-}
+};
+
 phx_hooks.slide_scroll = {
     mounted() { slide_scroll(this.el) }
-}
+};
+
+phx_hooks.sortable_columns = {
+    mounted() { Sortable.create(this.el, {
+        group: this.el.getAttribute("data-sortable_group"),
+        onEnd: (Evt) => {
+            let board_id = parseInt(this.el.closest('[data-board_id]').dataset['board_id']),
+                old_pos = Evt.oldIndex + 1,
+                new_pos = Evt.newIndex + 1;
+            if (old_pos != new_pos) {
+                this.pushEvent('move_column', {
+                    board_id: board_id,
+                    old_pos: old_pos,
+                    new_pos: new_pos});
+            };
+        }
+    })}
+};
+
+phx_hooks.sortable_tasks = {
+    mounted() { Sortable.create(this.el, {
+        group: this.el.getAttribute("data-sortable_group"),
+        onEnd: (Evt) => {
+            let task_id = parseInt(Evt.item.getAttribute('phx-value-id')),
+                old_col = parseInt(Evt.from.dataset['column_id']),
+                new_col = parseInt(Evt.to.dataset['column_id']),
+                old_pos = Evt.oldIndex + 1,
+                new_pos = Evt.newIndex + 1;
+            if (!(old_pos == new_pos && old_col == new_col)) {
+                this.pushEvent('move_task', {
+                    task_id: task_id,
+                    old_col: old_col,
+                    new_col: new_col,
+                    old_pos: old_pos,
+                    new_pos: new_pos});
+            };
+        }
+    })}
+};
 
 
+// draggable modals
+// ----------------
 function set_draggable(draggable, handler) {
     let x1 = 0, y1 = 0, x2 = 0, y2 = 0;
     // get viewport size to stop dragging to far
@@ -71,6 +113,8 @@ function set_draggable(draggable, handler) {
 };
 
 
+// board scrolling
+// ---------------
 function slide_scroll(slider) {
     let isDown = false;
     let startX;
