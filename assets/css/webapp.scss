@@ -75,6 +75,14 @@ main {
 
   .column_header {
     font-weight: 700;
+
+    &.level {
+      align-items: start;
+    }
+
+    .level-left {
+      flex-shrink: 1;
+    }
   }
 
   .column_tasks{

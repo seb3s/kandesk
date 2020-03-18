@@ -1,0 +1,5 @@
+// override swal default height
+// ----------------------------
+html body.swal2-height-auto {
+    height: 100% !important;
+}

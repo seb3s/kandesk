@@ -191,6 +191,13 @@ defmodule KandeskWeb.IndexLive do
     {:noreply, assign(socket, columns: columns)}
   end
 
+  def handle_event("delete_column", %{"id" => id} = params, %{assigns: assigns} = socket) do
+    id = to_integer(id)
+    {:ok, res} = Repo.query("select sp_delete_column($1);", [id])
+    columns = for c <- assigns.columns, c.id != id, do: c
+    {:noreply, assign(socket, columns: columns)}
+  end
+
 
   ## tasks
   ## -----

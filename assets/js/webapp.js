@@ -66,8 +66,9 @@ phx_hooks.sortable_tasks = {
 };
 
 
+// --------------------------------------------------------------------------------------
 // draggable modals
-// ----------------
+// --------------------------------------------------------------------------------------
 function set_draggable(draggable, handler) {
     let x1 = 0, y1 = 0, x2 = 0, y2 = 0;
     // get viewport size to stop dragging to far
@@ -114,8 +115,9 @@ function set_draggable(draggable, handler) {
 };
 
 
+// --------------------------------------------------------------------------------------
 // board scrolling
-// ---------------
+// --------------------------------------------------------------------------------------
 function slide_scroll(slider) {
     let isDown = false;
     let startX;
@@ -151,6 +153,42 @@ webapp.live_socket = new LiveSocket("/live", Socket, {
     params: {_csrf_token: csrfToken},
     hooks: phx_hooks});
 webapp.live_socket.connect();
+
+
+// --------------------------------------------------------------------------------------
+// overrides default data confirmation to use swal
+// --------------------------------------------------------------------------------------
+function extractPhxValue(el, meta) {
+    let prefix = "phx-value-";
+    for (let i = 0; i < el.attributes.length; i++) {
+      let name = el.attributes[i].name;
+      if(name.startsWith(prefix)){ meta[name.replace(prefix, "")] = el.getAttribute(name) };
+    }
+    return meta;
+};
+
+document.body.addEventListener('phoenix.link.click', function (e) {
+    e.stopPropagation();
+    let message = e.target.getAttribute("data-confirm");
+    if(!message) { return true; };
+    e.preventDefault();
+
+    let el = e.target,
+        event = el.getAttribute('phx-click'),
+        meta = extractPhxValue(el, {});
+
+    Swal.fire({
+        title: message,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.value) {
+            webapp.live_socket.root.pushHookEvent(null, event, meta);
+        }
+    })
+}, false);
 
 
 // --------------------------------------------------------------------------------------
