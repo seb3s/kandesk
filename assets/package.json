@@ -9,6 +9,7 @@
     "bulma": "^0.8.0",
     "cash-dom": "^6.0.2",
     "sortablejs": "^1.10.2",
+    "sweetalert2": "^9.10.2",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "phoenix_live_view": "file:../deps/phoenix_live_view"
