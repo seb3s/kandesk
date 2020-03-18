@@ -8,6 +8,7 @@
     <link rel="icon" href="<%= Routes.static_path(@conn, "/favicon.ico") %>">
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700">
+    <script defer src="https://use.fontawesome.com/releases/v5.12.1/js/all.js"></script>
     <%= csrf_meta_tag() %>
   </head>
   <body>
