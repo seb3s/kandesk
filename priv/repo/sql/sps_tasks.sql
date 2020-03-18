@@ -16,6 +16,9 @@ DECLARE
     v_position integer;
 
 BEGIN
+    delete from tasks
+    where column_id = v_column_id;
+
     delete from columns
     where id = v_column_id
     returning board_id, position into v_board_id, v_position;
