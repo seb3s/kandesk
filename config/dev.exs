@@ -2,7 +2,7 @@ use Mix.Config
 
 # Configure your database
 config :kandesk, Kandesk.Repo,
-  username: "elixir",
+  username: "kandesk",
   password: "***REMOVED***",
   database: "kandesk",
   hostname: "localhost",
