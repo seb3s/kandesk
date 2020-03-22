@@ -1,5 +1,10 @@
-<div class="buttons">
-  <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_board">Create a new board</button>
+<div class="board_header level is-marginless">
+  <div class="buttons level-left is-marginless">
+    <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_board">Create a new board</button>
+  </div>
+  <div class="buttons level-right is-marginless">
+    <%= button("Logout", to: "/session", method: "delete", class: "button") %>
+  </div>
 </div>
 
 <div class="columns is-multiline">

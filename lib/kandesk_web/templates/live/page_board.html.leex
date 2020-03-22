@@ -1,8 +1,10 @@
 <div class="board" data-board_id="<%= @board.id %>">
-  <div class="board_header">
-    <div class="buttons">
-      <button class="button is-primary" phx-click="view_dashboard">View dashboard</button>
+  <div class="board_header level is-marginless">
+    <div class="buttons level-left is-marginless">
+      <button class="button is-primary"<span class="icon" phx-click="view_dashboard"><i class="fas fa-home"></i></span></button>
       <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_column">Add column</button>
+    </div>
+    <div class="buttons level-right is-marginless">
     </div>
   </div>
   <div class="board_content">
