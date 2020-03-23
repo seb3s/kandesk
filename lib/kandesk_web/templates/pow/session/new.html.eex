@@ -1,21 +1,42 @@
-<h1>Sign in</h1>
-
-<%= form_for @changeset, @action, [as: :user], fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <%= label f, Pow.Ecto.Schema.user_id_field(@changeset) %>
-  <%= text_input f, Pow.Ecto.Schema.user_id_field(@changeset) %>
-  <%= error_tag f, Pow.Ecto.Schema.user_id_field(@changeset) %>
-
-  <%= label f, :password %>
-  <%= password_input f, :password %>
-  <%= error_tag f, :password %>
-
-  <div>
-    <%= submit "Sign in" %>
+<div class="page_login">
+<div class="card">
+  <div class="card-header card-header-icon">
+    <img src="<%= Routes.static_path(@conn, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
   </div>
-<% end %>
+
+  <div class="card-content">
+  <%= form_for @changeset, @action, [as: :user], fn f -> %>
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= label f, Pow.Ecto.Schema.user_id_field(@changeset), class: "label" %>
+      <div class="control">
+        <%= text_input f, Pow.Ecto.Schema.user_id_field(@changeset), class: "input" %>
+        <%= error_tag f, Pow.Ecto.Schema.user_id_field(@changeset) %>
+      </div>
+    </div>
+    <div class="field">
+      <%= label f, :password, class: "label" %>
+      <div class="control">
+        <%= password_input f, :password, class: "input" %>
+        <%= error_tag f, :password %>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <label class="checkbox">
+          <%= checkbox f, :persistent_session, class: "checkbox" %>
+          Stay connected
+        </label>
+      </div>
+    </div>
+
+    <div><%= submit "Login", class: "button is-primary" %></div>
+  <% end %>
+  </div>
+</div>
+</div>
