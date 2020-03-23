@@ -16,7 +16,7 @@
             <div class="level-left"><%= column.name %></div>
             <div class="level-right"><span class="icon" data-confirm="Are you sure?" phx-click="delete_column" phx-value-id="<%= column.id %>"><i class="fas fa-trash-alt"></i></span></div>
           </div>
-          <div class="column_tasks thinScroll" phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= column.id %>" >
+          <div class="column_tasks thinScroll" phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= column.id %>">
             <%= for task <- column.tasks do %>
             <div class="column_task" phx-click="edit_task" phx-value-id="<%= task.id %>" title="<%= task.descr %>">
               <%= task.name %>

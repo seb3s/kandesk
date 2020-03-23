@@ -8,25 +8,28 @@ body {
   min-height: 100vh;
 }
 
+
+// flash messages
+// --------------
 main .alert {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    font-size: 1.25rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 1.25rem;
 
-    &.alert-info {
-      color: black;
-      background-color: yellow;
-    }
+  &.alert-info {
+    color: black;
+    background-color: yellow;
+  }
 
-    &.alert-danger {
-      color: white;
-      background-color: red;
-    }
+  &.alert-danger {
+    color: white;
+    background-color: red;
+  }
 }
 
 
