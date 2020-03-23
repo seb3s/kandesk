@@ -41,4 +41,14 @@ defmodule KandeskWeb.ErrorHelpers do
       Gettext.dgettext(KandeskWeb.Gettext, "errors", msg, opts)
     end
   end
+
+  @doc """
+  Generates an alert div based on flash messages
+  """
+  def show_flash(conn), do: Phoenix.Controller.get_flash(conn) |> flash_msg
+
+  def flash_msg(%{"info"  => msg}) when msg != nil, do: ~E"<div class='alert alert-info'><%= msg %></div>"
+  def flash_msg(%{"error" => msg}) when msg != nil, do: ~E"<div class='alert alert-danger'><%= msg %></div>"
+  def flash_msg(_), do: nil
+
 end
