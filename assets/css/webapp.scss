@@ -60,6 +60,13 @@ main .alert {
 }
 
 
+// pages header
+// ------------
+.page_header {
+  margin-bottom: 0.5rem;
+}
+
+
 // dashboard page
 // --------------
 .card_board:hover {
@@ -70,13 +77,9 @@ main .alert {
 // board page
 // ----------
 .board {
-    min-height: calc(100vh - 20px);
-    display: flex;
-    flex-direction: column;
-
-  .board_header {
-    margin-bottom: 0.5rem;
-  }
+  min-height: calc(100vh - 20px);
+  display: flex;
+  flex-direction: column;
 
   .board_content {
     position: relative;
@@ -86,7 +89,6 @@ main .alert {
       user-select: none;
       white-space: nowrap;
       overflow-x: auto;
-      padding-bottom: 8px;
       position: absolute;
       top: 0;
       right: 0;

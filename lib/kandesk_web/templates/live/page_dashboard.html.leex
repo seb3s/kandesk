@@ -1,19 +1,21 @@
-<div class="board_header columns is-marginless">
-  <div class="column is-paddingless is-marginless buttons">
-    <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_board">Create a new board</button>
-  </div>
-  <div class="column is-paddingless is-marginless has-text-centered">
-    <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
-  </div>
-  <div class="column is-paddingless is-marginless buttons has-text-right">
-    <%= button("Logout", to: "/session", method: "delete", class: "button") %>
+<div class="page_header">
+  <div class="columns is-marginless">
+    <div class="column is-paddingless is-marginless">
+      <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_board">Create a new board</button>
+    </div>
+    <div class="column is-paddingless is-marginless has-text-centered">
+      <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
+    </div>
+    <div class="column is-paddingless is-marginless has-text-right">
+      <%= button("Logout", to: "/session", method: "delete", class: "button") %>
+    </div>
   </div>
 </div>
 
 <div class="columns is-multiline">
   <%= for board <- @boards do %>
   <div class="column is-one-third">
-    <div class="card card_board has-cursor-pointer" phx-click="view_board" phx-value-id="<%= board.id %>">
+    <div class="card card_board" phx-click="view_board" phx-value-id="<%= board.id %>">
       <div class="card-content ">
         <p><%= board.name %></p>
         <p><%= board.descr %></p>
