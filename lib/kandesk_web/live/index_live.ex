@@ -97,10 +97,8 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("delete_board", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
-    %Board{id: id}
-    |> Repo.delete()
-
-    boards = for b <- assigns.boards, b.id !== id, do: b
+    {:ok, res} = Repo.query("select sp_delete_board($1);", [id])
+    boards = for b <- assigns.boards, b.id != id, do: b
     {:noreply, assign(socket, boards: boards)}
   end
 

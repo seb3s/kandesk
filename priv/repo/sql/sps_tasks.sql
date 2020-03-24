@@ -2,6 +2,34 @@
 -- Copyright (c) 2020-2020 Sébastien SAINT-SEVIN
 -- -----------------------------------------------------------------------------
 
+-- Function: public.sp_delete_board(bigint)
+
+-- DROP FUNCTION public.sp_delete_board(bigint);
+
+CREATE OR REPLACE FUNCTION sp_delete_board(v_board_id bigint)
+
+RETURNS integer AS $$
+
+DECLARE
+    v_count integer;
+
+BEGIN
+    delete from tasks
+    where column_id in (select id from columns where board_id = v_board_id);
+
+    delete from columns
+    where board_id = v_board_id;
+
+    delete from boards
+    where id = v_board_id;
+
+    GET DIAGNOSTICS v_count = ROW_COUNT;
+    RETURN v_count;
+END;
+$$
+LANGUAGE plpgsql;
+
+
 -- Function: public.sp_delete_column(bigint)
 
 -- DROP FUNCTION public.sp_delete_column(bigint);

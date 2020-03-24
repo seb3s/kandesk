@@ -22,7 +22,7 @@
       <div class="card-content ">
         <p><%= board.name %></p>
         <p><%= board.descr %></p>
-        <button class="button" phx-click="delete_board" phx-value-id="<%= board.id %>">Delete board</button>
+        <button class="button" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_board" phx-value-id="<%= board.id %>">Delete board</button>
       </div>
     </div>
   </div>
