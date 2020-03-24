@@ -133,12 +133,12 @@ main .alert {
   }
 
   .column_task {
+    position: relative;
     background-color: white;
     margin: 0 0.375rem 0.5rem 0;
     padding: 0.5rem 0.75rem;
     border-radius: 3px;
     box-shadow: 0 1px 0 rgba(100, 100, 100, 0.5);
-
 
     &:first-child {
       margin-top: 0
@@ -148,6 +148,27 @@ main .alert {
     }
     &:hover {
       background-color: #fff9;
+    }
+
+    .task_action{
+      font-size: 1.5rem;
+      background-color: #eee;
+      opacity: .8;
+      padding: 5px;
+      position: absolute;
+      right: 3px;
+      top: 3px;
+      border-radius: 3px;
+      visibility: hidden;
+
+      &:hover {
+        background-color: #ddd;
+        opacity: 1;
+      }
+    }
+
+    &:hover .task_action {
+      visibility: visible;
     }
   }
 }
