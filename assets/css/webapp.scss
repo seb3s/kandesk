@@ -70,8 +70,40 @@ main .alert {
 // dashboard page
 // --------------
 .page_dashboard {
-  .card_board:hover {
-    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.5), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+  .card_board {
+    position: relative;
+
+    &:hover {
+      box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.5), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+    }
+
+    .board_actions{
+      font-size: 2rem;
+      padding: 5px;
+      position: absolute;
+      right: 3px;
+      top: 3px;
+      border-radius: 3px;
+      visibility: hidden;
+
+      button{
+        opacity: .6;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    &:hover .board_actions {
+      visibility: visible;
+    }
+
+    .board_name {
+      font-weight: 700;
+      font-size: $size-4;
+      margin-bottom: 0.75rem;
+    }
   }
 }
 

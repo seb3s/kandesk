@@ -21,10 +21,17 @@
     <div class="column is-one-third">
       <div class="card card_board" phx-click="view_board" phx-value-id="<%= board.id %>">
         <div class="card-content">
-          <div class="subtitle"><%= board.name %></div>
-          <div><%= board.descr %></div>
-          <button class="button" data-confirm="Are you sure?<br>The deletion is permanent!"
-            phx-click="delete_board" phx-value-id="<%= board.id %>">Delete board</button>
+          <div class="board_actions buttons">
+            <button class="button" phx-click="edit_board" phx-value-id="<%= board.id %>">
+              <span class="icon"><i class="fas fa-edit"></i></span>
+            </button>
+            <button class="button" data-confirm="Are you sure?<br>The deletion is permanent!"
+              phx-click="delete_board" phx-value-id="<%= board.id %>">
+              <span class="icon"><i class="fas fa-trash-alt"></i></span>
+            </button>
+          </div>
+          <div class="board_name"><%= board.name %></div>
+          <div class="board_descr"><%= board.descr %></div>
         </div>
       </div>
     </div>

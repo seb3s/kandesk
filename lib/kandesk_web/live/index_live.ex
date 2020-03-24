@@ -95,6 +95,35 @@ defmodule KandeskWeb.IndexLive do
     |> Repo.insert()
   end
 
+  def handle_event("edit_board", %{"id" => id} = params, %{assigns: assigns} = socket) do
+    id = to_integer(id)
+    row = Enum.find(assigns.boards, & &1.id == id)
+    changeset = Board.changeset(row, %{})
+    {:noreply, assign(socket, changeset: changeset, show_modal: "edit_board", edit_row: row)}
+  end
+
+  def handle_event("update_board", %{"board" => form_data} = params, %{assigns: assigns} = socket) do
+    case update_board(form_data, assigns) do
+      {:ok, board} ->
+        bid = assigns.edit_row.id
+        boards = for b <- assigns.boards, do: if b.id == bid, do: board, else: b
+        {:noreply, assign(socket, show_modal: nil, boards: boards)}
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  def update_board(form_data, assigns) do
+    attrs = %{
+      name: form_data["name"],
+      descr: form_data["descr"]
+    }
+
+    assigns.edit_row
+    |> Board.changeset(attrs)
+    |> Repo.update
+  end
+
   def handle_event("delete_board", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
     {:ok, res} = Repo.query("select sp_delete_board($1);", [id])
