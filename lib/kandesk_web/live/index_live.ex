@@ -3,7 +3,7 @@ defmodule KandeskWeb.IndexLive do
   alias Kandesk.Schema.{User, Board, Column, Task, Comment, Tag}
   alias Kandesk.Repo
   import Ecto.Query
-  import Kandesk.Convert
+  import Kandesk.Util
   #require Logger Logger.info "params: #{inspect params}"
 
 
