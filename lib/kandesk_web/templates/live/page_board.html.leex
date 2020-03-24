@@ -4,7 +4,10 @@
       <div class="column is-paddingless is-marginless">
         <div class="buttons">
           <button class="button is-primary" phx-click="view_dashboard"><span class="icon"><i class="fas fa-home"></i></span></button>
-          <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_column">Add column</button>
+          <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_column">
+            <span class="icon"><i class="fas fa-plus"></i></span>
+            <span>Add column</span>
+          </button>
         </div>
       </div>
       <div class="column is-paddingless is-marginless has-text-centered">
@@ -31,7 +34,10 @@
             <% end %>
           </div>
           <div class="column_footer">
-            <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_task" phx-value-column_id="<%= column.id %>">Add card</button>
+            <button class="button is-primary is-light is-fullwidth" phx-click="show_modal" phx-value-modal="create_task" phx-value-column_id="<%= column.id %>">
+              <span class="icon"><i class="fas fa-plus"></i></span>
+              <span>Add card</span>
+            </button>
           </div>
         </div>
       </div>
