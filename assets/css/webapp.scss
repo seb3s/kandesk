@@ -33,6 +33,13 @@ main .alert {
 }
 
 
+// set cursor for liveview click
+// -----------------------------
+[phx-click] {
+  cursor: pointer;
+}
+
+
 // login page
 // ----------
 .page_login {
