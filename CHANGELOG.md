@@ -1,4 +1,13 @@
-## v0.2.0 - 2020-03-24
+## v0.3.0 - 2020-03-24
+
+  - Add delete task
+  - Add delete board
+  - Add edit board
+  - Add kandesk logo to pages
+  - UI improvements
+
+
+## v0.2.0 - 2020-03-23
 
   - New login panel with a better UI and kandesk logo
 
