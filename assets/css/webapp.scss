@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  padding: 10px;
+  padding: 10px 10px 5px 10px;
   background-color: #ddd;
   min-height: 100vh;
 }
@@ -46,7 +46,7 @@ main .alert {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 20px);
+  min-height: calc(100vh - 15px);
 
   .card {
     min-width: 500px;
@@ -77,7 +77,7 @@ main .alert {
       box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.5), 0 0px 0 1px rgba(10, 10, 10, 0.02);
     }
 
-    .board_actions{
+    .board_actions {
       font-size: 2rem;
       padding: 5px;
       position: absolute;
@@ -86,7 +86,7 @@ main .alert {
       border-radius: 3px;
       visibility: hidden;
 
-      button{
+      button {
         opacity: .6;
 
         &:hover {
@@ -111,7 +111,7 @@ main .alert {
 // board page
 // ----------
 .page_board {
-  min-height: calc(100vh - 20px);
+  min-height: calc(100vh - 15px);
   display: flex;
   flex-direction: column;
 
@@ -123,6 +123,7 @@ main .alert {
       user-select: none;
       white-space: nowrap;
       overflow-x: auto;
+      padding-bottom: 7px;
       position: absolute;
       top: 0;
       right: 0;
@@ -146,7 +147,7 @@ main .alert {
   }
 }
 
-.column_content{
+.column_content {
   background-color: #ebecf0;
   display: flex;
   max-height: 100%;
@@ -169,7 +170,7 @@ main .alert {
     }
   }
 
-  .column_tasks{
+  .column_tasks {
     flex: 1 1 auto;
     overflow-y: auto;
     margin: 0 0.375rem 0 0.75rem;
@@ -193,7 +194,7 @@ main .alert {
       background-color: #fff9;
     }
 
-    .task_action{
+    .task_action {
       font-size: 1.5rem;
       background-color: #eee;
       opacity: .8;
