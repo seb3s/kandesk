@@ -1,3 +1,8 @@
+## v0.3.1 - 2020-03-25
+
+  - Fix missing ids for proper hook triggering, to correct the columns & tasks sortering failure
+
+
 ## v0.3.0 - 2020-03-24
 
   - Add delete task
