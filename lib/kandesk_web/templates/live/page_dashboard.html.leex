@@ -1,8 +1,11 @@
-<div class="board_header level is-marginless">
-  <div class="buttons level-left is-marginless">
+<div class="board_header columns is-marginless">
+  <div class="column is-paddingless is-marginless buttons">
     <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_board">Create a new board</button>
   </div>
-  <div class="buttons level-right is-marginless">
+  <div class="column is-paddingless is-marginless has-text-centered">
+    <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
+  </div>
+  <div class="column is-paddingless is-marginless buttons has-text-right">
     <%= button("Logout", to: "/session", method: "delete", class: "button") %>
   </div>
 </div>
