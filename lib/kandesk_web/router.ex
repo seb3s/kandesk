@@ -17,7 +17,7 @@ defmodule KandeskWeb.Router do
   end
 
   pipeline :liveview do
-    plug :put_live_layout, {KandeskWeb.LayoutView, "live.html"}
+    plug :put_root_layout, {KandeskWeb.LayoutView, "live.html"}
   end
 
   pipeline :protected do
