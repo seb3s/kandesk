@@ -20,16 +20,18 @@ phx_hooks.show_modal = {
             this.el.querySelector('.modal-card'),
             this.el.querySelector('.modal-card-head')); },
         onClose: () => { this.pushEvent('close_modal'); }
-    })}
+        })
+    }
 };
 
 phx_hooks.slide_scroll = {
-    mounted() { slide_scroll(this.el) }
+    mounted() { slide_scroll(this.el, document.getElementById(this.el.getAttribute("data-slider_id"))) }
 };
 
 phx_hooks.sortable_columns = {
     mounted() { Sortable.create(this.el, {
         group: this.el.getAttribute("data-sortable_group"),
+        handle: '.column_header',
         onEnd: (Evt) => {
             let board_id = parseInt(this.el.closest('[data-board_id]').dataset['board_id']),
                 old_pos = Evt.oldIndex + 1,
@@ -39,9 +41,9 @@ phx_hooks.sortable_columns = {
                     board_id: board_id,
                     old_pos: old_pos,
                     new_pos: new_pos});
-            };
-        }
-    })}
+            }
+        }})
+    }
 };
 
 phx_hooks.sortable_tasks = {
@@ -60,9 +62,9 @@ phx_hooks.sortable_tasks = {
                     new_col: new_col,
                     old_pos: old_pos,
                     new_pos: new_pos});
-            };
-        }
-    })}
+            }
+        }})
+    }
 };
 
 
@@ -118,12 +120,13 @@ function set_draggable(draggable, handler) {
 // --------------------------------------------------------------------------------------
 // board scrolling
 // --------------------------------------------------------------------------------------
-function slide_scroll(slider) {
+function slide_scroll(handler, slider) {
     let isDown = false;
     let startX;
     let scrollLeft;
 
-    slider.addEventListener('mousedown', (e) => {
+    handler.addEventListener('mousedown', (e) => {
+      if(e.target !== e.currentTarget) return;
       isDown = true;
       slider.classList.add('active');
       startX = e.pageX - slider.offsetLeft;

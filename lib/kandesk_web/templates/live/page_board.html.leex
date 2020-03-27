@@ -20,15 +20,15 @@
   </div>
 
   <div class="board_content">
-    <div id="board_columns" class="board_columns thinScroll" phx-hook="sortable_columns">
+    <div class="board_columns thinScroll" id="board_columns" phx-hook="sortable_columns">
       <%= for column <- @columns do %>
-      <div class="column_container">
+      <div class="column_container" id="<%= temp_id() %>" phx-hook="slide_scroll" data-slider_id="board_columns">
         <div class="column_content">
           <div class="column_header level is-marginless" phx-click="edit_column" phx-value-id="<%= column.id %>" title="<%= column.descr %>">
             <div class="level-left"><%= column.name %></div>
             <div class="level-right"><span class="icon" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_column" phx-value-id="<%= column.id %>"><i class="fas fa-trash-alt"></i></span></div>
           </div>
-          <div id="<%= temp_id() %>" class="column_tasks thinScroll" phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= column.id %>">
+          <div class="column_tasks thinScroll" id="<%= temp_id() %>" phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= column.id %>">
             <%= for task <- column.tasks do %>
             <div class="column_task" phx-click="edit_task" phx-value-id="<%= task.id %>" title="<%= task.descr %>">
               <i class="task_action fas fa-trash-alt" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_task" phx-value-id="<%= task.id %>"></i>
