@@ -1,3 +1,11 @@
+## v0.4.0 - 2020-03-27
+
+  - Dashboard - Sort boards by their name
+  - Board page - Add board horizontal scrolling while dragging mouse
+  - Board page - Columns are now sortable via their headers
+  - Upgrade to liveview 0.10.0
+
+
 ## v0.3.1 - 2020-03-25
 
   - Fix missing ids for proper hook triggering, to correct the columns & tasks sortering failure
