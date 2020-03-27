@@ -15,7 +15,7 @@ defmodule KandeskWeb.IndexLive do
   end
 
   def connected_mount(_params, %{"page" => "dashboard" = page, "user_id" => user_id}, socket) do
-    boards = Repo.all(from(Board, where: [creator_id: ^user_id], order_by: :id))
+    boards = Repo.all(from(Board, where: [creator_id: ^user_id], order_by: :name))
 
     {:ok, assign(socket,
       page: page,
@@ -74,7 +74,7 @@ defmodule KandeskWeb.IndexLive do
     case create_board(form_data, assigns) do
       {:ok, board} ->
         {:noreply, assign(socket, show_modal: nil,
-          boards: assigns.boards ++ [board])}
+          boards: Enum.sort(assigns.boards ++ [board], & &1.name < &2.name))}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
@@ -106,7 +106,8 @@ defmodule KandeskWeb.IndexLive do
     case update_board(form_data, assigns) do
       {:ok, board} ->
         bid = assigns.edit_row.id
-        boards = for b <- assigns.boards, do: if b.id == bid, do: board, else: b
+        boards = (for b <- assigns.boards, do: if b.id == bid, do: board, else: b)
+          |> Enum.sort(& &1.name < &2.name)
         {:noreply, assign(socket, show_modal: nil, boards: boards)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
