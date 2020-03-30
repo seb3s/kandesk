@@ -1,3 +1,8 @@
+## v0.5.0 - 2020-03-30
+
+  - Board page - Add pubsub when viewing a board to share a common view accross users / browsers
+
+
 ## v0.4.0 - 2020-03-27
 
   - Dashboard - Sort boards by their name
