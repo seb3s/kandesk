@@ -4,6 +4,7 @@ defmodule KandeskWeb.IndexLive do
   alias Kandesk.Repo
   import Ecto.Query
   import Kandesk.Util
+  import KandeskWeb.Endpoint, only: [subscribe: 1, unsubscribe: 1, broadcast_from: 4]
   #require Logger Logger.info "params: #{inspect params}"
 
 
@@ -137,10 +138,12 @@ defmodule KandeskWeb.IndexLive do
     board = Enum.find(assigns.boards, & &1.id == id)
     columns = Repo.all(from(Column, where: [board_id: ^id], order_by: :position))
       |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
+    subscribe(board.token)
     {:noreply, assign(socket, page: "board", board: board, columns: columns)}
   end
 
   def handle_event("view_dashboard", _params, %{assigns: assigns} = socket) do
+    unsubscribe(assigns.board.token)
     {:noreply, assign(socket, page: "dashboard")}
   end
 
@@ -151,6 +154,7 @@ defmodule KandeskWeb.IndexLive do
     case create_column(form_data, assigns) do
       {:ok, column} ->
         columns = assigns.columns ++ [%{column | tasks: []}]
+        broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
         {:noreply, assign(socket, show_modal: nil, columns: columns)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
@@ -184,6 +188,7 @@ defmodule KandeskWeb.IndexLive do
       {:ok, column} ->
         cid = assigns.edit_row.id
         columns = for c <- assigns.columns, do: if c.id == cid, do: column, else: c
+        broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
         {:noreply, assign(socket, show_modal: nil, columns: columns)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
@@ -216,6 +221,7 @@ defmodule KandeskWeb.IndexLive do
       {moved_column, l3} = List.pop_at(lres, 0)
       l1 ++ [moved_column] ++ l2  ++ l3
     end
+    broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
     {:noreply, assign(socket, columns: columns)}
   end
 
@@ -223,6 +229,7 @@ defmodule KandeskWeb.IndexLive do
     id = to_integer(id)
     {:ok, res} = Repo.query("select sp_delete_column($1);", [id])
     columns = for c <- assigns.columns, c.id != id, do: c
+    broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
     {:noreply, assign(socket, columns: columns)}
   end
 
@@ -235,6 +242,7 @@ defmodule KandeskWeb.IndexLive do
         cid = assigns.column_id
         columns = for c <- assigns.columns, do:
           if c.id == cid, do: %{c | tasks: c.tasks ++ [task]}, else: c
+        broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
         {:noreply, assign(socket, show_modal: nil, columns: columns)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
@@ -273,6 +281,7 @@ defmodule KandeskWeb.IndexLive do
         columns = for c <- assigns.columns, do: if c.id == cid, do:
           %{c | tasks: (for t <- c.tasks, do: if t.id == tid, do: task, else: t)},
           else: c
+        broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
         {:noreply, assign(socket, show_modal: nil, columns: columns)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
@@ -295,6 +304,7 @@ defmodule KandeskWeb.IndexLive do
     {:ok, res} = Repo.query("select sp_move_task($1, $2, $3, $4, $5);", [task_id, old_col, new_col, old_pos, new_pos])
     columns = Repo.all(from(Column, where: [board_id: ^assigns.board.id], order_by: :position))
       |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
+    broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
     {:noreply, assign(socket, columns: columns)}
   end
 
@@ -302,7 +312,16 @@ defmodule KandeskWeb.IndexLive do
     id = to_integer(id)
     {:ok, res} = Repo.query("select sp_delete_task($1);", [id])
     columns = for c <- assigns.columns, do: %{c | tasks: (for t <- c.tasks, t.id != id, do: t)}
+    broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
     {:noreply, assign(socket, columns: columns)}
+  end
+
+
+  ## handle_info
+  ## -----------
+  ## for columns & tasks
+  def handle_info(%{event: "set_columns", payload: state}, socket) do
+    {:noreply, assign(socket, state)}
   end
 
 end
