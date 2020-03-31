@@ -7,6 +7,7 @@ defmodule KandeskWeb.IndexLive do
   import KandeskWeb.Endpoint, only: [subscribe: 1, unsubscribe: 1, broadcast_from: 4]
   #require Logger Logger.info "params: #{inspect params}"
 
+  @boards_topic "boards"
 
   def mount(params, session, socket) do
     case connected?(socket) do
@@ -16,7 +17,8 @@ defmodule KandeskWeb.IndexLive do
   end
 
   def connected_mount(_params, %{"page" => "dashboard" = page, "user_id" => user_id}, socket) do
-    boards = Repo.all(from(Board, where: [creator_id: ^user_id], order_by: :name))
+    boards = get_user_boards(user_id)
+    subscribe(@boards_topic)
 
     {:ok, assign(socket,
       page: page,
@@ -48,6 +50,12 @@ defmodule KandeskWeb.IndexLive do
     Phoenix.View.render(KandeskWeb.LiveView, "page_" <> page <> ".html", assigns)
   end
 
+  # get_user_boards
+  # ---------------
+  def get_user_boards(user_id) do
+    Repo.all(from(Board, where: [creator_id: ^user_id], order_by: :name))
+  end
+
 
   ## handle_event
   ## ------------
@@ -74,8 +82,9 @@ defmodule KandeskWeb.IndexLive do
   def handle_event("create_board", %{"board" => form_data} = params, %{assigns: assigns} = socket) do
     case create_board(form_data, assigns) do
       {:ok, board} ->
-        {:noreply, assign(socket, show_modal: nil,
-          boards: Enum.sort(assigns.boards ++ [board], & &1.name < &2.name))}
+        boards = get_user_boards(assigns.user_id)
+        broadcast_from(self(), @boards_topic, "create_board", %{board: board, boards: boards})
+        {:noreply, assign(socket, show_modal: nil, boards: boards)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
@@ -106,9 +115,8 @@ defmodule KandeskWeb.IndexLive do
   def handle_event("update_board", %{"board" => form_data} = params, %{assigns: assigns} = socket) do
     case update_board(form_data, assigns) do
       {:ok, board} ->
-        bid = assigns.edit_row.id
-        boards = (for b <- assigns.boards, do: if b.id == bid, do: board, else: b)
-          |> Enum.sort(& &1.name < &2.name)
+        boards = get_user_boards(assigns.user_id)
+        broadcast_from(self(), @boards_topic, "update_board", %{board: board})
         {:noreply, assign(socket, show_modal: nil, boards: boards)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
@@ -130,6 +138,7 @@ defmodule KandeskWeb.IndexLive do
     id = to_integer(id)
     {:ok, res} = Repo.query("select sp_delete_board($1);", [id])
     boards = for b <- assigns.boards, b.id != id, do: b
+    broadcast_from(self(), @boards_topic, "delete_board", %{id: id})
     {:noreply, assign(socket, boards: boards)}
   end
 
@@ -317,11 +326,33 @@ defmodule KandeskWeb.IndexLive do
   end
 
 
-  ## handle_info
-  ## -----------
-  ## for columns & tasks
+  ## handle_info from broadcast
+  ## --------------------------
   def handle_info(%{event: "set_columns", payload: state}, socket) do
     {:noreply, assign(socket, state)}
+  end
+
+  def handle_info(%{event: "create_board", payload: %{board: board, boards: boards}},
+    %{assigns: assigns} = socket)
+  do
+    if assigns.user_id == board.creator_id,
+      do:   {:noreply, assign(socket, boards: boards)},
+      else: {:noreply, socket}
+  end
+
+  def handle_info(%{event: "update_board", payload: %{board: %{id: id} = board}},
+    %{assigns: assigns} = socket)
+  do
+    boards = for b <- assigns.boards, do: if b.id == id, do: board, else: b
+    {:noreply, assign(socket, %{boards: boards})}
+  end
+
+  def handle_info(%{event: "delete_board", payload: %{id: id}}, %{assigns: assigns} = socket) do
+    boards = for b <- assigns.boards, b.id != id, do: b
+    if assigns.page == "board" and assigns.board.id == id,
+      do:   (unsubscribe(assigns.board.token)
+            {:noreply, assign(socket, page: "dashboard", boards: boards)}),
+      else: {:noreply, assign(socket, boards: boards)}
   end
 
 end
