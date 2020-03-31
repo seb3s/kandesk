@@ -88,7 +88,7 @@ defmodule KandeskWeb.IndexLive do
       creator_id: assigns.user_id,
       token: Ecto.UUID.generate,
       is_active: true,
-      is_public: true
+      is_public: false
     }
 
     %Board{}
