@@ -1,3 +1,9 @@
+## v0.6.0 - 2020-04-02
+
+  - Dashboard - Add pubsub to boards events
+  - Add multi-user access to boards with rights management
+
+
 ## v0.5.0 - 2020-03-30
 
   - Board page - Add pubsub when viewing a board to share a common view accross users / browsers
