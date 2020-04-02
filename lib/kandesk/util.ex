@@ -5,4 +5,8 @@ defmodule Kandesk.Util do
 
   def temp_id(), do: "auto" <> :erlang.integer_to_binary(rem :erlang.unique_integer(), 1000000)
 
+  def user_rights(%Kandesk.Schema.Board{} = b, rights), do: user_rights(b.board_user, rights)
+  def user_rights(%Kandesk.Schema.BoardUser{} = bu, rights), do: Map.get(bu, rights)
+  def user_rights(nil, _rights), do: true
+
 end

@@ -22,13 +22,17 @@
       <div class="card card_board" phx-click="view_board" phx-value-id="<%= board.id %>">
         <div class="card-content">
           <div class="board_actions buttons">
+            <%= if user_rights(board, :edit_board?) do %>
             <button class="button" phx-click="edit_board" phx-value-id="<%= board.id %>">
               <span class="icon"><i class="fas fa-edit"></i></span>
             </button>
+            <% end %>
+            <%= if user_rights(board, :delete_board?) do %>
             <button class="button" data-confirm="Are you sure?<br>The deletion is permanent!"
               phx-click="delete_board" phx-value-id="<%= board.id %>">
               <span class="icon"><i class="fas fa-trash-alt"></i></span>
             </button>
+            <% end %>
           </div>
           <div class="board_name"><%= board.name %></div>
           <div class="board_descr"><%= board.descr %></div>

@@ -6,10 +6,12 @@
           <button class="button is-primary" phx-click="view_dashboard">
             <span class="icon"><i class="fas fa-home"></i></span>
           </button>
+          <%= if user_rights(@board, :create_column?) do %>
           <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_column">
             <span class="icon"><i class="fas fa-plus"></i></span>
             <span>Add column</span>
           </button>
+          <% end %>
         </div>
       </div>
       <div class="column is-paddingless is-marginless has-text-centered">
@@ -20,27 +22,33 @@
   </div>
 
   <div class="board_content">
-    <div class="board_columns thin_scroll" id="board_columns" phx-hook="sortable_columns">
+    <div class="board_columns thin_scroll" id="board_columns" <%= if user_rights(@board, :move_column?) do %>phx-hook="sortable_columns"<% end %>>
       <%= for column <- @columns do %>
       <div class="column_container" id="<%= temp_id() %>" phx-hook="slide_scroll" data-slider_id="board_columns">
         <div class="column_content">
-          <div class="column_header level is-marginless" phx-click="edit_column" phx-value-id="<%= column.id %>" title="<%= column.descr %>">
+          <div class="column_header level is-marginless" <%= if user_rights(@board, :edit_column?) do %>phx-click="edit_column" phx-value-id="<%= column.id %>"<% end %> title="<%= column.descr %>">
             <div class="level-left"><%= column.name %></div>
+            <%= if user_rights(@board, :delete_column?) do %>
             <div class="level-right"><span class="icon" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_column" phx-value-id="<%= column.id %>"><i class="fas fa-trash-alt"></i></span></div>
+            <% end %>
           </div>
-          <div class="column_tasks thin_scroll" id="<%= temp_id() %>" phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= column.id %>">
+          <div class="column_tasks thin_scroll" id="<%= temp_id() %>" <%= if user_rights(@board, :move_task?) do %>phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= column.id %>"<% end %>>
             <%= for task <- column.tasks do %>
-            <div class="column_task" phx-click="edit_task" phx-value-id="<%= task.id %>" title="<%= task.descr %>">
+            <div class="column_task" <%= if user_rights(@board, :edit_task?) do %>phx-click="edit_task" phx-value-id="<%= task.id %>"<% end %> title="<%= task.descr %>">
+              <%= if user_rights(@board, :delete_task?) do %>
               <i class="task_action fas fa-trash-alt" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_task" phx-value-id="<%= task.id %>"></i>
+              <% end %>
               <%= task.name %>
             </div>
             <% end %>
           </div>
           <div class="column_footer">
+            <%= if user_rights(@board, :create_task?) do %>
             <button class="button is-primary is-light is-fullwidth" phx-click="show_modal" phx-value-modal="create_task" phx-value-column_id="<%= column.id %>">
               <span class="icon"><i class="fas fa-plus"></i></span>
               <span>Add card</span>
             </button>
+            <% end %>
           </div>
         </div>
       </div>

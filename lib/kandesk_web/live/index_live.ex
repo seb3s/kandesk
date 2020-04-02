@@ -1,6 +1,6 @@
 defmodule KandeskWeb.IndexLive do
   use Phoenix.LiveView
-  alias Kandesk.Schema.{User, Board, Column, Task, Comment, Tag}
+  alias Kandesk.Schema.{User, Board, BoardUser, Column, Task, Comment, Tag}
   alias Kandesk.Repo
   import Ecto.Query
   import Kandesk.Util
@@ -50,10 +50,23 @@ defmodule KandeskWeb.IndexLive do
     Phoenix.View.render(KandeskWeb.LiveView, "page_" <> page <> ".html", assigns)
   end
 
+
   # get_user_boards
   # ---------------
   def get_user_boards(user_id) do
-    Repo.all(from(Board, where: [creator_id: ^user_id], order_by: :name))
+    q1 = from b in Board,
+      where: [creator_id: ^user_id],
+      select: b.id
+    q2 = from b in Board,
+      join: bu in BoardUser, on: bu.board_id == b.id and bu.user_id == ^user_id,
+      select: b.id
+    ids = Repo.all(union_all(q1, ^q2))
+
+    Repo.all(from(b in Board,
+      left_join: bu in BoardUser, on: bu.board_id == b.id and bu.user_id == ^user_id,
+      where: b.id in ^ids,
+      select_merge: %{board_user: bu},
+      order_by: :name))
   end
 
 

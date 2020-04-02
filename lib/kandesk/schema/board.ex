@@ -10,6 +10,8 @@ defmodule Kandesk.Schema.Board do
     field :is_public, :boolean
     belongs_to :creator, Kandesk.Schema.User
 
+    field :board_user, :any, virtual: true
+
     timestamps()
   end
 
