@@ -9,4 +9,8 @@ defmodule Kandesk.Util do
   def user_rights(%Kandesk.Schema.BoardUser{} = bu, rights), do: Map.get(bu, rights)
   def user_rights(nil, _rights), do: true
 
+  def tag_checked?(id, tags), do: Enum.any?(tags, & &1.id == id) and "checked"
+  def tag_color(tag, tags), do: Enum.find(tags, & &1.id == tag.id).color
+  def tag_name(tag, tags), do: Enum.find(tags, & &1.id == tag.id).name
+
 end

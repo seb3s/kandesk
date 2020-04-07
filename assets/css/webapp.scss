@@ -132,6 +132,68 @@ main .alert {
       flex-direction: row;
     }
   }
+
+  .input_color {
+    width: 80px;
+    height: 2rem;
+    cursor:pointer;
+    padding: 0;
+    margin-right: 0.75rem;
+  }
+
+  .input_tag {
+    height: 2rem;
+  }
+
+  .task_tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .task_tag {
+      min-width: 50px;
+      height: 18px;
+      line-height: 18px;
+      margin: 0 5px 5px 0;
+      padding: 0 7px 0 7px;
+      border-radius: 3px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.7rem;
+    }
+  }
+
+  .modal .task_tags {
+    border: 1px solid;
+    border-color: #dbdbdb;
+    border-radius: 4px;
+    padding: 0.5rem;
+
+    &:hover {
+      border-color: #b5b5b5;
+    }
+
+    .field_tag {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+
+      .checkbox_tag{
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+
+      .task_tag {
+        min-width: 80px;
+        height: 26px;
+        line-height: 26px;
+        margin: 5px 8px 5px 5px;
+        padding: 0 0.75rem 0 0.75rem;
+        border-radius: 5px;
+        font-size: 0.85rem;
+      }
+    }
+  }
 }
 
 .column_container {

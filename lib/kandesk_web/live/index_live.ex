@@ -89,6 +89,10 @@ defmodule KandeskWeb.IndexLive do
       column_id: to_integer(column_id))}
   end
 
+  def handle_event("show_modal", %{"modal" => "admin_tags" = modal}, %{assigns: assigns} = socket) do
+    {:noreply, assign(socket, show_modal: modal, changeset: Board.changeset(assigns.board, %{}))}
+  end
+
 
   ## boards
   ## ------
@@ -110,7 +114,20 @@ defmodule KandeskWeb.IndexLive do
       creator_id: assigns.user_id,
       token: Ecto.UUID.generate,
       is_active: true,
-      is_public: false
+      is_public: false,
+      tags: [
+        %{id: 0,  color: "#7c1a9c", name: "Version"},
+        %{id: 1,  color: "#c14bfb"},
+        %{id: 2,  color: "#ed207b", name: "Critical"},
+        %{id: 3,  color: "#ff8318", name: "Warning"},
+        %{id: 4,  color: "#edc30a", name: "In progress"},
+        %{id: 5,  color: "#3ab54a", name: "Done"},
+        %{id: 6,  color: "#93042d", name: "Bug"},
+        %{id: 7,  color: "#c58994", name: "Enhancement"},
+        %{id: 8,  color: "#9a7773", name: "New feature"},
+        %{id: 9,  color: "#274c6d", name: "Rejected"},
+        %{id: 10, color: "#22a2d8", name: "Needs feedback"},
+        %{id: 11, color: "#53718b"}]
     }
 
     %Board{}
@@ -167,6 +184,32 @@ defmodule KandeskWeb.IndexLive do
   def handle_event("view_dashboard", _params, %{assigns: assigns} = socket) do
     unsubscribe(assigns.board.token)
     {:noreply, assign(socket, page: "dashboard")}
+  end
+
+
+  ## tags
+  ## ----
+  def handle_event("set_board_tags", %{"board" => %{"tags"=> tags}}, %{assigns: assigns} = socket) do
+    case update_tags(tags, assigns) do
+      {:ok, board} ->
+        bid = board.id
+        boards = (for b <- assigns.boards, do: if b.id == bid, do: board, else: b)
+        broadcast_from(self(), @boards_topic, "update_board", %{board: board})
+        {:noreply, assign(socket, show_modal: nil, boards: boards, board: board)}
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  def update_tags(tags, assigns) do
+    #sort by integer instead of string due to form conversion (case when > 9 tags)
+    sorted_tags = Enum.map(tags, fn({k, v}) -> {to_integer(k), v} end)
+      |> Enum.sort(fn({k, v}, {k1, v1}) -> k < k1 end)
+      |> Enum.map(fn({k, v}) -> v end)
+
+    assigns.board
+    |> Board.changeset(%{tags: sorted_tags})
+    |> Repo.update
   end
 
 
@@ -277,6 +320,7 @@ defmodule KandeskWeb.IndexLive do
     attrs = %{
       name: form_data["name"],
       descr: form_data["descr"],
+      tags: form_data["tags"] || [], # when none is selected
       position: length(column.tasks) + 1,
       is_active: true,
       creator_id: assigns.user_id,
@@ -313,7 +357,8 @@ defmodule KandeskWeb.IndexLive do
   def update_task(form_data, assigns) do
     attrs = %{
       name: form_data["name"],
-      descr: form_data["descr"]
+      descr: form_data["descr"],
+      tags: form_data["tags"] || [] # when none is selected
     }
 
     assigns.edit_row
@@ -357,7 +402,8 @@ defmodule KandeskWeb.IndexLive do
     %{assigns: assigns} = socket)
   do
     boards = for b <- assigns.boards, do: if b.id == id, do: board, else: b
-    {:noreply, assign(socket, %{boards: boards})}
+    board1 = if assigns.page == "board" and assigns.board.id == id, do: board, else: assigns.board
+    {:noreply, assign(socket, %{boards: boards, board: board1})}
   end
 
   def handle_info(%{event: "delete_board", payload: %{id: id}}, %{assigns: assigns} = socket) do

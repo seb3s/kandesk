@@ -12,6 +12,12 @@
             <span>Add column</span>
           </button>
           <% end %>
+          <%= if user_rights(@board, :admin_tags?) do %>
+          <button class="button is-primary" phx-click="show_modal" phx-value-modal="admin_tags">
+            <span class="icon"><i class="fas fa-tags"></i></span>
+            <span>Tags</span>
+          </button>
+          <% end %>
         </div>
       </div>
       <div class="column is-paddingless is-marginless has-text-centered">
@@ -38,6 +44,11 @@
               <%= if user_rights(@board, :delete_task?) do %>
               <i class="task_action fas fa-trash-alt" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_task" phx-value-id="<%= task.id %>"></i>
               <% end %>
+              <div class="task_tags">
+                <%= for tag <- task.tags do %>
+                <span class="task_tag" style="background-color: <%= tag_color(tag, @board.tags) %>;"><%= tag_name(tag, @board.tags) %></span>
+                <% end %>
+              </div>
               <%= task.name %>
             </div>
             <% end %>

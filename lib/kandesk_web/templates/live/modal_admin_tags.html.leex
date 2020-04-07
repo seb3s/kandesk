@@ -1,0 +1,23 @@
+<div class="modal is-open" id="kmodal" phx-hook="show_modal">
+  <div class="modal-background" data-micromodal-close></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-cursor-grab">
+      <h2 class="modal-card-title">Manage tags</h2>
+    </header>
+    <section class="modal-card-body thin_scroll">
+      <%= f = form_for @changeset, "#", id: "form_modal", phx_submit: "set_board_tags" %>
+        <%= inputs_for f, :tags, fn fp -> %>
+        <div class="field is-horizontal">
+          <%= text_input fp, :id, type: "hidden" %>
+          <%= color_input fp, :color, class: "input_color", tabindex: "-1" %>
+          <%= text_input fp, :name, class: "input input_tag", placeholder: "Tag name" %>
+        </div>
+      <% end %>
+      </form>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-primary" form="form_modal" type="submit">Validate</button>
+      <button class="button" data-micromodal-close>Cancel</button>
+    </footer>
+  </div>
+</div>
