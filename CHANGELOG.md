@@ -1,3 +1,8 @@
+## v0.7.0 - 2020-04-07
+
+  - Add tags management
+
+
 ## v0.6.0 - 2020-04-02
 
   - Dashboard - Add pubsub to boards events
