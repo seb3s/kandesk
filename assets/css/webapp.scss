@@ -135,16 +135,20 @@ main .alert {
 }
 
 .column_container {
-  min-width: 300px;
-  max-width: 300px;
   padding: 0 7px;
+  min-width: 307px;
+  max-width: 307px;
 
   &:first-child {
     padding-left: 0;
+    min-width: 300px;
+    max-width: 300px;
   }
 
   &:last-child {
     padding-right: 0;
+    min-width: 300px;
+    max-width: 300px;
   }
 }
 
