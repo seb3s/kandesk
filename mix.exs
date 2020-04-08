@@ -45,7 +45,7 @@ defmodule Kandesk.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:argon2_elixir, "~> 2.2.1"},
       {:pow, "~> 1.0.19"},
-      {:phoenix_live_view, "~> 0.10.0"},
+      {:phoenix_live_view, "~> 0.11.0"},
       {:bamboo, "~> 1.4.0"},
       {:bamboo_smtp, "~> 2.1.0"},
     ]

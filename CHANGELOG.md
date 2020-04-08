@@ -1,3 +1,8 @@
+## v0.x.x - 2020-04-xx
+
+  - Upgrade to liveview 0.11.0
+
+
 ## v0.7.1 - 2020-04-08
 
   - Fix multi lines display for board description
