@@ -1,3 +1,8 @@
+## v0.7.1 - 2020-04-08
+
+  - Fix multi lines display for board description
+
+
 ## v0.7.0 - 2020-04-07
 
   - Add tags management
