@@ -1,5 +1,6 @@
-## v0.x.x - 2020-04-xx
+## v0.7.2 - 2020-04-08
 
+  - Keep column scrollbar position when updating tasks
   - Upgrade to liveview 0.11.0
 
 

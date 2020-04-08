@@ -30,7 +30,7 @@
   <div class="board_content">
     <div class="board_columns thin_scroll" id="board_columns" <%= if user_rights(@board, :move_column?) do %>phx-hook="sortable_columns"<% end %>>
       <%= for column <- @columns do %>
-      <div class="column_container" id="<%= temp_id() %>" phx-hook="slide_scroll" data-slider_id="board_columns">
+      <div class="column_container" id="column_container_<%= column.id %>" phx-hook="slide_scroll" data-slider_id="board_columns">
         <div class="column_content">
           <div class="column_header level is-marginless" <%= if user_rights(@board, :edit_column?) do %>phx-click="edit_column" phx-value-id="<%= column.id %>"<% end %> title="<%= column.descr %>">
             <div class="level-left"><%= column.name %></div>
@@ -38,7 +38,7 @@
             <div class="level-right"><span class="icon" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_column" phx-value-id="<%= column.id %>"><i class="fas fa-trash-alt"></i></span></div>
             <% end %>
           </div>
-          <div class="column_tasks thin_scroll" id="<%= temp_id() %>" <%= if user_rights(@board, :move_task?) do %>phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= column.id %>"<% end %>>
+          <div class="column_tasks thin_scroll" id="column_tasks_<%= column.id %>" <%= if user_rights(@board, :move_task?) do %>phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= column.id %>"<% end %>>
             <%= for task <- column.tasks do %>
             <div class="column_task" <%= if user_rights(@board, :edit_task?) do %>phx-click="edit_task" phx-value-id="<%= task.id %>"<% end %> title="<%= task.descr %>">
               <%= if user_rights(@board, :delete_task?) do %>
