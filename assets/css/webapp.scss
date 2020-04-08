@@ -104,6 +104,10 @@ main .alert {
       font-size: $size-4;
       margin-bottom: 0.75rem;
     }
+
+    .board_descr {
+      white-space: pre-line;
+    }
   }
 }
 
