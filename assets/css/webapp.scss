@@ -252,6 +252,12 @@ main .alert {
       padding: 0.25rem 0.25rem 0.25rem 0.5rem;
       flex-shrink: 1;
     }
+
+    .level-right {
+      .dropdown-trigger .icon:hover {
+        background-color: #ddd;
+      }
+    }
   }
 
   .column_tasks {

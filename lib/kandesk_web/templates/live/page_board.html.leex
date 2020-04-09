@@ -1,3 +1,9 @@
+<%
+  create_task? = user_rights(@board, :create_task?)
+  delete_column? = user_rights(@board, :delete_column?)
+  delete_task? = user_rights(@board, :delete_task?)
+  create_task_delete_column_any? = Enum.any?([delete_column?, create_task?], & &1)
+%>
 <div class="page_board" data-board_id="<%= @board.id %>">
   <div class="header">
     <div class="columns is-marginless">
@@ -49,16 +55,32 @@
       <%= for column <- @columns do %>
       <div class="column_container" id="column_container_<%= column.id %>" phx-hook="slide_scroll" data-slider_id="board_columns">
         <div class="column_content">
-          <div class="column_header level is-marginless" <%= if user_rights(@board, :edit_column?) do %>phx-click="edit_column" phx-value-id="<%= column.id %>"<% end %> title="<%= column.descr %>">
-            <div class="level-left"><%= column.name %></div>
-            <%= if user_rights(@board, :delete_column?) do %>
-            <div class="level-right"><span class="icon" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_column" phx-value-id="<%= column.id %>"><i class="fas fa-trash-alt"></i></span></div>
+          <div class="column_header level is-marginless has-cursor-pointer" title="<%= column.descr %>">
+            <div class="level-left" <%= if user_rights(@board, :edit_column?) do %>phx-click="edit_column" phx-value-id="<%= column.id %>"<% end %> ><%= column.name %></div>
+            <%= if create_task_delete_column_any? do %>
+            <div class="level-right">
+              <div class="dropdown is-right" onclick="$(this).toggleClass('is-active');">
+                <div class="dropdown-trigger" title="">
+                  <span class="icon is-medium"><i class="fas fa-ellipsis-v"></i></span>
+                </div>
+                <div class="dropdown-menu" role="menu">
+                  <div class="dropdown-content">
+                    <%= if create_task? do %>
+                      <a class="dropdown-item" style="display: flex; align-items: center;" phx-click="show_modal" phx-value-modal="create_task" phx-value-column_id="<%= column.id %>" phx-value-top_bottom="top"><span class="icon"><i class="fas fa-plus"></i></span><span>Add card</span></a>
+                    <% end %>
+                    <%= if delete_column? do %>
+                      <a class="dropdown-item" style="display: flex; align-items: center;" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_column" phx-value-id="<%= column.id %>"><span class="icon"><i class="fas fa-trash-alt"></i></span>Delete column</a>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
             <% end %>
           </div>
           <div class="column_tasks thin_scroll" id="column_tasks_<%= column.id %>" <%= if user_rights(@board, :move_task?) do %>phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= column.id %>"<% end %>>
             <%= for task <- column.tasks do %>
             <div class="column_task" <%= if user_rights(@board, :edit_task?) do %>phx-click="edit_task" phx-value-id="<%= task.id %>"<% end %> title="<%= task.descr %>">
-              <%= if user_rights(@board, :delete_task?) do %>
+              <%= if delete_task? do %>
               <i class="task_action fas fa-trash-alt" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_task" phx-value-id="<%= task.id %>"></i>
               <% end %>
               <div class="task_tags">
@@ -71,8 +93,8 @@
             <% end %>
           </div>
           <div class="column_footer">
-            <%= if user_rights(@board, :create_task?) do %>
-            <button class="button is-primary is-light is-fullwidth" phx-click="show_modal" phx-value-modal="create_task" phx-value-column_id="<%= column.id %>">
+            <%= if create_task? do %>
+            <button class="button is-primary is-light is-fullwidth" phx-click="show_modal" phx-value-modal="create_task" phx-value-column_id="<%= column.id %>" phx-value-top_bottom="bottom">
               <span class="icon"><i class="fas fa-plus"></i></span>
               <span>Add card</span>
             </button>

@@ -29,7 +29,8 @@ defmodule KandeskWeb.IndexLive do
       board: nil,
       columns: [],
       column_id: nil,
-      edit_row: nil
+      edit_row: nil,
+      top_bottom: nil
     )}
   end
 
@@ -84,9 +85,9 @@ defmodule KandeskWeb.IndexLive do
     {:noreply, assign(socket, show_modal: modal, changeset: Column.changeset(%Column{}, %{}))}
   end
 
-  def handle_event("show_modal", %{"modal" => "create_task" = modal, "column_id" => column_id}, socket) do
+  def handle_event("show_modal", %{"modal" => "create_task" = modal, "column_id" => column_id, "top_bottom" => top_bottom}, socket) do
     {:noreply, assign(socket, show_modal: modal, changeset: Task.changeset(%Task{}, %{}),
-      column_id: to_integer(column_id))}
+      column_id: to_integer(column_id), top_bottom: top_bottom)}
   end
 
   def handle_event("show_modal", %{"modal" => "admin_tags" = modal}, %{assigns: assigns} = socket) do
@@ -306,10 +307,16 @@ defmodule KandeskWeb.IndexLive do
     case create_task(form_data, assigns) do
       {:ok, task} ->
         cid = assigns.column_id
-        columns = for c <- assigns.columns, do:
-          if c.id == cid, do: %{c | tasks: c.tasks ++ [task]}, else: c
-        broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
-        {:noreply, assign(socket, show_modal: nil, columns: columns)}
+        if assigns.top_bottom === "top" do
+          send self(), {"move_task", %{"task_id" => task.id, "old_col" => cid, "new_col" => cid, "old_pos" => task.position, "new_pos" => 1}}
+          # columns refresh is done only once by move_task
+          {:noreply, assign(socket, show_modal: nil)}
+        else
+          columns = for c <- assigns.columns, do:
+            if c.id == cid, do: %{c | tasks: c.tasks ++ [task]}, else: c
+          broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+          {:noreply, assign(socket, show_modal: nil, columns: columns)}
+        end
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
@@ -414,5 +421,10 @@ defmodule KandeskWeb.IndexLive do
             {:noreply, assign(socket, page: "dashboard", boards: boards)}),
       else: {:noreply, assign(socket, boards: boards)}
   end
+
+
+  ## handle_info from handle_event self() cast
+  ## -----------------------------------------
+  def handle_info({"move_task" = event, params}, socket), do: handle_event(event, params, socket)
 
 end
