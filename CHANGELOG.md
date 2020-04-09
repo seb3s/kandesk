@@ -1,3 +1,10 @@
+## v0.8.0 - 2020-04-10
+
+  - Board page - Add a button to navigate between boards
+  - Board page - Add a button to add a card on top of list with a menu for other actions
+  - Board page - Increase columns density a little bit
+
+
 ## v0.7.2 - 2020-04-08
 
   - Keep column scrollbar position when updating tasks
