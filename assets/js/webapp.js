@@ -207,3 +207,4 @@ return webapp;
 }(webapp || {}));
 
 window.webapp = webapp;
+window.$ = $;
