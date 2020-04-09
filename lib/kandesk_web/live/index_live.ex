@@ -174,6 +174,7 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("view_board", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
+    assigns.board && unsubscribe(assigns.board.token) # eventually unsubscribe previous board
     board = Enum.find(assigns.boards, & &1.id == id)
     columns = Repo.all(from(Column, where: [board_id: ^id], order_by: :position))
       |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])

@@ -2,10 +2,27 @@
   <div class="header">
     <div class="columns is-marginless">
       <div class="column is-paddingless is-marginless">
-        <div class="buttons">
+        <div class="header_menu field is-grouped">
           <button class="button is-primary" phx-click="view_dashboard">
             <span class="icon"><i class="fas fa-home"></i></span>
           </button>
+          <div class="dropdown" onclick="$(this).toggleClass('is-active');">
+            <div class="dropdown-trigger">
+              <button class="button is-primary">
+                <span><%= limit_string(@board.name, 20) %></span>
+                <span class="icon"><i class="fas fa-caret-down"></i></span>
+              </button>
+            </div>
+            <div class="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <%= for board <- @boards, board.id != @board.id do %>
+                <a class="dropdown-item" phx-click="view_board" phx-value-id="<%= board.id %>">
+                  <%= board.name %>
+                </a>
+                <% end %>
+              </div>
+            </div>
+          </div>
           <%= if user_rights(@board, :create_column?) do %>
           <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_column">
             <span class="icon"><i class="fas fa-plus"></i></span>

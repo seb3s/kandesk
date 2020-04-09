@@ -62,8 +62,14 @@ main .alert {
 
 // pages header
 // ------------
-[class^=page_] > .header {
-  margin-bottom: 0.5rem;
+[class^=page_] {
+  & > .header {
+    margin-bottom: 0.5rem;
+  }
+
+  .header_menu > * {
+    margin-right: 0.5rem;
+  }
 }
 
 
