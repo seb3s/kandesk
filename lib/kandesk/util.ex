@@ -13,4 +13,11 @@ defmodule Kandesk.Util do
   def tag_color(tag, tags), do: Enum.find(tags, & &1.id == tag.id).color
   def tag_name(tag, tags), do: Enum.find(tags, & &1.id == tag.id).name
 
+  def limit_string(string, size) when size > 1 do
+    case String.at(string, size) do
+      nil -> string
+      _ -> (String.slice(string, 0, size) |> String.trim_trailing) <> "..."
+    end
+  end
+
 end
