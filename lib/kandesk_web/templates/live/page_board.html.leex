@@ -9,7 +9,7 @@
           <%= if user_rights(@board, :create_column?) do %>
           <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_column">
             <span class="icon"><i class="fas fa-plus"></i></span>
-            <span>Add column</span>
+            <span>Column</span>
           </button>
           <% end %>
           <%= if user_rights(@board, :admin_tags?) do %>
