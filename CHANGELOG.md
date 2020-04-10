@@ -1,3 +1,9 @@
+## v0.8.2 - 2020-04-11
+
+  - Board page - While changing board with the new board button, move_column? rights is not taken into account
+  - Board page - Improve tag checkboxes to be able to click on span element directly
+
+
 ## v0.8.1 - 2020-04-10
 
   - Remove local optimizations via variables that impacts liveview diff optimizations
