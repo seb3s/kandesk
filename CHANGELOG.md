@@ -1,3 +1,8 @@
+## v0.8.1 - 2020-04-10
+
+  - Remove local optimizations via variables that impacts liveview diff optimizations
+
+
 ## v0.8.0 - 2020-04-10
 
   - Board page - Add a button to navigate between boards
