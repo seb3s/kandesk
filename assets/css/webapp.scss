@@ -187,20 +187,41 @@ main .alert {
       display: flex;
       align-items: center;
       margin-right: 10px;
-
-      .checkbox_tag{
-        width: 1.2rem;
-        height: 1.2rem;
-      }
+      cursor: pointer;
+      user-select: none;
 
       .task_tag {
         min-width: 80px;
-        height: 26px;
-        line-height: 26px;
-        margin: 5px 8px 5px 5px;
-        padding: 0 0.75rem 0 0.75rem;
-        border-radius: 5px;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        margin: 5px 0 5px 5px;
+        padding: 0 0.25rem 0 0.6rem;
+        border-radius: 5px 0 0 5px;
         font-size: 0.85rem;
+      }
+
+      .checkbox_tag{
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+        cursor: inherit;
+        height: 1.5rem;
+        width: 1.5rem;
+        border-radius: 0 5px 5px 0;
+        color: #fff;
+        outline: none;
+
+        &:checked::before {
+          height: 1.5rem;
+          width: 1.5rem;
+          content: '✔';
+          display: inline-block;
+          font-size: 1.2rem;
+          text-align: center;
+          line-height: 1.5rem;
+        }
       }
     }
   }

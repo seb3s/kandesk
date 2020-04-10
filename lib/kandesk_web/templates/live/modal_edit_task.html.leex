@@ -24,10 +24,11 @@
         <label class="label">Task tags</label>
         <div class="task_tags">
           <%= for {tag, index} <- Enum.with_index(@board.tags) do %>
-          <div class="field_tag">
+          <label class="field_tag">
             <span class="task_tag" style="background-color: <%= tag.color %>;"><%= tag.name%></span>
-            <input class="checkbox_tag" id="tag_<%= index %>" name="task[tags][][id]" type="checkbox" value="<%= tag.id %>" <%= tag_checked?(tag.id, @edit_row.tags) %> >
-          </div>
+            <input class="checkbox_tag" style="background-color: <%= tag.color %>;"
+              id="tag_<%= index %>" name="task[tags][][id]" type="checkbox" value="<%= tag.id %>" <%= tag_checked?(tag.id, @edit_row.tags) %> >
+          </label>
           <% end %>
         </div>
         <% end %>
