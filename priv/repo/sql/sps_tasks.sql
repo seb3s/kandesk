@@ -20,6 +20,9 @@ BEGIN
     delete from columns
     where board_id = v_board_id;
 
+    delete from boards_users
+    where board_id = v_board_id;
+
     delete from boards
     where id = v_board_id;
 
