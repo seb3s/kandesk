@@ -1,3 +1,10 @@
+## v0.9.0 - 2020-04-15
+
+  - Add security checks to fight against falsification of phx-xx attributes
+  - Fix delete board when board is shared
+  - Create SQL stored procedures with ecto.migrate
+
+
 ## v0.8.2 - 2020-04-11
 
   - Board page - While changing board with the new board button, move_column? rights is not taken into account
