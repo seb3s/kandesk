@@ -139,19 +139,23 @@ defmodule KandeskWeb.IndexLive do
   def handle_event("edit_board", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
     row = Enum.find(assigns.boards, & &1.id == id)
-    changeset = Board.changeset(row, %{})
-    {:noreply, assign(socket, changeset: changeset, show_modal: "edit_board", edit_row: row)}
+    if user_rights(row, :edit_board?) do
+      changeset = Board.changeset(row, %{})
+      {:noreply, assign(socket, changeset: changeset, show_modal: "edit_board", edit_row: row)}
+    else {:noreply, socket} end
   end
 
   def handle_event("update_board", %{"board" => form_data} = params, %{assigns: assigns} = socket) do
-    case update_board(form_data, assigns) do
-      {:ok, board} ->
-        boards = get_user_boards(assigns.user_id)
-        broadcast_from(self(), @boards_topic, "update_board", %{board: board})
-        {:noreply, assign(socket, show_modal: nil, boards: boards)}
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
+    case assigns.edit_row do %Board{} = row -> # in case phx-submit is hacked
+      case update_board(form_data, assigns) do
+        {:ok, board} ->
+          boards = get_user_boards(assigns.user_id)
+          broadcast_from(self(), @boards_topic, "update_board", %{board: board})
+          {:noreply, assign(socket, show_modal: nil, boards: boards)}
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign(socket, changeset: changeset)}
+      end
+    _ -> {:noreply, socket} end
   end
 
   def update_board(form_data, assigns) do
@@ -167,20 +171,25 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("delete_board", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
-    {:ok, res} = Repo.query("select sp_delete_board($1);", [id])
-    boards = for b <- assigns.boards, b.id != id, do: b
-    broadcast_from(self(), @boards_topic, "delete_board", %{id: id})
-    {:noreply, assign(socket, boards: boards)}
+    row = Enum.find(assigns.boards, & &1.id == id)
+    if user_rights(row, :delete_board?) do
+      {:ok, res} = Repo.query("select sp_delete_board($1);", [id])
+      boards = for b <- assigns.boards, b.id != id, do: b
+      broadcast_from(self(), @boards_topic, "delete_board", %{id: id})
+      {:noreply, assign(socket, boards: boards)}
+    else {:noreply, socket} end
   end
 
   def handle_event("view_board", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
     assigns.board && unsubscribe(assigns.board.token) # eventually unsubscribe previous board
     board = Enum.find(assigns.boards, & &1.id == id)
-    columns = Repo.all(from(Column, where: [board_id: ^id], order_by: :position))
-      |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
-    subscribe(board.token)
-    {:noreply, assign(socket, page: "board", board: board, columns: columns)}
+    if board do
+      columns = Repo.all(from(Column, where: [board_id: ^id], order_by: :position))
+        |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
+      subscribe(board.token)
+      {:noreply, assign(socket, page: "board", board: board, columns: columns)}
+    else {:noreply, socket} end
   end
 
   def handle_event("view_dashboard", _params, %{assigns: assigns} = socket) do
@@ -192,15 +201,17 @@ defmodule KandeskWeb.IndexLive do
   ## tags
   ## ----
   def handle_event("set_board_tags", %{"board" => %{"tags"=> tags}}, %{assigns: assigns} = socket) do
-    case update_tags(tags, assigns) do
-      {:ok, board} ->
-        bid = board.id
-        boards = (for b <- assigns.boards, do: if b.id == bid, do: board, else: b)
-        broadcast_from(self(), @boards_topic, "update_board", %{board: board})
-        {:noreply, assign(socket, show_modal: nil, boards: boards, board: board)}
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
+    if user_rights(assigns.board, :admin_tags?) do
+      case update_tags(tags, assigns) do
+        {:ok, board} ->
+          bid = board.id
+          boards = (for b <- assigns.boards, do: if b.id == bid, do: board, else: b)
+          broadcast_from(self(), @boards_topic, "update_board", %{board: board})
+          {:noreply, assign(socket, show_modal: nil, boards: boards, board: board)}
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign(socket, changeset: changeset)}
+      end
+    else {:noreply, socket} end
   end
 
   def update_tags(tags, assigns) do
@@ -218,14 +229,16 @@ defmodule KandeskWeb.IndexLive do
   ## columns
   ## -------
   def handle_event("create_column", %{"column" => form_data} = params, %{assigns: assigns} = socket) do
-    case create_column(form_data, assigns) do
-      {:ok, column} ->
-        columns = assigns.columns ++ [%{column | tasks: []}]
-        broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
-        {:noreply, assign(socket, show_modal: nil, columns: columns)}
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
+    if user_rights(assigns.board, :create_column?) do
+      case create_column(form_data, assigns) do
+        {:ok, column} ->
+          columns = assigns.columns ++ [%{column | tasks: []}]
+          broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+          {:noreply, assign(socket, show_modal: nil, columns: columns)}
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign(socket, changeset: changeset)}
+      end
+    else {:noreply, socket} end
   end
 
   def create_column(form_data, assigns) do
@@ -246,20 +259,24 @@ defmodule KandeskWeb.IndexLive do
   def handle_event("edit_column", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
     row = Enum.find(assigns.columns, & &1.id == id)
-    changeset = Column.changeset(row, %{})
-    {:noreply, assign(socket, changeset: changeset, show_modal: "edit_column", edit_row: row)}
+    if row && user_rights(assigns.board, :edit_column?) do
+      changeset = Column.changeset(row, %{})
+      {:noreply, assign(socket, changeset: changeset, show_modal: "edit_column", edit_row: row)}
+    else {:noreply, socket} end
   end
 
   def handle_event("update_column", %{"column" => form_data} = params, %{assigns: assigns} = socket) do
-    case update_column(form_data, assigns) do
-      {:ok, column} ->
-        cid = assigns.edit_row.id
-        columns = for c <- assigns.columns, do: if c.id == cid, do: column, else: c
-        broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
-        {:noreply, assign(socket, show_modal: nil, columns: columns)}
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
+    case assigns.edit_row do %Column{} = row -> # in case phx-submit is hacked
+      case update_column(form_data, assigns) do
+        {:ok, column} ->
+          cid = assigns.edit_row.id
+          columns = for c <- assigns.columns, do: if c.id == cid, do: column, else: c
+          broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+          {:noreply, assign(socket, show_modal: nil, columns: columns)}
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign(socket, changeset: changeset)}
+      end
+    _ -> {:noreply, socket} end
   end
 
   def update_column(form_data, assigns) do
@@ -275,51 +292,59 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("move_column", %{"board_id" => board_id, "old_pos" => old_pos, "new_pos" => new_pos} = params, %{assigns: assigns} = socket)
   do
-    {:ok, res} = Repo.query("select sp_move_column($1, $2, $3);", [board_id, old_pos, new_pos])
-    columns =
-    if new_pos > old_pos do
-      {l1, lres} = Enum.split(assigns.columns, old_pos - 1)
-      {moved_column, lres} = List.pop_at(lres, 0)
-      {l2, l3} = Enum.split(lres, new_pos - old_pos)
-      l1 ++ l2 ++ [moved_column] ++ l3
-    else
-      {l1, lres} = Enum.split(assigns.columns, new_pos - 1)
-      {l2, lres} = Enum.split(lres, old_pos - new_pos)
-      {moved_column, l3} = List.pop_at(lres, 0)
-      l1 ++ [moved_column] ++ l2  ++ l3
-    end
-    broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
-    {:noreply, assign(socket, columns: columns)}
+    row = Enum.find(assigns.boards, & &1.id == board_id)
+    if row && user_rights(assigns.board, :move_column?) do
+      {:ok, res} = Repo.query("select sp_move_column($1, $2, $3);", [board_id, old_pos, new_pos])
+      columns =
+      if new_pos > old_pos do
+        {l1, lres} = Enum.split(assigns.columns, old_pos - 1)
+        {moved_column, lres} = List.pop_at(lres, 0)
+        {l2, l3} = Enum.split(lres, new_pos - old_pos)
+        l1 ++ l2 ++ [moved_column] ++ l3
+      else
+        {l1, lres} = Enum.split(assigns.columns, new_pos - 1)
+        {l2, lres} = Enum.split(lres, old_pos - new_pos)
+        {moved_column, l3} = List.pop_at(lres, 0)
+        l1 ++ [moved_column] ++ l2  ++ l3
+      end
+      broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+      {:noreply, assign(socket, columns: columns)}
+    else {:noreply, socket} end
   end
 
   def handle_event("delete_column", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
-    {:ok, res} = Repo.query("select sp_delete_column($1);", [id])
-    columns = for c <- assigns.columns, c.id != id, do: c
-    broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
-    {:noreply, assign(socket, columns: columns)}
+    row = Enum.find(assigns.columns, & &1.id == id)
+    if row && user_rights(assigns.board, :delete_column?) do
+      {:ok, res} = Repo.query("select sp_delete_column($1);", [id])
+      columns = for c <- assigns.columns, c.id != id, do: c
+      broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+      {:noreply, assign(socket, columns: columns)}
+    else {:noreply, socket} end
   end
 
 
   ## tasks
   ## -----
   def handle_event("create_task", %{"task" => form_data} = params, %{assigns: assigns} = socket) do
-    case create_task(form_data, assigns) do
-      {:ok, task} ->
-        cid = assigns.column_id
-        if assigns.top_bottom === "top" do
-          send self(), {"move_task", %{"task_id" => task.id, "old_col" => cid, "new_col" => cid, "old_pos" => task.position, "new_pos" => 1}}
-          # columns refresh is done only once by move_task
-          {:noreply, assign(socket, show_modal: nil)}
-        else
-          columns = for c <- assigns.columns, do:
-            if c.id == cid, do: %{c | tasks: c.tasks ++ [task]}, else: c
-          broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
-          {:noreply, assign(socket, show_modal: nil, columns: columns)}
-        end
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
+    if user_rights(assigns.board, :create_task?) do
+      case create_task(form_data, assigns) do
+        {:ok, task} ->
+          cid = assigns.column_id
+          if assigns.top_bottom === "top" do
+            send self(), {"move_task", %{"task_id" => task.id, "old_col" => cid, "new_col" => cid, "old_pos" => task.position, "new_pos" => 1}}
+            # columns refresh is done only once by move_task
+            {:noreply, assign(socket, show_modal: nil)}
+          else
+            columns = for c <- assigns.columns, do:
+              if c.id == cid, do: %{c | tasks: c.tasks ++ [task]}, else: c
+            broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+            {:noreply, assign(socket, show_modal: nil, columns: columns)}
+          end
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign(socket, changeset: changeset)}
+      end
+    else {:noreply, socket} end
   end
 
   def create_task(form_data, assigns) do
@@ -343,23 +368,27 @@ defmodule KandeskWeb.IndexLive do
   def handle_event("edit_task", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
     row = Enum.find(Enum.flat_map(assigns.columns, & &1.tasks), & &1.id == id)
-    changeset = Task.changeset(row, %{})
-    {:noreply, assign(socket, changeset: changeset, show_modal: "edit_task", edit_row: row)}
+    if row && user_rights(assigns.board, :edit_task?) do
+      changeset = Task.changeset(row, %{})
+      {:noreply, assign(socket, changeset: changeset, show_modal: "edit_task", edit_row: row)}
+    else {:noreply, socket} end
   end
 
   def handle_event("update_task", %{"task" => form_data} = params, %{assigns: assigns} = socket) do
-    case update_task(form_data, assigns) do
-      {:ok, task} ->
-        cid = assigns.edit_row.column_id
-        tid = assigns.edit_row.id
-        columns = for c <- assigns.columns, do: if c.id == cid, do:
-          %{c | tasks: (for t <- c.tasks, do: if t.id == tid, do: task, else: t)},
-          else: c
-        broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
-        {:noreply, assign(socket, show_modal: nil, columns: columns)}
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
+    case assigns.edit_row do %Task{} = row -> # in case phx-submit is hacked
+      case update_task(form_data, assigns) do
+        {:ok, task} ->
+          cid = row.column_id
+          tid = row.id
+          columns = for c <- assigns.columns, do: if c.id == cid, do:
+            %{c | tasks: (for t <- c.tasks, do: if t.id == tid, do: task, else: t)},
+            else: c
+          broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+          {:noreply, assign(socket, show_modal: nil, columns: columns)}
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign(socket, changeset: changeset)}
+      end
+     _ -> {:noreply, socket} end
   end
 
   def update_task(form_data, assigns) do
@@ -376,19 +405,35 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("move_task", %{"task_id" => task_id, "old_col" => old_col, "new_col" => new_col, "old_pos" => old_pos, "new_pos" => new_pos} = params, %{assigns: assigns} = socket)
   do
-    {:ok, res} = Repo.query("select sp_move_task($1, $2, $3, $4, $5);", [task_id, old_col, new_col, old_pos, new_pos])
-    columns = Repo.all(from(Column, where: [board_id: ^assigns.board.id], order_by: :position))
-      |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
-    broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
-    {:noreply, assign(socket, columns: columns)}
+    id = to_integer(task_id)
+    row = Enum.find(Enum.flat_map(assigns.columns, & &1.tasks), & &1.id == id)
+    col1 = Enum.find(assigns.columns, & &1.id == old_col)
+    col2 = Enum.find(assigns.columns, & &1.id == new_col)
+    if row && col1 && col2 && user_rights(assigns.board, :move_task?) do
+      {:ok, res} = Repo.query("select sp_move_task($1, $2, $3, $4, $5);", [task_id, old_col, new_col, old_pos, new_pos])
+      columns = Repo.all(from(Column, where: [board_id: ^assigns.board.id], order_by: :position))
+        |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
+      broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+      {:noreply, assign(socket, columns: columns)}
+    else {:noreply, socket} end
   end
 
   def handle_event("delete_task", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
-    {:ok, res} = Repo.query("select sp_delete_task($1);", [id])
-    columns = for c <- assigns.columns, do: %{c | tasks: (for t <- c.tasks, t.id != id, do: t)}
-    broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
-    {:noreply, assign(socket, columns: columns)}
+    row = Enum.find(Enum.flat_map(assigns.columns, & &1.tasks), & &1.id == id)
+    if row && user_rights(assigns.board, :delete_task?) do
+      {:ok, res} = Repo.query("select sp_delete_task($1);", [id])
+      columns = for c <- assigns.columns, do: %{c | tasks: (for t <- c.tasks, t.id != id, do: t)}
+      broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+      {:noreply, assign(socket, columns: columns)}
+    else {:noreply, socket} end
+  end
+
+
+  ## handle_event catch all when system is hacked via phx-xxx modifications
+  ## ----------------------------------------------------------------------
+  def handle_event(_event, _params, socket) do
+    {:noreply, socket}
   end
 
 
