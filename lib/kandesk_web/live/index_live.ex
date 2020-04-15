@@ -410,13 +410,19 @@ defmodule KandeskWeb.IndexLive do
     col1 = Enum.find(assigns.columns, & &1.id == old_col)
     col2 = Enum.find(assigns.columns, & &1.id == new_col)
     if row && col1 && col2 && user_rights(assigns.board, :move_task?) do
-      {:ok, res} = Repo.query("select sp_move_task($1, $2, $3, $4, $5);", [task_id, old_col, new_col, old_pos, new_pos])
-      columns = Repo.all(from(Column, where: [board_id: ^assigns.board.id], order_by: :position))
-        |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
-      broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
-      {:noreply, assign(socket, columns: columns)}
+      do_event("move_task", params, socket)
     else {:noreply, socket} end
   end
+
+  def do_event("move_task", %{"task_id" => task_id, "old_col" => old_col, "new_col" => new_col, "old_pos" => old_pos, "new_pos" => new_pos} = params, %{assigns: assigns} = socket)
+  do
+    {:ok, res} = Repo.query("select sp_move_task($1, $2, $3, $4, $5);", [task_id, old_col, new_col, old_pos, new_pos])
+    columns = Repo.all(from(Column, where: [board_id: ^assigns.board.id], order_by: :position))
+      |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
+    broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+    {:noreply, assign(socket, columns: columns)}
+  end
+
 
   def handle_event("delete_task", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
@@ -470,6 +476,6 @@ defmodule KandeskWeb.IndexLive do
 
   ## handle_info from handle_event self() cast
   ## -----------------------------------------
-  def handle_info({"move_task" = event, params}, socket), do: handle_event(event, params, socket)
+  def handle_info({"move_task" = event, params}, socket), do: do_event(event, params, socket)
 
 end
