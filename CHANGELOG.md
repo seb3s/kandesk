@@ -1,3 +1,11 @@
+## v0.10.0 - 2020-04-18
+
+  - Add column visibility
+  - Add board custom style hack
+  - Fix word overflowing in tasks
+  - Fix some user rights
+
+
 ## v0.9.0 - 2020-04-15
 
   - Add security checks to fight against falsification of phx-xx attributes
