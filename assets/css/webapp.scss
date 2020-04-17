@@ -198,9 +198,10 @@ main .alert {
         padding: 0 0.25rem 0 0.6rem;
         border-radius: 5px 0 0 5px;
         font-size: 0.85rem;
+        background-color: #53718b;
       }
 
-      .checkbox_tag{
+      .checkbox_tag {
         -webkit-appearance: none;
         -moz-appearance: none;
         -ms-appearance: none;
@@ -212,6 +213,7 @@ main .alert {
         border-radius: 0 5px 5px 0;
         color: #fff;
         outline: none;
+        background-color: #53718b;
 
         &:checked::before {
           height: 1.5rem;
