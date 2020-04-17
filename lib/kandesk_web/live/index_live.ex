@@ -246,7 +246,7 @@ defmodule KandeskWeb.IndexLive do
       name: form_data["name"],
       descr: form_data["descr"],
       position: length(assigns.columns) + 1,
-      is_visible: true,
+      visibility: "all",
       creator_id: assigns.user_id,
       board_id: assigns.board.id
     }

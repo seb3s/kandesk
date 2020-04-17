@@ -6,7 +6,7 @@ defmodule Kandesk.Schema.Column do
     field :name, :string
     field :descr, :string
     field :position, :integer
-    field :is_visible, :boolean
+    field :visibility, :string
     belongs_to :creator, Kandesk.Schema.User
     belongs_to :board, Kandesk.Schema.Board
     has_many :tasks, Kandesk.Schema.Task
@@ -16,8 +16,8 @@ defmodule Kandesk.Schema.Column do
 
   def changeset(struct, attrs) do
     struct
-    |> cast(attrs, [:name, :descr, :position, :is_visible, :creator_id, :board_id])
-    |> validate_required([:name, :position, :is_visible, :creator_id, :board_id])
+    |> cast(attrs, [:name, :descr, :position, :visibility, :creator_id, :board_id])
+    |> validate_required([:name, :position, :visibility, :creator_id, :board_id])
   end
 
 end
