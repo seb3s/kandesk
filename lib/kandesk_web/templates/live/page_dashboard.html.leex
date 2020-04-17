@@ -35,7 +35,7 @@
             <% end %>
           </div>
           <div class="board_name"><%= board.name %></div>
-          <div class="board_descr"><%= board.descr %></div>
+          <div class="board_descr"><%= limit_string(board.descr, 200) %></div>
         </div>
       </div>
     </div>
