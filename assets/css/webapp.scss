@@ -296,9 +296,6 @@ main .alert {
     border-radius: 0.25rem;
     box-shadow: 0 1px 0 rgba(100, 100, 100, 0.5);
 
-    &:first-child {
-      margin-top: 0
-    }
     &:last-child {
       margin-bottom: 0
     }
