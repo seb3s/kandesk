@@ -73,7 +73,7 @@
           </div>
           <div class="column_tasks thin_scroll" id="column_tasks_<%= column.id %>" <%= if user_rights(@board, :move_task?) do %>phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= column.id %>"<% end %>>
             <%= for task <- column.tasks do %>
-            <div class="column_task" <%= if user_rights(@board, :edit_task?) do %>phx-click="edit_task" phx-value-id="<%= task.id %>"<% end %> title="<%= task.descr %>">
+            <div class="column_task" phx-value-id="<%= task.id %>" <%= if user_rights(@board, :edit_task?) do %>phx-click="edit_task"<% end %> title="<%= task.descr %>">
               <%= if user_rights(@board, :delete_task?) do %>
               <i class="task_action fas fa-trash-alt" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_task" phx-value-id="<%= task.id %>"></i>
               <% end %>
