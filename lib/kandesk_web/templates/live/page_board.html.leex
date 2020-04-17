@@ -47,7 +47,8 @@
   <div class="board_content">
     <div class="board_columns thin_scroll" id="board_columns_<%= @board.id %>" <%= if user_rights(@board, :move_column?) do %>phx-hook="sortable_columns"<% end %>>
       <%= for column <- @columns do %>
-      <div class="column_container" id="column_container_<%= column.id %>" phx-hook="slide_scroll" data-slider_id="board_columns_<%= @board.id %>">
+      <%= if column_visible?(column, @user_id) do %>
+      <div class="column_container <%= column_visibility_class(column) %>" id="column_container_<%= column.id %>" phx-hook="slide_scroll" data-slider_id="board_columns_<%= @board.id %>">
         <div class="column_content">
           <div class="column_header level is-marginless has-cursor-pointer" title="<%= column.descr %>">
             <div class="level-left" <%= if user_rights(@board, :edit_column?) do %>phx-click="edit_column" phx-value-id="<%= column.id %>"<% end %> ><%= column.name %></div>
@@ -96,6 +97,10 @@
           </div>
         </div>
       </div>
+      <%= else %>
+        <%# invisible column: insert blank container for column sorting to work properly %>
+        <div></div>
+      <% end %>
       <% end %>
     </div>
   </div>

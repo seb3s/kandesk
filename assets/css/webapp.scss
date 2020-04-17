@@ -245,6 +245,10 @@ main .alert {
     min-width: 300px;
     max-width: 300px;
   }
+
+  &.is_creator .column_content{
+    background-color: #ccc;
+  }
 }
 
 .column_content {

@@ -24,4 +24,18 @@ defmodule Kandesk.Util do
     end
   end
 
+  def column_visibility_options(), do: ["all", "creator"]
+  def column_visibility_default(), do: "all"
+
+  def column_visible?(column, user_id) do
+    column.visibility == "all" || (column.visibility == "creator" && column.creator_id == user_id)
+  end
+
+  def column_visibility_class(column) do
+    case column.visibility do
+      "creator" -> "is_creator"
+      _ -> ""
+    end
+  end
+
 end

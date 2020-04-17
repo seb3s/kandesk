@@ -246,7 +246,7 @@ defmodule KandeskWeb.IndexLive do
       name: form_data["name"],
       descr: form_data["descr"],
       position: length(assigns.columns) + 1,
-      visibility: "all",
+      visibility: form_data["visibility"],
       creator_id: assigns.user_id,
       board_id: assigns.board.id
     }
@@ -282,7 +282,8 @@ defmodule KandeskWeb.IndexLive do
   def update_column(form_data, assigns) do
     attrs = %{
       name: form_data["name"],
-      descr: form_data["descr"]
+      descr: form_data["descr"],
+      visibility: form_data["visibility"]
     }
 
     assigns.edit_row

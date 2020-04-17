@@ -20,6 +20,16 @@
             <%= error_tag f, :descr %>
           </div>
         </div>
+        <label class="label">Visibility</label>
+        <div class="task_tags">
+          <%= for option <- column_visibility_options() do %>
+          <label class="field_tag">
+            <span class="task_tag"><%= String.capitalize(option) %></span>
+            <input class="checkbox_tag" name="column[visibility]" type="radio" value="<%= option %>"
+              <%= if option == column_visibility_default() do "checked" end %> >
+          </label>
+          <% end %>
+        </div>
       </form>
     </section>
     <footer class="modal-card-foot">
