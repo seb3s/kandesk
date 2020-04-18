@@ -1,3 +1,8 @@
+## v0.10.1 - 2020-04-18
+
+  - Fix when board descr is nil
+
+
 ## v0.10.0 - 2020-04-18
 
   - Add column visibility
