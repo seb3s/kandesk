@@ -21,7 +21,8 @@ phx_hooks.show_modal = {
             this.el.querySelector('.modal-card-head')); },
         onClose: () => { this.pushEvent('close_modal'); }
         })
-    }
+    },
+    beforeDestroy() { MicroModal.close(this.el.id) }
 };
 
 phx_hooks.slide_scroll = {
