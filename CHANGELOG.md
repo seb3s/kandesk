@@ -1,3 +1,9 @@
+## v0.10.2 - 2020-04-20
+
+  - Dashboard - Fix body scroll behaviour after creating a new board
+  - Revert back to raising an error in case of hacking as it is the correct way of doing it
+
+
 ## v0.10.1 - 2020-04-18
 
   - Fix when board descr is nil
