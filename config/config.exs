@@ -15,7 +15,7 @@ config :kandesk, KandeskWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "O8I0j9p1IXJUi65h5S73INz0qDzLxQ3pfIcCR9Y3BjMmWGXhlcJFTFfDRMbHpHr7",
   render_errors: [view: KandeskWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Kandesk.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: Kandesk.PubSub,
   live_view: [signing_salt: "5BFoIPvCG/CUh9GwpXNBIC2qh/JUB/Z5"]
 
 

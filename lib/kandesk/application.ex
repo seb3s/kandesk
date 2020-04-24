@@ -10,6 +10,10 @@ defmodule Kandesk.Application do
     children = [
       # Start the Ecto repository
       Kandesk.Repo,
+      # Start the Telemetry supervisor
+      KandeskWeb.Telemetry,
+      # Start the PubSub system
+      {Phoenix.PubSub, name: Kandesk.PubSub},
       # Start the endpoint when the application starts
       KandeskWeb.Endpoint
       # Starts a worker by calling: Kandesk.Worker.start_link(arg)
