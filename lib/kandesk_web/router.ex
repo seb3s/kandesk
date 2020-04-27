@@ -8,16 +8,13 @@ defmodule KandeskWeb.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
+    plug :put_root_layout, {KandeskWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-  end
-
-  pipeline :liveview do
-    plug :put_root_layout, {KandeskWeb.LayoutView, "live.html"}
   end
 
   pipeline :protected do
@@ -34,7 +31,7 @@ defmodule KandeskWeb.Router do
   end
 
   scope "/", KandeskWeb do
-    pipe_through [:browser, :liveview, :protected]
+    pipe_through [:browser, :protected]
 
     live "/", IndexLive, session: %{"page" => "dashboard"}
   end

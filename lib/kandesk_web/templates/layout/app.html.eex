@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Kandesk</title>
-    <link rel="icon" href="<%= Routes.static_path(@conn, "/favicon.ico") %>">
-    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700">
-    <script defer src="https://use.fontawesome.com/releases/v5.12.1/js/all.js"></script>
-    <%= csrf_meta_tag() %>
-  </head>
-  <body>
-    <main role="main">
-      <%= show_flash @conn %>
-      <%= @inner_content %>
-    </main>
-    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-    <script>webapp.init();</script>
-  </body>
-</html>
+<main role="main">
+  <%= show_flash @conn %>
+  <%= @inner_content %>
+</main>
