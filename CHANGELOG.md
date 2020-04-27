@@ -1,3 +1,8 @@
+## v0.11.0 - 2020-04-27
+
+  - Upgrade phoenix to 1.5.x. Add phoenix_live_dashboard.
+
+
 ## v0.10.2 - 2020-04-20
 
   - Dashboard - Fix body scroll behaviour after creating a new board
