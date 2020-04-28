@@ -67,7 +67,7 @@ main .alert {
     margin-bottom: 0.5rem;
   }
 
-  .header_menu > * {
+  .header_menu > *:not(:last-child) {
     margin-right: 0.5rem;
   }
 }
