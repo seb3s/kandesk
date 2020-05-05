@@ -1,3 +1,9 @@
+## v0.12.0 - 2020-05-05
+
+  - Add my account page with name & change password
+  - Better favicon
+
+
 ## v0.11.0 - 2020-04-27
 
   - Upgrade phoenix to 1.5.x. Add phoenix_live_dashboard.
