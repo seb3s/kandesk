@@ -50,12 +50,11 @@ main .alert {
 
   .card {
     min-width: 500px;
-  }
 
-  .card-header-icon {
-    background-color: #f0f8ff;
-    padding: 1rem;
-    cursor: unset;
+    & .card-header-icon {
+      padding: 1.5rem;
+      cursor: unset;
+    }
   }
 }
 

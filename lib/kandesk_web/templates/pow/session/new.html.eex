@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <div><%= submit "Login", class: "button is-primary" %></div>
+    <div class="buttons is-right"><%= submit "Login", class: "button is-primary" %></div>
   <% end %>
   </div>
 </div>

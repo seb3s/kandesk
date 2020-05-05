@@ -10,8 +10,14 @@
       <div class="column is-paddingless is-marginless has-text-centered">
         <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
       </div>
-      <div class="column is-paddingless is-marginless has-text-right">
-        <%= button("Logout", to: "/session", method: "delete", class: "button") %>
+      <div class="column is-paddingless is-marginless">
+        <div class="header_menu field is-grouped is-grouped-right">
+          <button class="button is-primary" phx-click="show_page" phx-value-page="account">
+            <span class="icon"><i class="fas fa-user-cog"></i></span>
+            <span>Account</span>
+          </button>
+          <%= button("Logout", to: "/session", method: "delete", class: "button") %>
+        </div>
       </div>
     </div>
   </div>

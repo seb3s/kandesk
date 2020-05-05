@@ -14,6 +14,21 @@
 }
 
 
+// cards
+// -----
+.card .card-header {
+  background-color: #f0f8ff;
+
+  .card-header-title {
+    color: #1c7a80;
+    font-weight: 600;
+    padding: 1.5rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+  }
+}
+
+
 // cursors
 // -------
 $cursors: ('default' 'pointer' 'grab' 'help' 'wait' 'crosshair' 'not-allowed' 'zoom-in');
@@ -26,4 +41,18 @@ $cursors: ('default' 'pointer' 'grab' 'help' 'wait' 'crosshair' 'not-allowed' 'z
 
 .has-cursor-grab:active {
   cursor: grabbing !important;
+}
+
+
+// buttons => revert #2381 bad fix
+// -------------------------------
+.buttons.is-right {
+  &:not(.has-addons) .button:not(.is-fullwidth) {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  & .button:not(:last-child):not(.is-fullwidth) {
+    margin-right: 0.5rem;
+  }
 }

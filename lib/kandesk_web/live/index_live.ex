@@ -191,7 +191,7 @@ defmodule KandeskWeb.IndexLive do
   end
 
   def handle_event("view_dashboard", _params, %{assigns: assigns} = socket) do
-    unsubscribe(assigns.board.token)
+    assigns.board && unsubscribe(assigns.board.token) # eventually unsubscribe previous board
     {:noreply, assign(socket, page: "dashboard")}
   end
 
@@ -412,7 +412,6 @@ defmodule KandeskWeb.IndexLive do
     {:noreply, assign(socket, columns: columns)}
   end
 
-
   def handle_event("delete_task", %{"id" => id} = params, %{assigns: assigns} = socket) do
     id = to_integer(id)
     row = Enum.find(Enum.flat_map(assigns.columns, & &1.tasks), & &1.id == id)
@@ -458,5 +457,29 @@ defmodule KandeskWeb.IndexLive do
   ## handle_info from handle_event self() cast
   ## -----------------------------------------
   def handle_info({"move_task" = event, params}, socket), do: do_event(event, params, socket)
+
+
+  ## account page
+  ## ------------
+  def handle_event("show_page", %{"page" => "account" = page}, %{assigns: assigns} = socket) do
+    user = Repo.get(User, assigns.user_id)
+    {:noreply, assign(socket, page: page, changeset: User.changeset(user, %{}), edit_row: user)}
+  end
+
+  def handle_event("update_password", %{"user" => form_data} = params, %{assigns: assigns} = socket) do
+    with %User{} <- assigns.edit_row do :ok else _ -> raise(@access_error) end
+    case assigns.edit_row |> User.changeset(form_data) |> Repo.update do
+      {:ok, user} -> handle_event("view_dashboard", nil, socket)
+      {:error, %Ecto.Changeset{} = changeset} -> {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  def handle_event("update_personal_data", %{"user" => form_data} = params, %{assigns: assigns} = socket) do
+    with %User{} <- assigns.edit_row do :ok else _ -> raise(@access_error) end
+    case assigns.edit_row |> User.name_changeset(form_data) |> Repo.update do
+      {:ok, user} -> handle_event("view_dashboard", nil, socket)
+      {:error, %Ecto.Changeset{} = changeset} -> {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
 
 end

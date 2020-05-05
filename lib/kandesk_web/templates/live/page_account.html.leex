@@ -1,0 +1,87 @@
+<div class="page_account">
+  <div class="header">
+    <div class="columns is-marginless">
+      <div class="column is-paddingless is-marginless">
+        <button class="button is-primary" phx-click="view_dashboard">
+          <span class="icon"><i class="fas fa-home"></i></span>
+        </button>
+      </div>
+      <div class="column is-paddingless is-marginless has-text-centered">
+        <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
+      </div>
+      <div class="column is-paddingless is-marginless">
+        <div class="header_menu field is-grouped is-grouped-right">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column is-half">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">My personal data</p>
+        </header>
+        <div class="card-content">
+          <%= f = form_for @changeset, "#", phx_submit: "update_personal_data" %>
+            <div class="field">
+              <%= label f, :firstname, class: "label" %>
+              <div class="control">
+                <%= text_input f, :firstname, class: "input" %>
+                <%= error_tag f, :firstname %>
+              </div>
+            </div>
+            <div class="field">
+              <%= label f, :lastname, class: "label" %>
+              <div class="control">
+                <%= text_input f, :lastname, class: "input" %>
+                <%= error_tag f, :lastname %>
+              </div>
+            </div>
+            <div class="buttons is-right">
+              <button class="button is-primary" type="submit">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-half">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">Change your password</p>
+        </header>
+        <div class="card-content">
+          <%= f = form_for @changeset, "#", phx_submit: "update_password" %>
+            <div class="field">
+              <%= label f, :current_password, class: "label" %>
+              <div class="control">
+                <%= password_input f, :current_password, class: "input", placeholder: "Enter password" %>
+                <%= error_tag f, :current_password %>
+              </div>
+            </div>
+            <div class="field">
+              <%= label f, :password, "New password", class: "label" %>
+              <div class="control">
+                <%= password_input f, :password, class: "input", placeholder: "Enter password" %>
+                <%= error_tag f, :password %>
+              </div>
+            </div>
+            <div class="field">
+              <%= label f, :password_confirmation, "Confirm password", class: "label" %>
+              <div class="control">
+                <%= password_input f, :password_confirmation, class: "input", placeholder: "Enter password" %>
+                <%= error_tag f, :password_confirmation %>
+              </div>
+            </div>
+            <div class="buttons is-right">
+              <button class="button is-primary" type="submit">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= if @show_modal do render "modal_#{@show_modal}.html", assigns end %>
+</div>
