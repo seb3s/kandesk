@@ -229,20 +229,17 @@ main .alert {
 }
 
 .column_container {
-  padding: 0 7px;
-  min-width: 307px;
-  max-width: 307px;
+  padding-left: 14px;
+  min-width: 300px;
+  max-width: 300px;
+  box-sizing: content-box;
+
+  .column_content {
+    box-sizing: border-box;
+  }
 
   &:first-child {
     padding-left: 0;
-    min-width: 300px;
-    max-width: 300px;
-  }
-
-  &:last-child {
-    padding-right: 0;
-    min-width: 300px;
-    max-width: 300px;
   }
 
   &.is_creator .column_content{
