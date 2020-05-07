@@ -1,3 +1,8 @@
+## v0.12.1 - 2020-05-06
+
+  - Better css for columns to be able to customize with a fixed number of columns adjusted to screen width
+
+
 ## v0.12.0 - 2020-05-05
 
   - Add my account page with name & change password
