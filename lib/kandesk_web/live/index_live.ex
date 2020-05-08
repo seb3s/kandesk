@@ -320,10 +320,11 @@ defmodule KandeskWeb.IndexLive do
   ## tasks
   ## -----
   def handle_event("create_task", %{"task" => form_data} = params, %{assigns: assigns} = socket) do
-    if !user_rights(assigns.board, :create_task?), do: raise(@access_error)
-    case create_task(form_data, assigns) do
+    cid = assigns.column_id
+    row = Enum.find(assigns.columns, & &1.id == cid)
+    if !(row && user_rights(assigns.board, :create_task?)), do: raise(@access_error)
+    case create_task(form_data, assigns, row) do
       {:ok, task} ->
-        cid = assigns.column_id
         if assigns.top_bottom === "top" do
           send self(), {"move_task", %{"task_id" => task.id, "old_col" => cid, "new_col" => cid, "old_pos" => task.position, "new_pos" => 1}}
           # columns refresh is done only once by move_task
@@ -339,9 +340,7 @@ defmodule KandeskWeb.IndexLive do
     end
   end
 
-  def create_task(form_data, assigns) do
-    cid = assigns.column_id
-    [column] = for c <- assigns.columns, c.id == cid, do: c
+  def create_task(form_data, assigns, column) do
     attrs = %{
       name: form_data["name"],
       descr: form_data["descr"],
