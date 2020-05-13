@@ -1,0 +1,11 @@
+<div class="column_task" phx-value-id="<%= @task.id %>" <%= if user_rights(@board, :edit_task?) do %>phx-click="edit_task"<% end %> title="<%= @task.descr %>">
+  <%= if user_rights(@board, :delete_task?) do %>
+    <i class="task_action fas fa-trash-alt" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_task" phx-value-id="<%= @task.id %>"></i>
+  <% end %>
+  <div class="task_tags">
+    <%= for tag <- @task.tags do %>
+    <span class="task_tag" style="background-color: <%= tag_color(tag, @board.tags) %>;"><%= tag_name(tag, @board.tags) %></span>
+    <% end %>
+  </div>
+  <%= @task.name %>
+</div>

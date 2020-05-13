@@ -1,0 +1,44 @@
+<%= if column_visible?(@column, @user_id) do %>
+  <div class="column_container <%= column_visibility_class(@column) %>" id="column_container_<%= @column.id %>" phx-hook="slide_scroll" data-slider_id="board_columns_<%= @board.id %>">
+    <div class="column_content">
+      <div class="column_header level is-marginless has-cursor-pointer" title="<%= @column.descr %>">
+        <div class="level-left" <%= if user_rights(@board, :edit_column?) do %>phx-click="edit_column" phx-value-id="<%= @column.id %>"<% end %> ><%= @column.name %></div>
+        <%= if Enum.any?([user_rights(@board, :delete_column?), user_rights(@board, :create_task?)], & &1) do %>
+        <div class="level-right">
+          <div class="dropdown is-right" onclick="$(this).toggleClass('is-active');">
+            <div class="dropdown-trigger" title="">
+              <span class="icon is-medium"><i class="fas fa-ellipsis-v"></i></span>
+            </div>
+            <div class="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <%= if user_rights(@board, :create_task?) do %>
+                  <a class="dropdown-item" style="display: flex; align-items: center;" phx-click="show_modal" phx-value-modal="create_task" phx-value-column_id="<%= @column.id %>" phx-value-top_bottom="top"><span class="icon"><i class="fas fa-plus"></i></span><span>Add card</span></a>
+                <% end %>
+                <%= if user_rights(@board, :delete_column?) do %>
+                  <a class="dropdown-item" style="display: flex; align-items: center;" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_column" phx-value-id="<%= @column.id %>"><span class="icon"><i class="fas fa-trash-alt"></i></span>Delete column</a>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+      <div class="column_tasks thin_scroll" id="column_tasks_<%= @column.id %>" <%= if user_rights(@board, :move_task?) do %>phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= @column.id %>"<% end %>>
+        <%= for task <- @column.tasks do %>
+          <%= live_component(@socket, KandeskWeb.TaskComponent, id: "task_#{task.id}", task: task, board: @board) %>
+        <% end %>
+      </div>
+      <div class="column_footer">
+        <%= if user_rights(@board, :create_task?) do %>
+        <button class="button is-primary is-light is-fullwidth" phx-click="show_modal" phx-value-modal="create_task" phx-value-column_id="<%= @column.id %>" phx-value-top_bottom="bottom">
+          <span class="icon"><i class="fas fa-plus"></i></span>
+          <span>Add card</span>
+        </button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <%# invisible column: insert blank container for column sorting to work properly %>
+  <div></div>
+<% end %>
