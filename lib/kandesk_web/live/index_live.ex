@@ -366,7 +366,7 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("update_task", %{"task" => form_data} = params, %{assigns: assigns} = socket) do
     row = with %Task{} = r <- assigns.edit_row do r else _ -> raise(@access_error) end
-    case update_task(form_data, assigns) do
+    case update_task(form_data, assigns, row) do
       {:ok, task} ->
         cid = row.column_id
         tid = row.id
@@ -380,14 +380,22 @@ defmodule KandeskWeb.IndexLive do
     end
   end
 
-  def update_task(form_data, assigns) do
-    attrs = %{
-      name: form_data["name"],
-      descr: form_data["descr"],
-      tags: form_data["tags"] || [] # when none is selected
-    }
+  def update_task(form_data, assigns, edit_row) do
+    old_tags = edit_row.tags
+    new_tags = form_data["tags"] || [] # when none is selected
 
-    assigns.edit_row
+    ## optimization: avoid updating tags when none has changed
+    attrs = if Enum.reduce(old_tags, "", & &2 <> to_string(&1.id)) ===
+               Enum.reduce(new_tags, "", & &2 <> &1["id"]),
+    do:
+      %{name: form_data["name"],
+        descr: form_data["descr"]},
+    else:
+      %{name: form_data["name"],
+        descr: form_data["descr"],
+        tags: new_tags}
+
+    edit_row
     |> Task.changeset(attrs)
     |> Repo.update
   end
