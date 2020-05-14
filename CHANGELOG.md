@@ -1,3 +1,9 @@
+## v0.13.0 - 2020-05-14
+
+  - Optimization: avoid updating tags when none has changed
+  - Use liveview components to reduce size of updates sent on the wire
+
+
 ## v0.12.1 - 2020-05-06
 
   - Better css for columns to be able to customize with a fixed number of columns adjusted to screen width
