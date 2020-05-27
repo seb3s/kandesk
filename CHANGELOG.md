@@ -1,3 +1,8 @@
+## v0.13.1 - 2020-05-27
+
+  - Upgrade phoenix_live_view to 0.13.2
+
+
 ## v0.13.0 - 2020-05-14
 
   - Optimization: avoid updating tags when none has changed
