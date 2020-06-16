@@ -16,7 +16,7 @@ let phx_hooks = {};
 phx_hooks.show_modal = {
     mounted() { MicroModal.show(this.el.id, {
         disableScroll: true,
-        onShow: () => { set_draggable(
+        onShow: () => { set_draggable(this,
             this.el.querySelector('.modal-card'),
             this.el.querySelector('.modal-card-head')); },
         onClose: () => { this.pushEvent('close_modal'); }
@@ -70,9 +70,28 @@ phx_hooks.sortable_tasks = {
 
 
 // --------------------------------------------------------------------------------------
+// debounce
+// --------------------------------------------------------------------------------------
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+        var context = this, args = arguments;
+        var later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+};
+
+
+// --------------------------------------------------------------------------------------
 // draggable modals
 // --------------------------------------------------------------------------------------
-function set_draggable(draggable, handler) {
+function set_draggable(caller, draggable, handler) {
     let x1 = 0, y1 = 0, x2 = 0, y2 = 0;
     // get viewport size to stop dragging to far
     let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -91,6 +110,8 @@ function set_draggable(draggable, handler) {
         document.onmousemove = elementDrag;
     }
 
+    let push_modal_pos_fn = debounce(function(pos) { caller.pushEvent('set_modal_pos', {pos: pos}) }, 500);
+
     function elementDrag(e) {
         e = e || window.event;
         e.preventDefault();
@@ -107,6 +128,8 @@ function set_draggable(draggable, handler) {
             draggable.style.right = "unset";
             draggable.style.bottom = "unset";
             draggable.style.position = "fixed";
+            // debounce update of liveview state to keep modal pos on subsequent liveview updates
+            push_modal_pos_fn(draggable.style.cssText);
         }
     }
 

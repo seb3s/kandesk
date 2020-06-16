@@ -26,6 +26,7 @@ defmodule KandeskWeb.IndexLive do
       user_id: user_id,
       changeset: nil,
       show_modal: nil,
+      modal_pos: "",
       boards: boards,
       board: nil,
       columns: [],
@@ -75,7 +76,7 @@ defmodule KandeskWeb.IndexLive do
   ## handle_event
   ## ------------
   def handle_event("close_modal", params, %{assigns: assigns} = socket) do
-    {:noreply, assign(socket, show_modal: nil)}
+    {:noreply, assign(socket, show_modal: nil, modal_pos: "")}
   end
 
   def handle_event("show_modal", %{"modal" => "create_board" = modal}, socket) do
@@ -93,6 +94,14 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("show_modal", %{"modal" => "admin_tags" = modal}, %{assigns: assigns} = socket) do
     {:noreply, assign(socket, show_modal: modal, changeset: Board.changeset(assigns.board, %{}))}
+  end
+
+  def handle_event("set_modal_pos", %{"pos" => pos}, %{assigns: assigns} = socket) do
+    if assigns.show_modal do
+      {:noreply, assign(socket, modal_pos: pos)}
+    else # modal has already been closed, ignore
+      {:noreply, socket}
+    end
   end
 
 
