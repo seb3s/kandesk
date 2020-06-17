@@ -17,6 +17,9 @@
                 <%= if user_rights(@board, :delete_column?) do %>
                   <a class="dropdown-item" style="display: flex; align-items: center;" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_column" phx-value-id="<%= @column.id %>"><span class="icon"><i class="fas fa-trash-alt"></i></span>Delete column</a>
                 <% end %>
+                <%= if user_rights(@board, :create_column?) do %>
+                  <a class="dropdown-item" style="display: flex; align-items: center;" data-confirm="Are you sure?" phx-click="duplicate_column" phx-value-id="<%= @column.id %>"><span class="icon"><i class="fas fa-copy"></i></span>Duplicate column</a>
+                <% end %>
               </div>
             </div>
           </div>

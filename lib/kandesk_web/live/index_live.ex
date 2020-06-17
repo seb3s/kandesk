@@ -325,6 +325,17 @@ defmodule KandeskWeb.IndexLive do
     {:noreply, assign(socket, columns: columns)}
   end
 
+  def handle_event("duplicate_column", %{"id" => id} = params, %{assigns: assigns} = socket) do
+    id = to_integer(id)
+    row = Enum.find(assigns.columns, & &1.id == id)
+    if !(row && user_rights(assigns.board, :create_column?)), do: raise(@access_error)
+    {:ok, res} = Repo.query("select sp_duplicate_column($1, $2);", [id, assigns.user_id])
+    columns = Repo.all(from(Column, where: [board_id: ^assigns.board.id], order_by: :position))
+      |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
+    broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+    {:noreply, assign(socket, columns: columns)}
+  end
+
 
   ## tasks
   ## -----
