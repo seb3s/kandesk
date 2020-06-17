@@ -1,3 +1,11 @@
+## v0.14.0 - 2020-06-17
+
+  - New feature: move a column to another board
+  - New feature: duplicate a column
+  - Add modal position to assigns to keep track of draggings
+  - Upgrade phoenix_live_view to 0.13.3
+
+
 ## v0.13.1 - 2020-05-27
 
   - Upgrade phoenix_live_view to 0.13.2
