@@ -336,6 +336,18 @@ defmodule KandeskWeb.IndexLive do
     {:noreply, assign(socket, columns: columns)}
   end
 
+  def handle_event("move_column_to_board", %{"id" => id, "board_id" => board_id} = params, %{assigns: assigns} = socket) do
+    id = to_integer(id)
+    board_id = to_integer(board_id)
+    row = Enum.find(assigns.columns, & &1.id == id)
+    row2 = Enum.find(assigns.boards, & &1.id == board_id)
+    if !(row && row2 && user_rights(assigns.board, :move_column?)), do: raise(@access_error)
+    {:ok, res} = Repo.query("select sp_move_column_to_board($1, $2);", [id, board_id])
+    columns = for c <- assigns.columns, c.id != id, do: c
+    broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+    {:noreply, assign(socket, columns: columns)}
+  end
+
 
   ## tasks
   ## -----

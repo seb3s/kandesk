@@ -5,20 +5,34 @@
         <div class="level-left" <%= if user_rights(@board, :edit_column?) do %>phx-click="edit_column" phx-value-id="<%= @column.id %>"<% end %> ><%= @column.name %></div>
         <%= if Enum.any?([user_rights(@board, :delete_column?), user_rights(@board, :create_task?)], & &1) do %>
         <div class="level-right">
-          <div class="dropdown is-right" onclick="$(this).toggleClass('is-active');">
+          <div class="nested dropdown is-right">
             <div class="dropdown-trigger" title="">
               <span class="icon is-medium"><i class="fas fa-ellipsis-v"></i></span>
             </div>
             <div class="dropdown-menu" role="menu">
               <div class="dropdown-content">
                 <%= if user_rights(@board, :create_task?) do %>
-                  <a class="dropdown-item" style="display: flex; align-items: center;" phx-click="show_modal" phx-value-modal="create_task" phx-value-column_id="<%= @column.id %>" phx-value-top_bottom="top"><span class="icon"><i class="fas fa-plus"></i></span><span>Add card</span></a>
+                  <a class="dropdown-item" phx-click="show_modal" phx-value-modal="create_task" phx-value-column_id="<%= @column.id %>" phx-value-top_bottom="top"><span class="icon"><i class="fas fa-plus"></i></span>Add card</a>
                 <% end %>
                 <%= if user_rights(@board, :delete_column?) do %>
-                  <a class="dropdown-item" style="display: flex; align-items: center;" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_column" phx-value-id="<%= @column.id %>"><span class="icon"><i class="fas fa-trash-alt"></i></span>Delete column</a>
+                  <a class="dropdown-item" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_column" phx-value-id="<%= @column.id %>"><span class="icon"><i class="fas fa-trash-alt"></i></span>Delete column</a>
                 <% end %>
                 <%= if user_rights(@board, :create_column?) do %>
-                  <a class="dropdown-item" style="display: flex; align-items: center;" data-confirm="Are you sure?" phx-click="duplicate_column" phx-value-id="<%= @column.id %>"><span class="icon"><i class="fas fa-copy"></i></span>Duplicate column</a>
+                  <a class="dropdown-item" data-confirm="Are you sure?" phx-click="duplicate_column" phx-value-id="<%= @column.id %>"><span class="icon"><i class="fas fa-copy"></i></span>Duplicate column</a>
+                <% end %>
+                <%= if user_rights(@board, :move_column?) do %>
+                  <div class="dropdown-item nested dropdown is-left">
+                    <div class="dropdown-trigger">
+                        <span class="icon"><i class="fas fa-caret-down"></i></span>Move column to board
+                    </div>
+                    <div class="dropdown-menu" role="menu">
+                      <div class="dropdown-content">
+                        <%= for board <- @boards, board.id != @board.id do %>
+                        <a class="dropdown-item" data-confirm="Are you sure?" phx-click="move_column_to_board" phx-value-id="<%= @column.id %>" phx-value-board_id="<%= board.id %>"><%= limit_string(board.name, 20) %></a>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
                 <% end %>
               </div>
             </div>
