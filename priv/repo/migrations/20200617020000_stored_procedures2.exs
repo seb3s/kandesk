@@ -3,7 +3,7 @@ defmodule Kandesk.Repo.Migrations.StoredProcedures2 do
 
   def change do
 execute ~S"""
-DROP FUNCTION public.sp_duplicate_column(bigint, bigint);
+DROP FUNCTION IF EXISTS public.sp_duplicate_column(bigint, bigint);
 """
 
 execute ~S"""

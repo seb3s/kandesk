@@ -3,7 +3,7 @@ defmodule Kandesk.Repo.Migrations.StoredProcedures3 do
 
   def change do
 execute ~S"""
-DROP FUNCTION public.sp_move_column_to_board(bigint, bigint);
+DROP FUNCTION IF EXISTS public.sp_move_column_to_board(bigint, bigint);
 """
 
 execute ~S"""
