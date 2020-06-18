@@ -60,7 +60,8 @@ $cursors: ('default' 'pointer' 'grab' 'help' 'wait' 'crosshair' 'not-allowed' 'z
 
 // dropdown & nested dropdown
 // --------------------------
-.dropdown-item {
+.dropdown-item,
+.nested.dropdown .dropdown-trigger {
   display: flex;
   align-items: center;
 }
