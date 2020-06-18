@@ -15,7 +15,7 @@
           <button class="button is-primary" phx-click="view_dashboard">
             <span class="icon"><i class="fas fa-home"></i></span>
           </button>
-          <div class="dropdown" onclick="$(this).toggleClass('is-active');">
+          <div class="is-hoverable dropdown is-iconless" id=<%= "board_dropdown_#{@board.id}" %>>
             <div class="dropdown-trigger">
               <button class="button is-primary">
                 <span><%= limit_string(@board.name, 20) %></span>
@@ -26,7 +26,7 @@
               <div class="dropdown-content">
                 <%= for board <- @boards, board.id != @board.id do %>
                 <a class="dropdown-item" phx-click="view_board" phx-value-id="<%= board.id %>">
-                  <%= board.name %>
+                  <%= limit_string(board.name, 30) %>
                 </a>
                 <% end %>
               </div>
