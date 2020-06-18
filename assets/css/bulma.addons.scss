@@ -83,13 +83,23 @@ div.dropdown-item {
     display: block;
   }
 
-  .dropdown-menu {
-    top: 2rem;
-  }
-
   &.is-left .dropdown-menu {
     left: -70%;
     right: auto;
     margin-left: 100%;
+  }
+
+  .nested.dropdown .dropdown-menu {
+    max-height: 20rem;
+    overflow-y: auto;
+    padding-top: 0;
+  }
+}
+
+.dropdown.is-iconless {
+  a.dropdown-item,
+  button.dropdown-item,
+  div.dropdown-item {
+    padding-right: 1rem;
   }
 }

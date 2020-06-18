@@ -21,14 +21,14 @@
                   <a class="dropdown-item" data-confirm="Are you sure?" phx-click="duplicate_column" phx-value-id="<%= @column.id %>"><span class="icon"><i class="fas fa-copy"></i></span>Duplicate column</a>
                 <% end %>
                 <%= if user_rights(@board, :move_column?) do %>
-                  <div class="dropdown-item nested dropdown is-left">
+                  <div class="dropdown-item nested dropdown is-left is-iconless">
                     <div class="dropdown-trigger">
                         <span class="icon"><i class="fas fa-caret-down"></i></span>Move column to board
                     </div>
-                    <div class="dropdown-menu" role="menu">
+                    <div class="dropdown-menu thin_scroll" role="menu">
                       <div class="dropdown-content">
                         <%= for board <- @boards, board.id != @board.id do %>
-                        <a class="dropdown-item" data-confirm="Are you sure?" phx-click="move_column_to_board" phx-value-id="<%= @column.id %>" phx-value-board_id="<%= board.id %>"><%= limit_string(board.name, 20) %></a>
+                        <a class="dropdown-item" data-confirm="Are you sure?" phx-click="move_column_to_board" phx-value-id="<%= @column.id %>" phx-value-board_id="<%= board.id %>"><%= limit_string(board.name, 30) %></a>
                         <% end %>
                       </div>
                     </div>
