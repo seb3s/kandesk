@@ -1,3 +1,9 @@
+## v0.14.1 - 2020-06-18
+
+  - Set boards dropdown menu to hoverable style
+  - Limit nested dropdown menus in height
+
+
 ## v0.14.0 - 2020-06-17
 
   - New feature: move a column to another board
