@@ -96,6 +96,12 @@ defmodule KandeskWeb.IndexLive do
     {:noreply, assign(socket, show_modal: modal, changeset: Board.changeset(assigns.board, %{}))}
   end
 
+  def handle_event("show_modal", %{"modal" => "share_board" = modal}, %{assigns: assigns} = socket) do
+    {:noreply, assign(socket, show_modal: modal,
+      boardusers: get_boardusers(assigns.board.id),
+      edit_row: nil, searches: [])}
+  end
+
   def handle_event("set_modal_pos", %{"pos" => pos}, %{assigns: assigns} = socket) do
     if assigns.show_modal do
       {:noreply, assign(socket, modal_pos: pos)}
@@ -229,6 +235,94 @@ defmodule KandeskWeb.IndexLive do
     assigns.board
     |> Board.changeset(%{tags: sorted_tags})
     |> Repo.update
+  end
+
+
+  ## share board
+  ## -----------
+  def get_boardusers(board_id) do
+    Repo.all(from bu in BoardUser,
+      join: u in User, on: u.id == bu.user_id,
+      where: [board_id: ^board_id],
+      order_by: [u.lastname, u.firstname])
+    |> Repo.preload(:user)
+  end
+
+  def handle_event("view_share", %{"id" => id} = params, %{assigns: assigns} = socket) do
+    id = to_integer(id)
+    row = Enum.find(assigns.boardusers, & &1.user_id == id)
+    if !row, do: raise(@access_error)
+    {:noreply, assign(socket, edit_row: row)}
+  end
+
+  def handle_event("update_share", params, %{assigns: assigns} = socket) do
+    row = with %BoardUser{} = r <- assigns.edit_row do r else _ -> raise(@access_error) end
+    form_data = params["boarduser"] || %{} # when no chekboxes are selected
+    case update_rights(form_data, assigns, row) do
+      {:ok, boarduser} ->
+        uid = row.user_id
+        bid = row.board_id
+        boardusers = for r <- assigns.boardusers, do:
+          if r.user_id == uid && r.board_id == bid, do: boarduser, else: r
+        {:noreply, assign(socket, boardusers: boardusers, edit_row: nil)}
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  def update_rights(form_data, assigns, edit_row) do
+    attrs =
+      for right <- BoardUser.rights() do
+        {right, form_data[Atom.to_string(right)]}
+      end
+      |> Map.new
+
+    edit_row
+    |> BoardUser.changeset(attrs)
+    |> Repo.update
+  end
+
+  def handle_event("delete_share", %{"id" => id} = params, %{assigns: %{boardusers: boardusers, edit_row: edit_row} = assigns} = socket)
+  do
+    id = to_integer(id)
+    row = Enum.find(boardusers, & &1.user_id == id)
+    if !row, do: raise(@access_error)
+    Repo.delete!(row)
+    boardusers = for r <- boardusers, r.user_id != id, do: r
+    edit_row = if edit_row && edit_row.user_id == id, do: nil, else: edit_row
+    {:noreply, assign(socket, boardusers: boardusers, edit_row: edit_row)}
+  end
+
+  def handle_event("search_user", %{"value" => search}, socket) when byte_size(search) == 0 do
+    {:noreply, assign(socket, searches: [])}
+  end
+
+  def handle_event("search_user", %{"value" => search}, %{assigns: assigns} = socket)
+    when byte_size(search) <= 100
+  do
+    board_id = assigns.board.id
+    users = Repo.all(from u in User,
+      where: (ilike(u.firstname, ^"#{search}%") or
+        ilike(u.lastname, ^"#{search}%") or
+        ilike(u.email, ^"#{search}%")) and
+        fragment("not exists (select 'X' from boards_users zz
+          where board_id=? and user_id=u0.id)", ^board_id),
+      order_by: [:lastname, :firstname],
+      limit: 10)
+    {:noreply, assign(socket, searches: users)}
+  end
+
+  def handle_event("add_share", %{"id" => id} = params, %{assigns: assigns} = socket)
+  do
+    id = to_integer(id)
+    board_id = assigns.board.id
+    {:ok, boarduser} = %BoardUser{}
+      |> BoardUser.changeset(%{user_id: id, board_id: board_id})
+      |> Repo.insert()
+    # we need to get preload :user
+    boardusers = get_boardusers(board_id)
+    boarduser = Enum.find(boardusers, & &1.user_id == id)
+    {:noreply, assign(socket, searches: [], boardusers: boardusers, edit_row: boarduser)}
   end
 
 

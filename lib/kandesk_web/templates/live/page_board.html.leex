@@ -44,6 +44,12 @@
             <span>Tags</span>
           </button>
           <% end %>
+          <%= if is_creator(@board, @user_id) do %>
+          <button class="button is-primary" phx-click="show_modal" phx-value-modal="share_board">
+            <span class="icon"><i class="fas fa-user-plus"></i></span>
+            <span>Share</span>
+          </button>
+          <% end %>
         </div>
       </div>
       <div class="column is-paddingless is-marginless has-text-centered">
