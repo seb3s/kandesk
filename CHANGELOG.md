@@ -1,3 +1,8 @@
+## v0.15.0 - 2020-07-03
+
+  - New modal: share a board with users, grant users access to functionalities according to defined rights
+
+
 ## v0.14.1 - 2020-06-18
 
   - Set boards dropdown menu to hoverable style
