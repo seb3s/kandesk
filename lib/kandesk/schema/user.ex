@@ -26,12 +26,6 @@ defmodule Kandesk.Schema.User do
     |> pow_extension_changeset(attrs)
   end
 
-  def name_changeset(struct, attrs) do
-    struct
-    |> cast(attrs, [:firstname, :lastname])
-    |> validate_required([:firstname, :lastname])
-  end
-
   def admin_changeset(struct, attrs) do
     struct
     |> pow_user_id_field_changeset(attrs)
