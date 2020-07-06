@@ -2,10 +2,27 @@
   <div class="header">
     <div class="columns is-marginless">
       <div class="column is-paddingless is-marginless">
-        <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_board">
-          <span class="icon"><i class="fas fa-plus"></i></span>
-          <span>Board</span>
-        </button>
+        <div class="header_menu field is-grouped">
+          <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_board">
+            <span class="icon"><i class="fas fa-plus"></i></span>
+            <span>Board</span>
+          </button>
+          <%= if @user.role == "admin" do%>
+            <div class="is-hoverable dropdown is-iconless">
+              <div class="dropdown-trigger">
+                <button class="button is-primary">
+                  <span class="icon"><i class="fas fa-cogs"></i></span>
+                  <span>Admin area</span>
+                </button>
+              </div>
+              <div class="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                  <a class="dropdown-item" phx-click="show_page" phx-value-page="admin_users">Manage users</a>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
       </div>
       <div class="column is-paddingless is-marginless has-text-centered">
         <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">

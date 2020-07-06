@@ -5,7 +5,7 @@ defmodule KandeskWeb.IndexLive do
   import Ecto.Query
   import Kandesk.Util
   import KandeskWeb.Endpoint, only: [subscribe: 1, unsubscribe: 1, broadcast_from: 4]
-  #require Logger Logger.info "params: #{inspect params}"
+  #require Logger #Logger.info "params: #{inspect params}"
 
   @boards_topic "boards"
   @access_error "Unauthorized access detected"
@@ -24,6 +24,7 @@ defmodule KandeskWeb.IndexLive do
     {:ok, assign(socket,
       page: page,
       user_id: user_id,
+      user: Repo.get(User, user_id),
       changeset: nil,
       show_modal: nil,
       modal_pos: "",
@@ -32,6 +33,7 @@ defmodule KandeskWeb.IndexLive do
       columns: [],
       column_id: nil,
       edit_row: nil,
+      edit_mode: nil,
       top_bottom: nil
     )}
   end
@@ -613,6 +615,72 @@ defmodule KandeskWeb.IndexLive do
       {:ok, user} -> handle_event("view_dashboard", nil, socket)
       {:error, %Ecto.Changeset{} = changeset} -> {:noreply, assign(socket, changeset: changeset)}
     end
+  end
+
+
+  ## admin users
+  ## -----------
+  def get_users() do
+    rows = Repo.all(from u in User, order_by: [u.lastname, u.firstname, u.email])
+  end
+
+  def handle_event("show_page", %{"page" => "admin_users" = page}, %{assigns: assigns} = socket) do
+    with "admin" <- assigns.user.role do :ok else _ -> raise(@access_error) end
+    rows = get_users()
+    {:noreply, assign(socket, page: page, rows: rows, edit_row: nil)}
+  end
+
+  def handle_event("create_user", params, %{assigns: assigns} = socket) do
+    with "admin" <- assigns.user.role do :ok else _ -> raise(@access_error) end
+    user = %User{}
+    {:noreply, assign(socket, changeset: User.changeset(user, %{}), edit_row: user, edit_mode: :create)}
+  end
+
+  def handle_event("update_user", %{"id" => id}, %{assigns: assigns} = socket) do
+    id = to_integer(id)
+    row = Enum.find(assigns.rows, & &1.id == id)
+    with "admin" <- assigns.user.role, %User{} <- row do :ok else _ -> raise(@access_error) end
+    {:noreply, assign(socket, changeset: User.changeset(row, %{}), edit_row: row, edit_mode: :update)}
+  end
+
+  def handle_event("save_user", %{"user" => form_data} = params, %{assigns: assigns} = socket) do
+    edit_row = assigns.edit_row
+    with "admin" <- assigns.user.role, %User{} <- edit_row do :ok else _ -> raise(@access_error) end
+    id = edit_row.id
+    case edit_user(form_data, assigns, edit_row) do
+      {:ok, user} ->
+        rows = get_users()
+        # we could be currently updating ourselves
+        user = if assigns.user.id == user.id, do: user, else: assigns.user
+        {:noreply, assign(socket, rows: rows, edit_row: nil, user: user)}
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
+  def handle_event("delete_user", %{"id" => id}, %{assigns: assigns} = socket) do
+    with "admin" <- assigns.user.role do :ok else _ -> raise(@access_error) end
+    id = to_integer(id)
+    Repo.delete!(%User{id: id})
+    rows = for r <- assigns.rows, r.id != id, do: r
+    # eventually clear edited user
+    edit_row = case assigns.edit_row do
+      %User{id: id} -> nil
+      row -> row
+    end
+    {:noreply, assign(socket, rows: rows, edit_row: edit_row)}
+  end
+
+  def handle_event("cancel", %{"panel" => "admin_edit_user"}, %{assigns: assigns} = socket) do
+    {:noreply, assign(socket, edit_row: nil)}
+  end
+
+  def edit_user(form_data, %{edit_mode: :create} = assigns, edit_row) do
+    edit_row |> User.admin_changeset(form_data) |> Repo.insert
+  end
+
+  def edit_user(form_data, %{edit_mode: :update} = assigns, edit_row) do
+    edit_row |> User.admin_changeset(form_data) |> Repo.update
   end
 
 end

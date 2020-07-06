@@ -14,7 +14,7 @@ defmodule Kandesk.Schema.User do
     field :lastname, :string
     field :avatar, :string
     field :language, :string
-    field :active, :boolean
+    field :active, :boolean, default: true
     field :role, :string
 
     timestamps()
@@ -31,5 +31,26 @@ defmodule Kandesk.Schema.User do
     |> cast(attrs, [:firstname, :lastname])
     |> validate_required([:firstname, :lastname])
   end
+
+  def admin_changeset(struct, attrs) do
+    struct
+    |> pow_user_id_field_changeset(attrs)
+    |> pow_password_changeset(attrs)
+    |> pow_extension_changeset(attrs)
+    |> cast(attrs, [:firstname, :lastname, :email, :language, :active, :role])
+    |> validate_required([:firstname, :lastname, :email, :language, :active, :role])
+  end
+
+  def roles(), do: ["admin", "user"]
+  def select_roles(), do: for item <- roles(), do: {role(item), item}
+  def role("admin"), do: "Administrator"
+  def role("user"), do: "User"
+  def role(_), do: ""
+
+  def languages(), do: ["fr", "en"]
+  def select_languages(), do: for item <- languages(), do: {language(item), item}
+  def language("fr"), do: "French"
+  def language("en"), do: "English"
+  def language(_), do: ""
 
 end

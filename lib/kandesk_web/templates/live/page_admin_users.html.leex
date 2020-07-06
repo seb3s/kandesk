@@ -1,0 +1,127 @@
+<div class="page_admin_users">
+  <div class="header">
+    <div class="columns is-marginless">
+      <div class="column is-paddingless is-marginless">
+        <button class="button is-primary" phx-click="view_dashboard">
+          <span class="icon"><i class="fas fa-home"></i></span>
+        </button>
+      </div>
+      <div class="column is-paddingless is-marginless has-text-centered">
+        <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
+      </div>
+      <div class="column is-paddingless is-marginless">
+        <div class="header_menu field is-grouped is-grouped-right">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column is-half">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">Users</p>
+          <a class="card-header-icon" phx-click="create_user"><i class="fas fa-user-plus"></i></a>
+        </header>
+        <div class="card-content">
+          <%= for user <- @rows do %>
+          <div class="level mb-0 px-3 py-2 <%= if user == @edit_row, do: "has-background-grey-lighter", else: "bg_hover" %>" phx-click="update_user" phx-value-id="<%= user.id %>">
+            <div class="level-left"><%= user.firstname %> <%= user.lastname %> - <%= user.email %></div>
+            <div class="level-right">
+              <i class="fas fa-trash-alt" data-confirm="Are you sure?" phx-click="delete_user" phx-value-id="<%= user.id %>"></i>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%= if !is_nil(@edit_row) do %>
+    <div class="column is-half">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            <%= case @edit_mode do
+              :update -> "Update user"
+              :create -> "Create user"
+              end %>
+          </p>
+        </header>
+        <div class="card-content">
+          <%= f = form_for @changeset, "#", phx_submit: "save_user" %>
+            <div class="field">
+              <%= label f, :firstname, class: "label" %>
+              <div class="control">
+                <%= text_input f, :firstname, class: "input" %>
+                <%= error_tag f, :firstname %>
+              </div>
+            </div>
+            <div class="field">
+              <%= label f, :lastname, class: "label" %>
+              <div class="control">
+                <%= text_input f, :lastname, class: "input" %>
+                <%= error_tag f, :lastname %>
+              </div>
+            </div>
+            <div class="field">
+              <%= label f, :email, class: "label" %>
+              <div class="control">
+                <%= text_input f, :email, class: "input" %>
+                <%= error_tag f, :email %>
+              </div>
+            </div>
+            <%= if @edit_mode == :create do %>
+              <div class="field">
+                <%= label f, :password, class: "label" %>
+                <div class="control">
+                  <%= password_input f, :password, class: "input" %>
+                  <%= error_tag f, :password %>
+                </div>
+              </div>
+              <div class="field">
+                <%= label f, :password_confirmation, class: "label" %>
+                <div class="control">
+                  <%= password_input f, :password_confirmation, class: "input" %>
+                  <%= error_tag f, :password_confirmation %>
+                </div>
+              </div>
+            <% end %>
+            <div class="field">
+              <%= label f, :language, class: "label" %>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <%= select(f, :language, Kandesk.Schema.User.select_languages(), [prompt: "Select language"]) %>
+                </div>
+                <%= error_tag f, :language %>
+              </div>
+            </div>
+            <div class="field">
+              <%= label f, :active, class: "label" %>
+              <div class="control">
+                <%= checkbox f, :active, class: "checkbox" %>
+                <%= error_tag f, :active %>
+              </div>
+            </div>
+            <div class="field">
+              <%= label f, :role, class: "label" %>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <%= select(f, :role, Kandesk.Schema.User.select_roles(), [prompt: "Select user role"]) %>
+                </div>
+                <%= error_tag f, :role %>
+              </div>
+            </div>
+            <div class="buttons is-right">
+              <button class="button" type="button" phx-click="cancel" phx-value-panel="admin_edit_user">Cancel</button>
+              <button class="button is-primary" type="submit">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+  </div>
+
+  <%= if @show_modal do render "modal_#{@show_modal}.html", assigns end %>
+</div>
