@@ -213,6 +213,8 @@ main .alert {
         color: #fff;
         outline: none;
         background-color: #53718b;
+        transform: unset;
+        margin-left: unset;
 
         &:checked::before {
           height: 1.5rem;
