@@ -22,7 +22,7 @@
         <header class="card-header">
           <p class="card-header-title">My personal data</p>
         </header>
-        <div class="card-content">
+        <div class="card-content max_h thin_scroll">
           <%= f = form_for @changeset, "#", phx_submit: "update_personal_data" %>
             <div class="field">
               <%= label f, :firstname, class: "label" %>
@@ -51,7 +51,7 @@
         <header class="card-header">
           <p class="card-header-title">Change your password</p>
         </header>
-        <div class="card-content">
+        <div class="card-content max_h thin_scroll">
           <%= f = form_for @changeset, "#", phx_submit: "update_password" %>
             <div class="field">
               <%= label f, :current_password, class: "label" %>

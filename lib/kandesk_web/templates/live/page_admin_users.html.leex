@@ -23,7 +23,7 @@
           <p class="card-header-title">Users</p>
           <a class="card-header-icon" phx-click="create_user"><i class="fas fa-user-plus"></i></a>
         </header>
-        <div class="card-content">
+        <div class="card-content max_h thin_scroll">
           <%= for user <- @rows do %>
           <div class="level mb-0 px-3 py-2 <%= if user == @edit_row, do: "has-background-grey-lighter", else: "bg_hover" %>" phx-click="update_user" phx-value-id="<%= user.id %>">
             <div class="level-left"><%= user.firstname %> <%= user.lastname %> - <%= user.email %></div>
@@ -47,7 +47,7 @@
               end %>
           </p>
         </header>
-        <div class="card-content">
+        <div class="card-content max_h thin_scroll">
           <%= f = form_for @changeset, "#", phx_submit: "save_user" %>
             <div class="field">
               <%= label f, :firstname, class: "label" %>

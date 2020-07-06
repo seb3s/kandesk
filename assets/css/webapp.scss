@@ -331,6 +331,14 @@ main .alert {
   }
 }
 
+
+// miscellaneous
+// -------------
 .bg_hover:hover {
   background-color: whitesmoke;
+}
+
+.card-content.max_h {
+    max-height: calc(100vh - 145px);
+    overflow-y: auto;
 }
