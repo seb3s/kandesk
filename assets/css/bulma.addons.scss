@@ -103,3 +103,11 @@ div.dropdown-item {
     padding-right: 1rem;
   }
 }
+
+
+// checkboxes
+// ----------
+input[type=checkbox] {
+  transform: scale(1.5);
+  margin-left: 0.25rem;
+}
