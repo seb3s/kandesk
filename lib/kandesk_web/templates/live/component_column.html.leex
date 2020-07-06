@@ -1,4 +1,4 @@
-<%= if column_visible?(@column, @user_id) do %>
+<%= if column_visible?(@column, @user) do %>
   <div class="column_container <%= column_visibility_class(@column) %>" id="column_container_<%= @column.id %>" phx-hook="slide_scroll" data-slider_id="board_columns_<%= @board.id %>">
     <div class="column_content">
       <div class="column_header level is-marginless has-cursor-pointer" title="<%= @column.descr %>">

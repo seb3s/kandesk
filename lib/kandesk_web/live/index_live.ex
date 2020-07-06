@@ -23,7 +23,6 @@ defmodule KandeskWeb.IndexLive do
 
     {:ok, assign(socket,
       page: page,
-      user_id: user_id,
       user: Repo.get(User, user_id),
       changeset: nil,
       show_modal: nil,
@@ -118,7 +117,7 @@ defmodule KandeskWeb.IndexLive do
   def handle_event("create_board", %{"board" => form_data} = params, %{assigns: assigns} = socket) do
     case create_board(form_data, assigns) do
       {:ok, board} ->
-        boards = get_user_boards(assigns.user_id)
+        boards = get_user_boards(assigns.user.id)
         broadcast_from(self(), @boards_topic, "create_board", %{board: board, boards: boards})
         {:noreply, assign(socket, show_modal: nil, boards: boards)}
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -130,7 +129,7 @@ defmodule KandeskWeb.IndexLive do
     attrs = %{
       name: form_data["name"],
       descr: form_data["descr"],
-      creator_id: assigns.user_id,
+      creator_id: assigns.user.id,
       token: Ecto.UUID.generate,
       is_active: true,
       is_public: false,
@@ -166,7 +165,7 @@ defmodule KandeskWeb.IndexLive do
     with %Board{} <- assigns.edit_row do :ok else _ -> raise(@access_error) end
     case update_board(form_data, assigns) do
       {:ok, board} ->
-        boards = get_user_boards(assigns.user_id)
+        boards = get_user_boards(assigns.user.id)
         broadcast_from(self(), @boards_topic, "update_board", %{board: board})
         {:noreply, assign(socket, show_modal: nil, boards: boards)}
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -348,7 +347,7 @@ defmodule KandeskWeb.IndexLive do
       descr: form_data["descr"],
       position: length(assigns.columns) + 1,
       visibility: form_data["visibility"],
-      creator_id: assigns.user_id,
+      creator_id: assigns.user.id,
       board_id: assigns.board.id
     }
 
@@ -425,7 +424,7 @@ defmodule KandeskWeb.IndexLive do
     id = to_integer(id)
     row = Enum.find(assigns.columns, & &1.id == id)
     if !(row && user_rights(assigns.board, :create_column?)), do: raise(@access_error)
-    {:ok, res} = Repo.query("select sp_duplicate_column($1, $2);", [id, assigns.user_id])
+    {:ok, res} = Repo.query("select sp_duplicate_column($1, $2);", [id, assigns.user.id])
     columns = Repo.all(from(Column, where: [board_id: ^assigns.board.id], order_by: :position))
       |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
     broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
@@ -475,7 +474,7 @@ defmodule KandeskWeb.IndexLive do
       tags: form_data["tags"] || [], # when none is selected
       position: length(column.tasks) + 1,
       is_active: true,
-      creator_id: assigns.user_id,
+      creator_id: assigns.user.id,
       column_id: assigns.column_id
     }
 
@@ -567,7 +566,7 @@ defmodule KandeskWeb.IndexLive do
   def handle_info(%{event: "create_board", payload: %{board: board, boards: boards}},
     %{assigns: assigns} = socket)
   do
-    if assigns.user_id == board.creator_id,
+    if assigns.user.id == board.creator_id,
       do:   {:noreply, assign(socket, boards: boards)},
       else: {:noreply, socket}
   end

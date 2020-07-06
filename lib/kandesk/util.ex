@@ -13,7 +13,7 @@ defmodule Kandesk.Util do
   end
   def user_rights(nil, _rights), do: false
 
-  def is_creator(%Kandesk.Schema.Board{} = b, user_id), do: b.creator_id == user_id
+  def is_creator(%Kandesk.Schema.Board{} = b, user), do: b.creator_id == user.id
 
   def tag_checked?(id, tags), do: Enum.any?(tags, & &1.id == id) and "checked"
   def tag_color(tag, tags), do: Enum.find(tags, & &1.id == tag.id).color
@@ -30,8 +30,8 @@ defmodule Kandesk.Util do
   def column_visibility_options(), do: ["all", "creator"]
   def column_visibility_default(), do: "all"
 
-  def column_visible?(column, user_id) do
-    column.visibility == "all" || (column.visibility == "creator" && column.creator_id == user_id)
+  def column_visible?(column, user) do
+    column.visibility == "all" || (column.visibility == "creator" && column.creator_id == user.id)
   end
 
   def column_visibility_class(column) do

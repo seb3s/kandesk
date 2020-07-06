@@ -44,7 +44,7 @@
             <span>Tags</span>
           </button>
           <% end %>
-          <%= if is_creator(@board, @user_id) do %>
+          <%= if is_creator(@board, @user) do %>
           <button class="button is-primary" phx-click="show_modal" phx-value-modal="share_board">
             <span class="icon"><i class="fas fa-user-plus"></i></span>
             <span>Share</span>
@@ -62,7 +62,7 @@
   <div class="board_content">
     <div class="board_columns thin_scroll" id="board_columns_<%= @board.id %>" <%= if user_rights(@board, :move_column?) do %>phx-hook="sortable_columns"<% end %>>
       <%= for column <- @columns do %>
-        <%= live_component(@socket, KandeskWeb.ColumnComponent, id: "column_#{column.id}", column: column, user_id: @user_id, board: @board, boards: @boards) %>
+        <%= live_component(@socket, KandeskWeb.ColumnComponent, id: "column_#{column.id}", column: column, user: @user, board: @board, boards: @boards) %>
       <% end %>
     </div>
   </div>
