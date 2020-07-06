@@ -1,3 +1,8 @@
+## v1.0.0 - 2020-07-06
+
+  - Add admin area to create-update-delete users
+
+
 ## v0.15.0 - 2020-07-03
 
   - New modal: share a board with users, grant users access to functionalities according to defined rights
