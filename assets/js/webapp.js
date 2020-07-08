@@ -212,7 +212,7 @@ document.body.addEventListener('phoenix.link.click', function (e) {
         cancelButtonText: 'Cancel'
     }).then((result) => {
         if (result.value) {
-            webapp.live_socket.root.pushHookEvent(null, event, meta);
+            webapp.live_socket.root.pushHookEvent(null, event, meta, function(){});
         }
     })
 }, false);
