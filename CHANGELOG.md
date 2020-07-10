@@ -1,3 +1,8 @@
+## v1.0.1 - 2020-07-10
+
+  - Upgrade phoenix_live_view to 0.14.1
+
+
 ## v1.0.0 - 2020-07-06
 
   - Add admin area to create-update-delete users
