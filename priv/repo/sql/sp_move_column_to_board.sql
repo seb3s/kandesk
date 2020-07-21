@@ -19,7 +19,7 @@ DECLARE
 BEGIN
     select position, board_id into v_old_position, v_old_board_id from columns where id = v_column_id;
 
-    select max(position) into v_last_pos from columns where board_id = v_board_id;
+    select coalesce(max(position), 0) into v_last_pos from columns where board_id = v_board_id;
 
     update columns
     set board_id = v_board_id, position = v_last_pos + 1
