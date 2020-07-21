@@ -1,3 +1,8 @@
+## v1.0.2 - 2020-07-21
+
+  - Fix a bug when moving a column to an empty board
+
+
 ## v1.0.1 - 2020-07-10
 
   - Upgrade phoenix_live_view to 0.14.1
