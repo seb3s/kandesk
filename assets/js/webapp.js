@@ -2,7 +2,6 @@ import $ from "cash-dom";
 import {Socket} from "phoenix";
 import LiveSocket from "phoenix_live_view";
 import MicroModal from "../vendor/micromodal";
-import Popper from "../vendor/popper";
 import Sortable from "sortablejs";
 import Swal from 'sweetalert2';
 
