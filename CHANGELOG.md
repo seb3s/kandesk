@@ -1,3 +1,10 @@
+## v1.1.0 - 2020-07-24
+
+  - Add a popover menu per task: create date, update date, delete task
+  - Add some tooltips on dashboard
+  - Upgrade phoenix_live_view to 0.14.2
+
+
 ## v1.0.2 - 2020-07-21
 
   - Fix a bug when moving a column to an empty board
