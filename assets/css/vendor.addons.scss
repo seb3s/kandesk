@@ -3,3 +3,22 @@
 html body.swal2-height-auto {
     height: 100% !important;
 }
+
+
+// tippy custom themes
+// -------------------
+.tippy-box[data-theme~='lightblue-bg'] {
+  background-color: #ebfeff;
+}
+.tippy-box[data-theme~='lightblue-bg'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: #ebfeff;
+}
+.tippy-box[data-theme~='lightblue-bg'][data-placement^='bottom'] > .tippy-arrow::before {
+  border-bottom-color: #ebfeff;
+}
+.tippy-box[data-theme~='lightblue-bg'][data-placement^='left'] > .tippy-arrow::before {
+  border-left-color: #ebfeff;
+}
+.tippy-box[data-theme~='lightblue-bg'][data-placement^='right'] > .tippy-arrow::before {
+  border-right-color: #ebfeff;
+}

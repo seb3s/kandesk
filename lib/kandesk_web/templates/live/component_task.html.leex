@@ -1,4 +1,7 @@
-<div class="column_task" phx-value-id="<%= @task.id %>" <%= if user_rights(@board, :edit_task?) do %>phx-click="edit_task"<% end %> title="<%= @task.descr %>">
+<div class="column_task" phx-value-id="<%= @task.id %>"
+  <%= if user_rights(@board, :edit_task?) do %>phx-click="edit_task"<% end %>
+  <%= if @task.descr do %>id="<%= temp_id() %>" phx-hook="tippy" data-tippy-allowhtml="true" data-tippy-placement="right-start" data-tippy-theme="light-border lightblue-bg" data-tippy-content="<%= text_to_html(@task.descr) %>"<% end %>
+>
   <div class="task_action" id="<%= temp_id() %>" phx-hook="tippy_template" data-template="tpl_task_<%= @task.id %>">
     <span class="icon"><i class="fas fa-ellipsis-v"></i></span>
   </div>
