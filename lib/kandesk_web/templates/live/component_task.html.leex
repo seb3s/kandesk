@@ -1,7 +1,17 @@
 <div class="column_task" phx-value-id="<%= @task.id %>" <%= if user_rights(@board, :edit_task?) do %>phx-click="edit_task"<% end %> title="<%= @task.descr %>">
-  <%= if user_rights(@board, :delete_task?) do %>
-    <i class="task_action fas fa-trash-alt" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_task" phx-value-id="<%= @task.id %>"></i>
-  <% end %>
+  <div class="task_action" id="<%= temp_id() %>" phx-hook="tippy_template" data-template="tpl_task_<%= @task.id %>">
+    <span class="icon"><i class="fas fa-ellipsis-v"></i></span>
+  </div>
+  <div id="tpl_task_<%= @task.id %>" onclick="webapp.close_tippy(this);">
+    <div style="padding: 5px;">
+      Created at: <%= @task.inserted_at %><br>
+      Updated at: <%= @task.updated_at %>
+    </div>
+    <%= if user_rights(@board, :delete_task?) do %>
+      <hr class="dropdown-divider">
+      <a class="dropdown-item" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_task" phx-value-id="<%= @task.id %>"><span class="icon"><i class="fas fa-trash-alt"></i></span>Delete card</a>
+    <% end %>
+  </div>
   <div class="task_tags">
     <%= for tag <- @task.tags do %>
     <span class="task_tag" style="background-color: <%= tag_color(tag, @board.tags) %>;"><%= tag_name(tag, @board.tags) %></span>
