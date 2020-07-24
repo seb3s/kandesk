@@ -69,32 +69,38 @@ phx_hooks.sortable_tasks = {
 };
 
 phx_hooks.tippy = {
-    mounted() { create_tippy(this.el) },
-    updated() { create_tippy(this.el) }
-}
-
-function create_tippy(item) {
-    if (item.getAttribute("data-tippy-content"))
-        tippy(item)
-    else
-        tippy(item.querySelectorAll("[data-tippy-content]"))
+    mounted() {
+        let options = {delay: [300, 0]}
+        if (this.el.getAttribute("data-tippy-content")) {
+            tippy(this.el, options)
+        } else {
+            tippy(this.el.querySelectorAll("[data-tippy-content]"), options)
+        }
+    },
+    updated() {
+        // only update content for tippy that have hook & content on the same tag
+        let content = this.el.getAttribute("data-tippy-content")
+        if (content) {
+            this.el._tippy.setContent(content)
+        }
+    }
 }
 
 phx_hooks.tippy_template = {
-    mounted() { create_tippy_template(this.el) },
-    updated() { create_tippy_template(this.el) }
-}
-
-function create_tippy_template(item) {
-    tippy(item, {
-        content: document.getElementById(item.getAttribute('data-template')),
-        allowHTML:true,
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'light-border',
-        placement: 'bottom-end',
-        popperOptions: { strategy: 'fixed', },
-    })
+    mounted() {
+        tippy(this.el, {
+            content: document.getElementById(this.el.getAttribute('data-template')),
+            allowHTML:true,
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-end',
+            popperOptions: { strategy: 'fixed', },
+        })
+    },
+    updated() { this.el._tippy.setContent(
+        document.getElementById(this.el.getAttribute('data-template')))
+    }
 }
 
 webapp.close_tippy = function(item) {
