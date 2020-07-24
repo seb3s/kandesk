@@ -4,6 +4,7 @@ import LiveSocket from "phoenix_live_view";
 import MicroModal from "../vendor/micromodal";
 import Sortable from "sortablejs";
 import Swal from 'sweetalert2';
+import tippy from 'tippy.js';
 
 let webapp = (function (webapp) {
 
@@ -66,6 +67,40 @@ phx_hooks.sortable_tasks = {
         }})
     }
 };
+
+phx_hooks.tippy = {
+    mounted() { create_tippy(this.el) },
+    updated() { create_tippy(this.el) }
+}
+
+function create_tippy(item) {
+    if (item.getAttribute("data-tippy-content"))
+        tippy(item)
+    else
+        tippy(item.querySelectorAll("[data-tippy-content]"))
+}
+
+phx_hooks.tippy_template = {
+    mounted() { create_tippy_template(this.el) },
+    updated() { create_tippy_template(this.el) }
+}
+
+function create_tippy_template(item) {
+    tippy(item, {
+        content: document.getElementById(item.getAttribute('data-template')),
+        allowHTML:true,
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-end',
+        popperOptions: { strategy: 'fixed', },
+    })
+}
+
+webapp.close_tippy = function(item) {
+    let tippyInstance = document.querySelector('[data-template="'+item.id+'"]')._tippy
+    tippyInstance.hide()
+}
 
 
 // --------------------------------------------------------------------------------------
