@@ -1,3 +1,9 @@
+## v1.1.1 - 2020-07-24
+
+  - Convert title native tooltips to nice tippies with custom theme
+  - Fix tippy mutiple creations when updating
+
+
 ## v1.1.0 - 2020-07-24
 
   - Add a popover menu per task: create date, update date, delete task
