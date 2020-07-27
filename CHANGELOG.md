@@ -1,3 +1,8 @@
+## v1.1.2 - 2020-07-26
+
+  - Make tippy descr interactive. prevent dragging from tippies. try to limit tippies being in dragging image as far as possible
+
+
 ## v1.1.1 - 2020-07-24
 
   - Convert title native tooltips to nice tippies with custom theme
