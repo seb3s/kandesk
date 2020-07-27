@@ -50,6 +50,7 @@ phx_hooks.sortable_columns = {
 phx_hooks.sortable_tasks = {
     mounted() { Sortable.create(this.el, {
         group: this.el.getAttribute("data-sortable_group"),
+        delay: 1, // let tippy time to get closed before dragging
         onEnd: (Evt) => {
             let task_id = parseInt(Evt.item.getAttribute('phx-value-id')),
                 old_col = parseInt(Evt.from.dataset['column_id']),
@@ -96,6 +97,7 @@ phx_hooks.tippy_template = {
             theme: 'light-border',
             placement: 'bottom-end',
             popperOptions: { strategy: 'fixed', },
+            duration: [300, 1], // 1 to avoid getting popover in dragging image but get phx-click triggered
         })
     },
     updated() { this.el._tippy.setContent(
