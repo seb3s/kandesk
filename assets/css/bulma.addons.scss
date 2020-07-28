@@ -88,12 +88,6 @@ div.dropdown-item {
     right: auto;
     margin-left: 100%;
   }
-
-  .nested.dropdown .dropdown-menu {
-    max-height: 15rem;
-    overflow-y: auto;
-    padding-top: 0;
-  }
 }
 
 .dropdown.is-iconless {
@@ -101,6 +95,18 @@ div.dropdown-item {
   button.dropdown-item,
   div.dropdown-item {
     padding-right: 1rem;
+  }
+}
+
+.dropdown-content{
+  // unit as tailwind 1 == 1/4 rem
+  &.max-h-60 {
+    max-height: 15rem;
+    overflow-y: auto;
+  }
+  &.max-h-120 {
+    max-height: 30rem;
+    overflow-y: auto;
   }
 }
 
