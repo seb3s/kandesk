@@ -21,7 +21,7 @@
           </div>
         </div>
         <%= if user_rights(@board, :assoc_tags?) do %>
-        <label class="label">Task tags</label>
+        <label class="label">Card tags</label>
         <div class="task_tags">
           <%= for {tag, index} <- Enum.with_index(@board.tags) do %>
           <label class="field_tag">
