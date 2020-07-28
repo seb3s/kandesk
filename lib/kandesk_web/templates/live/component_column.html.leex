@@ -12,7 +12,7 @@
         >
           <%= @column.name %>
         </div>
-        <%= if Enum.any?([user_rights(@board, :delete_column?), user_rights(@board, :create_task?)], & &1) do %>
+        <%= if user_rights(@board, :create_task?) || user_rights(@board, :create_column?) || user_rights(@board, :delete_column?) || user_rights(@board, :move_column?) do %>
         <div class="level-right">
           <div class="nested dropdown is-right">
             <div class="dropdown-trigger" title="">
