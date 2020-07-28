@@ -1,6 +1,12 @@
+## v1.2.0 - 2020-07-28
+
+  - Set a max height for boards menu with a thin scrollbar
+  - Add a switchable small version for tags
+
+
 ## v1.1.2 - 2020-07-26
 
-  - Make tippy descr interactive. prevent dragging from tippies. try to limit tippies being in dragging image as far as possible
+  - Make tippy descr interactive, prevent dragging from tippies, try to limit tippies being in dragging image as far as possible
 
 
 ## v1.1.1 - 2020-07-24
@@ -11,6 +17,7 @@
 
 ## v1.1.0 - 2020-07-24
 
+  - Add tippy.js library
   - Add a popover menu per task: create date, update date, delete task
   - Add some tooltips on dashboard
   - Upgrade phoenix_live_view to 0.14.2
