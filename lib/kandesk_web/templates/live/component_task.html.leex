@@ -19,7 +19,7 @@
       <a class="dropdown-item" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_task" phx-value-id="<%= @task.id %>"><span class="icon"><i class="fas fa-trash-alt"></i></span>Delete card</a>
     <% end %>
   </div>
-  <div class="task_tags">
+  <div class="task_tags" phx-click="toggle_tags_size">
     <%= for tag <- @task.tags do %>
     <span class="task_tag" style="background-color: <%= tag_color(tag, @board.tags) %>;"><%= tag_name(tag, @board.tags) %></span>
     <% end %>

@@ -59,7 +59,7 @@
     </div>
   </div>
 
-  <div class="board_content">
+  <div class="board_content <%= @settings.tags_size %>">
     <div class="board_columns thin_scroll" id="board_columns_<%= @board.id %>" <%= if user_rights(@board, :move_column?) do %>phx-hook="sortable_columns"<% end %>>
       <%= for column <- @columns do %>
         <%= live_component(@socket, KandeskWeb.ColumnComponent, id: "column_#{column.id}", column: column, user: @user, board: @board, boards: @boards) %>

@@ -172,6 +172,17 @@ main .alert {
     }
   }
 
+  .board_content.small_tags .task_tags {
+    .task_tag {
+      min-width: 40px;
+      max-width: 40px;
+      height: 8px;
+      line-height: 8px;
+      color: transparent;
+      border-radius: 5px;
+    }
+  }
+
   .modal .task_tags {
     border: 1px solid;
     border-color: #dbdbdb;

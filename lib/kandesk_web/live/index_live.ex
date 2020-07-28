@@ -33,7 +33,8 @@ defmodule KandeskWeb.IndexLive do
       column_id: nil,
       edit_row: nil,
       edit_mode: nil,
-      top_bottom: nil
+      top_bottom: nil,
+      settings: %{tags_size: :large_tags}
     )}
   end
 
@@ -236,6 +237,14 @@ defmodule KandeskWeb.IndexLive do
     assigns.board
     |> Board.changeset(%{tags: sorted_tags})
     |> Repo.update
+  end
+
+  def handle_event("toggle_tags_size", _params, %{assigns: assigns} = socket) do
+    settings = case assigns.settings do
+      %{tags_size: :large_tags} = settings -> %{settings | tags_size:  :small_tags}
+      %{tags_size: :small_tags} = settings -> %{settings | tags_size:  :large_tags}
+    end
+    {:noreply, assign(socket, settings: settings)}
   end
 
 
