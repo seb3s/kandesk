@@ -1,3 +1,9 @@
+## v1.2.1 - 2020-07-28
+
+  - Move toggle tags size to a new tag menu to avoid loosing that edit-task is widely accessible
+  - Upgrade phoenix_live_view to 0.14.3
+
+
 ## v1.2.0 - 2020-07-28
 
   - Set a max height for boards menu with a thin scrollbar
