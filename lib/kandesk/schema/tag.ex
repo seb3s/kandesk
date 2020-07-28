@@ -6,7 +6,7 @@ defmodule Kandesk.Schema.Tag do
 
   embedded_schema do
     field :id, :integer
-    field :color,  :string
+    field :color, :string
     field :name, :string
   end
 

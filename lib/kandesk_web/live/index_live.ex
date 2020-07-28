@@ -247,6 +247,15 @@ defmodule KandeskWeb.IndexLive do
     {:noreply, assign(socket, settings: settings)}
   end
 
+  def handle_event("add_tag", _params, %{assigns: assigns} = socket) do
+    if !user_rights(assigns.board, :admin_tags?), do: raise(@access_error)
+    tags = Map.get(assigns.changeset.changes, :tags, assigns.board.tags)
+    new_tags = tags ++ [%{id: length(tags), color: "#666666"}]
+    changeset = assigns.changeset
+      |> Ecto.Changeset.put_embed(:tags, new_tags)
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
 
   ## share board
   ## -----------
