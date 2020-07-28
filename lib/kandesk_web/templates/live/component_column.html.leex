@@ -1,8 +1,17 @@
 <%= if column_visible?(@column, @user) do %>
   <div class="column_container <%= column_visibility_class(@column) %>" id="column_container_<%= @column.id %>" phx-hook="slide_scroll" data-slider_id="board_columns_<%= @board.id %>">
     <div class="column_content">
-      <div class="column_header level is-marginless has-cursor-pointer" title="<%= @column.descr %>">
-        <div class="level-left" <%= if user_rights(@board, :edit_column?) do %>phx-click="edit_column" phx-value-id="<%= @column.id %>"<% end %> ><%= @column.name %></div>
+      <div class="column_header level is-marginless has-cursor-pointer">
+        <div class="level-left"
+          <%= if user_rights(@board, :edit_column?) do %>
+            phx-click="edit_column" phx-value-id="<%= @column.id %>"
+          <% end %>
+          <%= if @column.descr do %>
+            id="<%= temp_id() %>" phx-hook="tippy" data-tippy-placement="bottom-start" data-tippy-allowhtml="true" data-tippy-theme="light-border lightblue-bg" data-tippy-offset="[0, 4]" data-tippy-maxwidth="282" data-tippy-content="<%= text_to_html(@column.descr) %>"
+          <% end %>
+        >
+          <%= @column.name %>
+        </div>
         <%= if Enum.any?([user_rights(@board, :delete_column?), user_rights(@board, :create_task?)], & &1) do %>
         <div class="level-right">
           <div class="nested dropdown is-right">
