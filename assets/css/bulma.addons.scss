@@ -66,6 +66,14 @@ $cursors: ('default' 'pointer' 'grab' 'help' 'wait' 'crosshair' 'not-allowed' 'z
   align-items: center;
 }
 
+.dropdown-item {
+  font-weight: 700;
+
+  .icon {
+    margin-right: 0.25rem;
+  }
+}
+
 div.dropdown-item {
   padding-right: 3rem;
   text-align: left;

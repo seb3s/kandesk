@@ -38,12 +38,22 @@
             <span>Column</span>
           </button>
           <% end %>
-          <%= if user_rights(@board, :admin_tags?) do %>
-          <button class="button is-primary" phx-click="show_modal" phx-value-modal="admin_tags">
-            <span class="icon"><i class="fas fa-tags"></i></span>
-            <span>Tags</span>
-          </button>
-          <% end %>
+          <div class="is-hoverable dropdown">
+            <div class="dropdown-trigger">
+              <button class="button is-primary">
+                <span class="icon"><i class="fas fa-tags"></i></span>
+                <span>Tags</span>
+              </button>
+            </div>
+            <div class="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <a class="dropdown-item" phx-click="toggle_tags_size"><span class="icon"><i class="fas fa-arrows-alt"></i></span>Toggle size</a>
+                <%= if user_rights(@board, :admin_tags?) do %>
+                  <a class="dropdown-item" phx-click="show_modal" phx-value-modal="admin_tags"><span class="icon"><i class="fas fa-cogs"></i></span>Manage tags</a>
+                <% end %>
+              </div>
+            </div>
+          </div>
           <%= if is_creator(@board, @user) do %>
           <button class="button is-primary" phx-click="show_modal" phx-value-modal="share_board">
             <span class="icon"><i class="fas fa-user-plus"></i></span>
