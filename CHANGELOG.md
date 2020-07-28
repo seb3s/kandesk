@@ -1,3 +1,10 @@
+## v1.3.0 - 2020-07-29
+
+  - Ability to add a tag to the tags list
+  - Convert column description to tippy
+  - Fix column menu access rights
+
+
 ## v1.2.1 - 2020-07-28
 
   - Move toggle tags size to a new tag menu to avoid loosing that edit-task is widely accessible
