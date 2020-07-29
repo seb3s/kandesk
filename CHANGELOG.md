@@ -1,3 +1,9 @@
+## v1.3.1 - 2020-07-29
+
+  - Add thin_scroll to all modal-card-body sections
+  - Adjust some modal css to have better & same behaviour under chrome & firefox
+
+
 ## v1.3.0 - 2020-07-29
 
   - Ability to add a tag to the tags list
