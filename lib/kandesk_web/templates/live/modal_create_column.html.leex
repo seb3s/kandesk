@@ -4,7 +4,7 @@
     <header class="modal-card-head has-cursor-grab">
       <h2 class="modal-card-title">Create a column</h2>
     </header>
-    <section class="modal-card-body">
+    <section class="modal-card-body thin_scroll">
       <%= f = form_for @changeset, "#", id: "form_modal", phx_submit: "create_column" %>
         <div class="field">
           <%= label f, :name, class: "label" %>
