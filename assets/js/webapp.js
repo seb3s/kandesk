@@ -110,6 +110,10 @@ webapp.close_tippy = function(item) {
     tippyInstance.hide()
 }
 
+phx_hooks.scroll_on_update = {
+    updated() { this.el.scrollIntoView() }
+}
+
 
 // --------------------------------------------------------------------------------------
 // debounce

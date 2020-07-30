@@ -34,6 +34,7 @@ defmodule KandeskWeb.IndexLive do
       edit_row: nil,
       edit_mode: nil,
       top_bottom: nil,
+      scroll_count: 0,
       settings: %{tags_size: :large_tags}
     )}
   end
@@ -253,7 +254,7 @@ defmodule KandeskWeb.IndexLive do
     new_tags = tags ++ [%{id: length(tags), color: "#666666"}]
     changeset = assigns.changeset
       |> Ecto.Changeset.put_embed(:tags, new_tags)
-    {:noreply, assign(socket, changeset: changeset)}
+    {:noreply, assign(socket, changeset: changeset, scroll_count: assigns.scroll_count + 1)}
   end
 
 

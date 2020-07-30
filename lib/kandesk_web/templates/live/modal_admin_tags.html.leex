@@ -14,6 +14,7 @@
         </div>
       <% end %>
       </form>
+      <div id="<%= temp_id() %>" phx-hook="scroll_on_update" data-scroll-count="<%= @scroll_count %>"></div>
     </section>
     <footer class="modal-card-foot level">
       <div class="level-left" style="flex-grow: 1;">
