@@ -1,3 +1,9 @@
+## v1.3.2 - 2020-07-30
+
+  - Admin tags: fix ids being wrongly generated when inserting multiple tags at once before validating
+  - Admin tags: scroll to newly added input on add tag
+
+
 ## v1.3.1 - 2020-07-29
 
   - Add thin_scroll to all modal-card-body sections
