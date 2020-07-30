@@ -250,10 +250,16 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("add_tag", _params, %{assigns: assigns} = socket) do
     if !user_rights(assigns.board, :admin_tags?), do: raise(@access_error)
-    tags = Ecto.Changeset.get_change(assigns.changeset, :tags, assigns.board.tags)
-    new_tags = tags ++ [%{id: length(tags), color: "#666666"}]
     changeset = assigns.changeset
-      |> Ecto.Changeset.put_embed(:tags, new_tags)
+    {id, tags} = case Ecto.Changeset.get_change(changeset, :tags) do
+      nil ->
+        tags = assigns.board.tags
+        {length(tags), tags}
+      changeset ->
+        inserts = for c <- changeset, c.action === :insert, do: c
+        {length(inserts), changeset}
+    end
+    changeset = Ecto.Changeset.put_change(changeset, :tags, tags ++ [%{id: id, color: "#666666"}])
     {:noreply, assign(socket, changeset: changeset, scroll_count: assigns.scroll_count + 1)}
   end
 
