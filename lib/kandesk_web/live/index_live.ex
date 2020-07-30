@@ -249,7 +249,7 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("add_tag", _params, %{assigns: assigns} = socket) do
     if !user_rights(assigns.board, :admin_tags?), do: raise(@access_error)
-    tags = Map.get(assigns.changeset.changes, :tags, assigns.board.tags)
+    tags = Ecto.Changeset.get_change(assigns.changeset, :tags, assigns.board.tags)
     new_tags = tags ++ [%{id: length(tags), color: "#666666"}]
     changeset = assigns.changeset
       |> Ecto.Changeset.put_embed(:tags, new_tags)
