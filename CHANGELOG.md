@@ -1,3 +1,8 @@
+## v1.x.x - 2020-
+
+  - Upgrade phoenix_live_view to 0.14.4
+
+
 ## v1.3.2 - 2020-07-30
 
   - Admin tags: fix ids being wrongly generated when inserting multiple tags at once before validating
