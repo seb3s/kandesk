@@ -34,12 +34,10 @@ phx_hooks.sortable_columns = {
         group: this.el.getAttribute("data-sortable_group"),
         handle: '.column_header',
         onEnd: (Evt) => {
-            let board_id = parseInt(this.el.closest('[data-board_id]').dataset['board_id']),
-                old_pos = Evt.oldIndex + 1,
+            let old_pos = Evt.oldIndex + 1,
                 new_pos = Evt.newIndex + 1;
             if (old_pos != new_pos) {
                 this.pushEvent('move_column', {
-                    board_id: board_id,
                     old_pos: old_pos,
                     new_pos: new_pos});
             }

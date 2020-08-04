@@ -1,4 +1,4 @@
-<div class="page_board" data-board_id="<%= @board.id %>">
+<div class="page_board">
   <%= if @board.descr && String.contains?(@board.descr, "##custom_styles##") do %>
     <style type="text/css">
       <%= case String.split(@board.descr, "##custom_styles##", trim: true) do

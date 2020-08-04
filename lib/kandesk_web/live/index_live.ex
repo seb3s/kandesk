@@ -414,11 +414,10 @@ defmodule KandeskWeb.IndexLive do
     |> Repo.update
   end
 
-  def handle_event("move_column", %{"board_id" => board_id, "old_pos" => old_pos, "new_pos" => new_pos} = params, %{assigns: assigns} = socket)
+  def handle_event("move_column", %{"old_pos" => old_pos, "new_pos" => new_pos} = params, %{assigns: assigns} = socket)
   do
-    row = Enum.find(assigns.boards, & &1.id == board_id)
-    if !(row && user_rights(assigns.board, :move_column?)), do: raise(@access_error)
-    {:ok, res} = Repo.query("select sp_move_column($1, $2, $3);", [board_id, old_pos, new_pos])
+    if !user_rights(assigns.board, :move_column?), do: raise(@access_error)
+    {:ok, res} = Repo.query("select sp_move_column($1, $2, $3);", [assigns.board.id, old_pos, new_pos])
     columns =
     if new_pos > old_pos do
       {l1, lres} = Enum.split(assigns.columns, old_pos - 1)
