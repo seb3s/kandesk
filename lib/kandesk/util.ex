@@ -16,8 +16,6 @@ defmodule Kandesk.Util do
   def is_creator(%Kandesk.Schema.Board{} = b, user), do: b.creator_id == user.id
 
   def tag_checked?(id, tags), do: Enum.any?(tags, & &1.id == id) and "checked"
-  def tag_color(tag, tags), do: Enum.find(tags, & &1.id == tag.id).color
-  def tag_name(tag, tags), do: Enum.find(tags, & &1.id == tag.id).name
 
   def limit_string(nil, _size), do: :nil
   def limit_string(string, size) when size > 1 do
