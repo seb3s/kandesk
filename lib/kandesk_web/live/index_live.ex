@@ -96,7 +96,8 @@ defmodule KandeskWeb.IndexLive do
   end
 
   def handle_event("show_modal", %{"modal" => "admin_tags" = modal}, %{assigns: assigns} = socket) do
-    {:noreply, assign(socket, show_modal: modal, changeset: Board.changeset(assigns.board, %{}))}
+    {:noreply, assign(socket, show_modal: modal, changeset: Board.changeset(assigns.board, %{}),
+      tags_order: assigns.board.tags)}
   end
 
   def handle_event("show_modal", %{"modal" => "share_board" = modal}, %{assigns: assigns} = socket) do
@@ -261,6 +262,26 @@ defmodule KandeskWeb.IndexLive do
     end
     changeset = Ecto.Changeset.put_change(changeset, :tags, tags ++ [%{id: id, color: "#666666"}])
     {:noreply, assign(socket, changeset: changeset, scroll_count: assigns.scroll_count + 1)}
+  end
+
+ def handle_event("move_tag", %{"old_pos" => old_pos, "new_pos" => new_pos} = params, %{assigns: assigns} = socket)
+  do
+    if !user_rights(assigns.board, :admin_tags?), do: raise(@access_error)
+    old_pos = old_pos - 2 # due to form hidden fields
+    new_pos = new_pos - 2
+    tags = if new_pos > old_pos do
+      {l1, lres} = Enum.split(assigns.tags_order, old_pos - 1)
+      {moved_tag, lres} = List.pop_at(lres, 0)
+      {l2, l3} = Enum.split(lres, new_pos - old_pos)
+      l1 ++ l2 ++ [moved_tag] ++ l3
+    else
+      {l1, lres} = Enum.split(assigns.tags_order, new_pos - 1)
+      {l2, lres} = Enum.split(lres, old_pos - new_pos)
+      {moved_tag, l3} = List.pop_at(lres, 0)
+      l1 ++ [moved_tag] ++ l2  ++ l3
+    end
+    changeset = Ecto.Changeset.put_change(assigns.changeset, :tags, tags)
+    {:noreply, assign(socket, changeset: changeset, tags_order: tags)}
   end
 
 

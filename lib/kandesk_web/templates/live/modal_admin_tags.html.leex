@@ -5,10 +5,11 @@
       <h2 class="modal-card-title">Manage tags</h2>
     </header>
     <section class="modal-card-body thin_scroll">
-      <%= f = form_for @changeset, "#", id: "form_modal", phx_submit: "set_board_tags" %>
+      <%= f = form_for @changeset, "#", id: "form_modal", phx_submit: "set_board_tags", phx_hook: "sortable_tags" %>
         <%= inputs_for f, :tags, fn fp -> %>
         <div class="field is-horizontal">
           <%= text_input fp, :id, type: "hidden" %>
+          <div class="tag_handle"></div>
           <%= color_input fp, :color, class: "input_color", tabindex: "-1" %>
           <%= text_input fp, :name, class: "input input_tag", placeholder: "Tag name" %>
         </div>

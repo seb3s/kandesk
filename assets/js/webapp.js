@@ -67,6 +67,22 @@ phx_hooks.sortable_tasks = {
     }
 };
 
+phx_hooks.sortable_tags = {
+    mounted() { Sortable.create(this.el, {
+        group: this.el.getAttribute("data-sortable_group"),
+        handle: '.tag_handle',
+        onEnd: (Evt) => {
+            let old_pos = Evt.oldIndex + 1,
+                new_pos = Evt.newIndex + 1;
+            if (old_pos != new_pos) {
+                this.pushEvent('move_tag', {
+                    old_pos: old_pos,
+                    new_pos: new_pos});
+            }
+        }})
+    }
+};
+
 phx_hooks.tippy = {
     mounted() {
         let options = {delay: [300, 0]}

@@ -20,8 +20,8 @@
     <% end %>
   </div>
   <div class="task_tags">
-    <%= for tag <- @task.tags do %>
-    <span class="task_tag" style="background-color: <%= tag_color(tag, @board.tags) %>;"><%= tag_name(tag, @board.tags) %></span>
+    <%= for tag <- Enum.filter(@board.tags, fn tag -> Enum.find(@task.tags, & &1.id == tag.id) end) do %>
+    <span class="task_tag" style="background-color: <%= tag.color %>;"><%= tag.name %></span>
     <% end %>
   </div>
   <%= @task.name %>

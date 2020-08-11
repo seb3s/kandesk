@@ -239,6 +239,14 @@ main .alert {
       }
     }
   }
+
+  .tag_handle {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+    background-repeat: no-repeat;
+    background-position: top 1px left;
+    width: 15px;
+    cursor: pointer;
+  }
 }
 
 .column_container {
