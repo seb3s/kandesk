@@ -1,5 +1,6 @@
-## v1.x.x - 2020-
+## v1.4.0 - 2020-08-12
 
+  - Add tags sorting
   - Upgrade phoenix_live_view to 0.14.4
 
 
