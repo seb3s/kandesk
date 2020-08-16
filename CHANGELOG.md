@@ -1,3 +1,8 @@
+## v1.5.0 - 2020-08-
+
+  - Add ability to copy a column content to the clipboard
+
+
 ## v1.4.0 - 2020-08-12
 
   - Add tags sorting
