@@ -90,6 +90,10 @@ defmodule KandeskWeb.IndexLive do
     {:noreply, assign(socket, show_modal: modal, changeset: Column.changeset(%Column{}, %{}))}
   end
 
+  def handle_event("show_modal", %{"modal" => "column_content" = modal, "id" => id}, socket) do
+    {:noreply, assign(socket, show_modal: modal, column_id: to_integer(id))}
+  end
+
   def handle_event("show_modal", %{"modal" => "create_task" = modal, "column_id" => column_id, "top_bottom" => top_bottom}, socket) do
     {:noreply, assign(socket, show_modal: modal, changeset: Task.changeset(%Task{}, %{}),
       column_id: to_integer(column_id), top_bottom: top_bottom)}

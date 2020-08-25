@@ -1,0 +1,21 @@
+<div class="modal is-open" id="kmodal" phx-hook="show_modal">
+  <div class="modal-background" data-micromodal-close></div>
+  <div class="modal-card" style="<%= @modal_pos %>">
+    <header class="modal-card-head has-cursor-grab">
+      <h2 class="modal-card-title">Get column content</h2>
+    </header>
+    <section class="modal-card-body thin_scroll">
+<textarea class="textarea" style="min-height: 20em;">
+<%= for task <- (Enum.find(@columns, & &1.id == @column_id)).tasks do %>
+<task>
+  <name><%= task.name %></name><%= if task.descr do %>
+  <descr><%= task.descr %></descr><% end %>
+</task>
+<% end %>
+</textarea>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-primary" data-micromodal-close>Close</button>
+    </footer>
+  </div>
+</div>

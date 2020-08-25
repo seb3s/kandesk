@@ -29,6 +29,7 @@
                 <%= if user_rights(@board, :create_column?) do %>
                   <a class="dropdown-item" data-confirm="Are you sure?" phx-click="duplicate_column" phx-value-id="<%= @column.id %>"><span class="icon"><i class="fas fa-copy"></i></span>Duplicate column</a>
                 <% end %>
+                <a class="dropdown-item" phx-click="show_modal" phx-value-modal="column_content" phx-value-id="<%= @column.id %>"><span class="icon"><i class="fas fa-file-export"></i></span>Get column content</a>
                 <%= if user_rights(@board, :move_column?) do %>
                   <div class="dropdown-item nested dropdown is-left is-iconless">
                     <div class="dropdown-trigger">
