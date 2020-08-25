@@ -1,6 +1,7 @@
-## v1.5.0 - 2020-08-
+## v1.5.0 - 2020-08-25
 
-  - Add ability to copy a column content to the clipboard
+  - Show the task text when prompting for deletion
+  - Add ability to get the content of a column
 
 
 ## v1.4.0 - 2020-08-12
