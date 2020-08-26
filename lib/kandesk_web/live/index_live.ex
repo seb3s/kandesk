@@ -110,8 +110,10 @@ defmodule KandeskWeb.IndexLive do
     {:noreply, assign(socket, show_modal: "export_content", column_id: nil)}
   end
 
-  def handle_event("show_modal", %{"modal" => "column_content" = modal, "id" => id}, socket) do
-    {:noreply, assign(socket, show_modal: "export_content", column_id: to_integer(id))}
+  def handle_event("show_modal", %{"modal" => "column_content" = modal, "id" => id}, %{assigns: assigns} = socket) do
+    id = to_integer(id)
+    if !Enum.find(assigns.columns, & &1.id == id), do: raise(@access_error)
+    {:noreply, assign(socket, show_modal: "export_content", column_id: id)}
   end
 
   def handle_event("set_modal_pos", %{"pos" => pos}, %{assigns: assigns} = socket) do
