@@ -1,3 +1,8 @@
+## v1.6.1 - 2020-08-26
+
+  - Improve export column content security
+
+
 ## v1.6.0 - 2020-08-26
 
   - Add board content export
