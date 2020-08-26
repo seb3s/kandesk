@@ -24,6 +24,8 @@
             </div>
             <div class="dropdown-menu" role="menu">
               <div class="dropdown-content thin_scroll max-h-120">
+                <a class="dropdown-item" phx-click="show_modal" phx-value-modal="board_content"><span class="icon"><i class="fas fa-file-export"></i></span>Export board content</a>
+                <hr class="dropdown-divider">
                 <%= for board <- @boards, board.id != @board.id do %>
                 <a class="dropdown-item" phx-click="view_board" phx-value-id="<%= board.id %>">
                   <%= limit_string(board.name, 30) %>
