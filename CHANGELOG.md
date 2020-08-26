@@ -1,3 +1,9 @@
+## v1.6.0 - 2020-08-26
+
+  - Add board content export
+  - Improve column content export with tags, board and column data
+
+
 ## v1.5.0 - 2020-08-25
 
   - Show the task text when prompting for deletion
