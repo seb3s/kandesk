@@ -39,30 +39,33 @@
     </div>
   </div>
 
-  <div class="columns is-multiline" id="<%= temp_id() %>" phx-hook="tippy">
-    <%= for board <- @boards do %>
-    <div class="column is-one-third">
-      <div class="card card_board" phx-click="view_board" phx-value-id="<%= board.id %>">
-        <div class="card-content">
-          <div class="board_actions buttons">
-            <%= if user_rights(board, :edit_board?) do %>
-            <button class="button" phx-click="edit_board" phx-value-id="<%= board.id %>" data-tippy-content="Edit board">
-              <span class="icon"><i class="fas fa-edit"></i></span>
-            </button>
-            <% end %>
-            <%= if user_rights(board, :delete_board?) do %>
-            <button class="button" data-confirm="Are you sure?<br>The deletion is permanent!"
-              phx-click="delete_board" phx-value-id="<%= board.id %>" data-tippy-content="Delete board">
-              <span class="icon"><i class="fas fa-trash-alt"></i></span>
-            </button>
-            <% end %>
+  <div class="page_content">
+    <div class="page_overflow thin_scroll">
+      <div class="columns is-multiline is-marginless" id="<%= temp_id() %>" phx-hook="tippy">
+        <%= for board <- @boards do %>
+        <div class="column is-one-third">
+          <div class="card card_board" phx-click="view_board" phx-value-id="<%= board.id %>">
+            <div class="card-content">
+              <div class="board_actions buttons">
+                <%= if user_rights(board, :edit_board?) do %>
+                <button class="button" phx-click="edit_board" phx-value-id="<%= board.id %>" data-tippy-content="Edit board">
+                  <span class="icon"><i class="fas fa-edit"></i></span>
+                </button>
+                <% end %>
+                <%= if user_rights(board, :delete_board?) do %>
+                <button class="button" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_board" phx-value-id="<%= board.id %>" data-tippy-content="Delete board">
+                  <span class="icon"><i class="fas fa-trash-alt"></i></span>
+                </button>
+                <% end %>
+              </div>
+              <div class="board_name"><%= board.name %></div>
+              <div class="board_descr"><%= limit_string(board.descr, 200) %></div>
+            </div>
           </div>
-          <div class="board_name"><%= board.name %></div>
-          <div class="board_descr"><%= limit_string(board.descr, 200) %></div>
         </div>
+        <% end %>
       </div>
     </div>
-    <% end %>
   </div>
 
   <%= if @show_modal do render "modal_#{@show_modal}.html", assigns end %>

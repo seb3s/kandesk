@@ -75,6 +75,31 @@ main .alert {
 // dashboard page
 // --------------
 .page_dashboard {
+  min-height: calc(100vh - 15px);
+  display: flex;
+  flex-direction: column;
+
+  .page_content {
+    position: relative;
+    flex-grow: 1;
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+
+    .page_overflow {
+      user-select: none;
+      position: absolute;
+      overflow: auto;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      .is-one-third:nth-child(-1n+3) {
+        padding-top: 0;
+      }
+    }
+  }
+
   .card_board {
     position: relative;
 
