@@ -1,3 +1,10 @@
+## v1.6.2 - 2020-08-28
+
+  - Live components refactoring
+  - Refactor using different modules by page
+  - Dashboard: fix the header and make only the boards scrollable
+
+
 ## v1.6.1 - 2020-08-26
 
   - Improve export column content security
