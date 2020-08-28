@@ -21,14 +21,14 @@
       <div class="card">
         <header class="card-header">
           <p class="card-header-title">Users</p>
-          <a class="card-header-icon" phx-click="create_user"><i class="fas fa-user-plus"></i></a>
+          <a class="card-header-icon" phx-click="create_user" phx-value-delegate="Page.Admin_users"><i class="fas fa-user-plus"></i></a>
         </header>
         <div class="card-content max_h thin_scroll">
           <%= for user <- @rows do %>
-          <div class="level mb-0 px-3 py-2 <%= if user == @edit_row, do: "has-background-grey-lighter", else: "bg_hover" %>" phx-click="update_user" phx-value-id="<%= user.id %>">
+          <div class="level mb-0 px-3 py-2 <%= if user == @edit_row, do: "has-background-grey-lighter", else: "bg_hover" %>" phx-click="update_user" phx-value-delegate="Page.Admin_users" phx-value-id="<%= user.id %>">
             <div class="level-left"><%= user.firstname %> <%= user.lastname %> - <%= user.email %></div>
             <div class="level-right">
-              <i class="fas fa-trash-alt" data-confirm="Are you sure?" phx-click="delete_user" phx-value-id="<%= user.id %>"></i>
+              <i class="fas fa-trash-alt" data-confirm="Are you sure?" phx-click="delete_user" phx-value-delegate="Page.Admin_users" phx-value-id="<%= user.id %>"></i>
             </div>
           </div>
           <% end %>
@@ -49,6 +49,7 @@
         </header>
         <div class="card-content max_h thin_scroll">
           <%= f = form_for @changeset, "#", phx_submit: "save_user" %>
+            <input name="delegate" type="hidden" value="Page.Admin_users">
             <div class="field">
               <%= label f, :firstname, class: "label" %>
               <div class="control">
@@ -112,7 +113,7 @@
               </div>
             </div>
             <div class="buttons is-right">
-              <button class="button" type="button" phx-click="cancel" phx-value-panel="admin_edit_user">Cancel</button>
+              <button class="button" type="button" phx-click="cancel" phx-value-delegate="Page.Admin_users" phx-value-panel="admin_edit_user">Cancel</button>
               <button class="button is-primary" type="submit">Save</button>
             </div>
           </form>

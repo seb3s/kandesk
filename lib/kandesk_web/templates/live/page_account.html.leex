@@ -24,6 +24,7 @@
         </header>
         <div class="card-content max_h thin_scroll">
           <%= f = form_for @changeset, "#", phx_submit: "update_personal_data" %>
+            <input name="delegate" type="hidden" value="Page.Account">
             <div class="field">
               <%= label f, :firstname, class: "label" %>
               <div class="control">
@@ -53,6 +54,7 @@
         </header>
         <div class="card-content max_h thin_scroll">
           <%= f = form_for @changeset, "#", phx_submit: "update_password" %>
+            <input name="delegate" type="hidden" value="Page.Account">
             <div class="field">
               <%= label f, :current_password, class: "label" %>
               <div class="control">

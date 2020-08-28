@@ -648,93 +648,12 @@ defmodule KandeskWeb.IndexLive do
   def handle_info({"move_task" = event, params}, socket), do: do_event(event, params, socket)
 
 
-  ## account page
-  ## ------------
-  def handle_event("show_page", %{"page" => "account" = page}, %{assigns: assigns} = socket) do
-    user = assigns.user
-    {:noreply, assign(socket, page: page, changeset: User.changeset(user, %{}), edit_row: user)}
-  end
-
-  def handle_event("update_password", %{"user" => form_data} = params, %{assigns: assigns} = socket) do
-    with %User{} <- assigns.edit_row do :ok else _ -> raise(@access_error) end
-    case assigns.edit_row |> User.changeset(form_data) |> Repo.update do
-      {:ok, user} -> handle_event("view_dashboard", nil, assign(socket, user: user))
-      {:error, %Ecto.Changeset{} = changeset} -> {:noreply, assign(socket, changeset: changeset)}
-    end
-  end
-
-  def handle_event("update_personal_data", %{"user" => form_data} = params, %{assigns: assigns} = socket) do
-    with %User{} <- assigns.edit_row do :ok else _ -> raise(@access_error) end
-    case assigns.edit_row |> User.admin_changeset(form_data) |> Repo.update do
-      {:ok, user} -> handle_event("view_dashboard", nil, assign(socket, user: user))
-      {:error, %Ecto.Changeset{} = changeset} -> {:noreply, assign(socket, changeset: changeset)}
-    end
-  end
-
-
-  ## admin users
-  ## -----------
-  def get_users() do
-    rows = Repo.all(from u in User, order_by: [u.lastname, u.firstname, u.email])
-  end
-
-  def handle_event("show_page", %{"page" => "admin_users" = page}, %{assigns: assigns} = socket) do
-    with "admin" <- assigns.user.role do :ok else _ -> raise(@access_error) end
-    rows = get_users()
-    {:noreply, assign(socket, page: page, rows: rows, edit_row: nil)}
-  end
-
-  def handle_event("create_user", params, %{assigns: assigns} = socket) do
-    with "admin" <- assigns.user.role do :ok else _ -> raise(@access_error) end
-    user = %User{}
-    {:noreply, assign(socket, changeset: User.changeset(user, %{}), edit_row: user, edit_mode: :create)}
-  end
-
-  def handle_event("update_user", %{"id" => id}, %{assigns: assigns} = socket) do
-    id = to_integer(id)
-    row = Enum.find(assigns.rows, & &1.id == id)
-    with "admin" <- assigns.user.role, %User{} <- row do :ok else _ -> raise(@access_error) end
-    {:noreply, assign(socket, changeset: User.changeset(row, %{}), edit_row: row, edit_mode: :update)}
-  end
-
-  def handle_event("save_user", %{"user" => form_data} = params, %{assigns: assigns} = socket) do
-    edit_row = assigns.edit_row
-    with "admin" <- assigns.user.role, %User{} <- edit_row do :ok else _ -> raise(@access_error) end
-    id = edit_row.id
-    case edit_user(form_data, assigns, edit_row) do
-      {:ok, user} ->
-        rows = get_users()
-        # we could be currently updating ourselves
-        user = if assigns.user.id == user.id, do: user, else: assigns.user
-        {:noreply, assign(socket, rows: rows, edit_row: nil, user: user)}
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
-  end
-
-  def handle_event("delete_user", %{"id" => id}, %{assigns: assigns} = socket) do
-    with "admin" <- assigns.user.role do :ok else _ -> raise(@access_error) end
-    id = to_integer(id)
-    Repo.delete!(%User{id: id})
-    rows = for r <- assigns.rows, r.id != id, do: r
-    # eventually clear edited user
-    edit_row = case assigns.edit_row do
-      %User{id: id} -> nil
-      row -> row
-    end
-    {:noreply, assign(socket, rows: rows, edit_row: edit_row)}
-  end
-
-  def handle_event("cancel", %{"panel" => "admin_edit_user"}, %{assigns: assigns} = socket) do
-    {:noreply, assign(socket, edit_row: nil)}
-  end
-
-  def edit_user(form_data, %{edit_mode: :create} = assigns, edit_row) do
-    edit_row |> User.admin_changeset(form_data) |> Repo.insert
-  end
-
-  def edit_user(form_data, %{edit_mode: :update} = assigns, edit_row) do
-    edit_row |> User.admin_changeset(form_data) |> Repo.update
+  ## page delegation
+  ## ---------------
+  def handle_event(event, %{"delegate" => delegate} = params, socket) do
+    valid_delegates = ["Page.Account", "Page.Admin_users"]
+    if !Enum.any?(valid_delegates, & &1 == delegate), do: raise(@access_error)
+    apply(String.to_existing_atom("Elixir.KandeskWeb." <> delegate), :handle_event, [event, params, socket])
   end
 
 end
