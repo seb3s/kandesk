@@ -52,7 +52,7 @@
       </div>
       <div class="column_tasks thin_scroll" id="column_tasks_<%= @column.id %>" <%= if user_rights(@board, :move_task?) do %>phx-hook="sortable_tasks" data-sortable_group="board" data-column_id="<%= @column.id %>"<% end %>>
         <%= for task <- @column.tasks do %>
-          <%= live_component(@socket, KandeskWeb.TaskComponent, id: "task_#{task.id}", task: task, board: @board) %>
+          <%= live_component(@socket, KandeskWeb.Component.Task, id: "task_#{task.id}", task: task, board: @board) %>
         <% end %>
       </div>
       <div class="column_footer">

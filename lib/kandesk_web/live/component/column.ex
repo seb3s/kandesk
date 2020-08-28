@@ -1,4 +1,4 @@
-defmodule KandeskWeb.ColumnComponent do
+defmodule KandeskWeb.Component.Column do
   use Phoenix.LiveComponent
 
   def render(assigns) do

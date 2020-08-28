@@ -1,4 +1,4 @@
-defmodule KandeskWeb.TaskComponent do
+defmodule KandeskWeb.Component.Task do
   use Phoenix.LiveComponent
 
   def render(assigns) do
