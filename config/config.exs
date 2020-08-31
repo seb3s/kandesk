@@ -18,7 +18,7 @@ config :kandesk, KandeskWeb.Endpoint,
   pubsub_server: Kandesk.PubSub,
   live_view: [signing_salt: "5BFoIPvCG/CUh9GwpXNBIC2qh/JUB/Z5"]
 
-
+# Configures pow
 config :kandesk, :pow,
   user: Kandesk.Schema.User,
   repo: Kandesk.Repo,
