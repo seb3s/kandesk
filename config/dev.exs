@@ -16,7 +16,7 @@ config :kandesk, Kandesk.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :kandesk, KandeskWeb.Endpoint,
-  http: [port: 4000],
+  http: [port: 4001],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
@@ -56,7 +56,6 @@ config :kandesk, KandeskWeb.Endpoint,
 
 # Watch static and templates for browser reloading.
 config :kandesk, KandeskWeb.Endpoint,
-  http: [port: 4001],
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
