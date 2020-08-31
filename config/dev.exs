@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :kandesk, Kandesk.Repo,
   username: "kandesk",
-  password: "***REMOVED***",
+  password: "kandesklocaldev",
   database: "kandesk",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
