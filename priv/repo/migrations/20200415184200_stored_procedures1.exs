@@ -3,7 +3,7 @@ defmodule Kandesk.Repo.Migrations.StoredProcedures1 do
 
   def change do
 execute ~S"""
-DROP FUNCTION public.sp_delete_board(bigint);
+DROP FUNCTION IF EXISTS public.sp_delete_board(bigint);
 """
 
 execute ~S"""
@@ -35,7 +35,7 @@ LANGUAGE plpgsql;
 """
 
 execute ~S"""
-DROP FUNCTION public.sp_delete_column(bigint);
+DROP FUNCTION IF EXISTS public.sp_delete_column(bigint);
 """
 
 execute ~S"""
@@ -69,7 +69,7 @@ LANGUAGE plpgsql;
 """
 
 execute ~S"""
-DROP FUNCTION public.sp_move_column(bigint, integer, integer);
+DROP FUNCTION IF EXISTS public.sp_move_column(bigint, integer, integer);
 """
 
 execute ~S"""
@@ -113,7 +113,7 @@ LANGUAGE plpgsql;
 """
 
 execute ~S"""
-DROP FUNCTION public.sp_delete_task(bigint);
+DROP FUNCTION IF EXISTS public.sp_delete_task(bigint);
 """
 
 execute ~S"""
@@ -144,7 +144,7 @@ LANGUAGE plpgsql;
 """
 
 execute ~S"""
-DROP FUNCTION public.sp_move_task(bigint, bigint, bigint, integer, integer);
+DROP FUNCTION IF EXISTS public.sp_move_task(bigint, bigint, bigint, integer, integer);
 """
 
 execute ~S"""
