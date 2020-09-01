@@ -1,3 +1,10 @@
+## v1.6.4 - 2020-09-01
+
+  - Update README.md with first user creation details
+  - Setup first admin user in seeds.exs
+  - Fix stored procedures setup on first install
+
+
 ## v1.6.3 - 2020-09-01
 
   - Update readme file
