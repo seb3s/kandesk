@@ -3,10 +3,6 @@ defmodule Kandesk.Repo.Migrations.StoredProcedures2 do
 
   def change do
 execute ~S"""
-DROP FUNCTION IF EXISTS public.sp_duplicate_column(bigint, bigint);
-"""
-
-execute ~S"""
 CREATE OR REPLACE FUNCTION sp_duplicate_column(v_column_id bigint, v_creator_id bigint)
 
 RETURNS integer AS $$
