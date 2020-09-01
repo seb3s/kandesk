@@ -13,6 +13,8 @@ Now you can visit [`localhost:4001`](http://localhost:4001) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
+to create a new user go to http://localhost:4001/registration/new
+
 ## Learn more
 
   * Official website: https://www.phoenixframework.org/
