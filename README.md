@@ -9,6 +9,18 @@ To start your Phoenix server:
   * Install Node.js dependencies with `cd assets && npm install`
   * Start Phoenix endpoint with `mix phx.server`
 
+## Create a first admin user
+
+To be able to connect to the application, a first admin user must be created.
+This is done by running:
+
+    mix run priv/repo/seeds.exs
+
+Then you can connect with "admin@admin.com" as Email and "admin" as Password. Then you will be able to change everything from within the application, password included ;-)
+
+
+## Access the application
+
 Now you can visit [`localhost:4001`](http://localhost:4001) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
