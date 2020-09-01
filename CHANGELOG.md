@@ -1,3 +1,11 @@
+## v1.6.3 - 2020-09-01
+
+  - Update readme file
+  - Add license file
+  - Update webpack deps
+  - Cleaning before going public
+
+
 ## v1.6.2 - 2020-08-28
 
   - Live components refactoring
