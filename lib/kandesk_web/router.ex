@@ -52,7 +52,7 @@ defmodule KandeskWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through :browser
+      pipe_through [:browser, :protected]
       live_dashboard "/dashboard", metrics: KandeskWeb.Telemetry
     end
   end
