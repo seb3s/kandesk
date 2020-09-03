@@ -5,7 +5,8 @@ defmodule KandeskWeb.IndexLive do
   import Ecto.Query
   import Kandesk.Util
   import KandeskWeb.Endpoint, only: [subscribe: 1, unsubscribe: 1, broadcast_from: 4]
-  #require Logger #Logger.info "params: #{inspect params}"
+  import KandeskWeb.Gettext
+  # require Logger #Logger.info "params: #{inspect params}"
 
   @boards_topic "boards"
   @access_error "Unauthorized access detected"
@@ -45,11 +46,13 @@ defmodule KandeskWeb.IndexLive do
 
 
   def render(%{page: "loading"} = assigns) do
-    ~L"<div>La page est en cours de chargement, veuillez patienter...</div>"
+    msg = gettext("The page is loading, please wait...")
+    ~L"<div>#{msg}</div>"
   end
 
   def render(%{page: "error"} = assigns) do
-    ~L"<div>Une erreur s'est produite</div>"
+    msg = gettext("An error has occurred.")
+    ~L"<div>#{msg}</div>"
   end
 
   def render(%{page: page} = assigns) do
@@ -147,18 +150,19 @@ defmodule KandeskWeb.IndexLive do
       is_active: true,
       is_public: false,
       tags: [
-        %{id: 0,  color: "#7c1a9c", name: "Version"},
-        %{id: 1,  color: "#c14bfb"},
-        %{id: 2,  color: "#ed207b", name: "Critical"},
-        %{id: 3,  color: "#ff8318", name: "Warning"},
-        %{id: 4,  color: "#edc30a", name: "In progress"},
-        %{id: 5,  color: "#3ab54a", name: "Done"},
-        %{id: 6,  color: "#93042d", name: "Bug"},
-        %{id: 7,  color: "#c58994", name: "Enhancement"},
-        %{id: 8,  color: "#9a7773", name: "New feature"},
-        %{id: 9,  color: "#274c6d", name: "Rejected"},
-        %{id: 10, color: "#22a2d8", name: "Needs feedback"},
-        %{id: 11, color: "#53718b"}]
+        %{id: 0, color: "#7c1a9c", name: gettext("Version")},
+        %{id: 1, color: "#c14bfb"},
+        %{id: 2, color: "#ed207b", name: gettext("Critical")},
+        %{id: 3, color: "#ff8318", name: gettext("Warning")},
+        %{id: 4, color: "#edc30a", name: gettext("In progress")},
+        %{id: 5, color: "#3ab54a", name: gettext("Done")},
+        %{id: 6, color: "#93042d", name: gettext("Bug")},
+        %{id: 7, color: "#c58994", name: gettext("Enhancement")},
+        %{id: 8, color: "#9a7773", name: gettext("New feature")},
+        %{id: 9, color: "#274c6d", name: gettext("Rejected")},
+        %{id: 10, color: "#22a2d8", name: gettext("Needs feedback")},
+        %{id: 11, color: "#53718b"}
+      ]
     }
 
     %Board{}

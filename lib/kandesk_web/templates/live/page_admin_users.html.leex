@@ -28,7 +28,7 @@
           <div class="level mb-0 px-3 py-2 <%= if user == @edit_row, do: "has-background-grey-lighter", else: "bg_hover" %>" phx-click="update_user" phx-value-delegate="Page.Admin_users" phx-value-id="<%= user.id %>">
             <div class="level-left"><%= user.firstname %> <%= user.lastname %> - <%= user.email %></div>
             <div class="level-right">
-              <i class="fas fa-trash-alt" data-confirm="Are you sure?" phx-click="delete_user" phx-value-delegate="Page.Admin_users" phx-value-id="<%= user.id %>"></i>
+              <i class="fas fa-trash-alt" data-confirm="<%= gettext("Are you sure?") %>" phx-click="delete_user" phx-value-delegate="Page.Admin_users" phx-value-id="<%= user.id %>"></i>
             </div>
           </div>
           <% end %>
@@ -42,8 +42,8 @@
         <header class="card-header">
           <p class="card-header-title">
             <%= case @edit_mode do
-              :update -> "Update user"
-              :create -> "Create user"
+              :update -> gettext("Update user")
+              :create ->gettext( "Create user")
               end %>
           </p>
         </header>
@@ -107,14 +107,14 @@
               <%= label f, :role, class: "label" %>
               <div class="control">
                 <div class="select is-fullwidth">
-                  <%= select(f, :role, Kandesk.Schema.User.select_roles(), [prompt: "Select user role"]) %>
+                  <%= select(f, :role, Kandesk.Schema.User.select_roles(), [prompt: gettext("Select user role")]) %>
                 </div>
                 <%= error_tag f, :role %>
               </div>
             </div>
             <div class="buttons is-right">
-              <button class="button" type="button" phx-click="cancel" phx-value-delegate="Page.Admin_users" phx-value-panel="admin_edit_user">Cancel</button>
-              <button class="button is-primary" type="submit">Save</button>
+              <button class="button is-primary" type="submit"><%= gettext("Save") %></button>
+              <button class="button" type="button" phx-click="cancel" phx-value-delegate="Page.Admin_users" phx-value-panel="admin_edit_user"><%= gettext("Cancel") %></button>
             </div>
           </form>
         </div>
