@@ -51,6 +51,8 @@ defmodule Kandesk.MixProject do
       {:pow, "~> 1.0.20"},
       {:bamboo, "~> 1.4.0"},
       {:bamboo_smtp, "~> 2.1.0"},
+      {:ex_cldr, "~> 2.14"},
+      {:ex_cldr_numbers, "~> 2.13"}
     ]
   end
 
