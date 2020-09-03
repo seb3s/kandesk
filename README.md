@@ -9,6 +9,7 @@ To start your Phoenix server:
   * Install Node.js dependencies with `cd assets && npm install`
   * Start Phoenix endpoint with `mix phx.server`
 
+
 ## Create a first admin user
 
 To be able to connect to the application, a first admin user must be created.
@@ -25,7 +26,46 @@ Now you can visit [`localhost:4001`](http://localhost:4001) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## Learn more
+
+## Features set
+
+**Boards:**
+
+* create / update / delete
+* sharable among users with fine grain access control (edit_board?, delete_board?, create_column?, edit_column?, delete_column?, move_column?, create_task?, edit_task?, delete_task?, move_task?, admin_tags?, assoc_tags?)
+* export board content to pseudo xml data
+
+**Columns:**
+
+* create / update / delete
+* visibility: a column can be made visible to its creator only
+* columns are sortable via drag & drop
+* duplicate column
+* ability to move a column to another board
+* export column content to pseudo xml data
+
+**Cards:**
+
+* create / update / delete
+* tags association
+
+**Tags:**
+
+* create / update / delete
+* two display modes: large with text or small without
+* new tags can be added
+* tags are sortable to control the order in which they appear on cards
+
+**Account page:**
+
+* basic page to maintain your personal data (currently names & password)
+
+**Admin area:**
+
+* manage users : basic admin panel to be able to create / update / delete users
+
+
+## Learn more about elixir, phoenix & liveview
 
   * Official website: https://www.phoenixframework.org/
   * Guides: https://hexdocs.pm/phoenix/overview.html
