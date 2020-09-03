@@ -43,11 +43,14 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * duplicate column
   * ability to move a column to another board
   * export column content to pseudo xml data
+  * realtime updating among users viewing the same board
 
 ### Cards:
 
   * create / update / delete
+  * cards are sortable via drag & drop within and between columns
   * tags association
+  * realtime updating among users viewing the same board
 
 ### Tags:
 
@@ -55,6 +58,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * two display modes: large with text or small without
   * new tags can be added
   * tags are sortable to control the order in which they appear on cards
+  * realtime updating among users viewing the same board
 
 ### Account page:
 
