@@ -51,7 +51,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 **Tags:**
 
-* create / update / delete
+* create / update
 * two display modes: large with text or small without
 * new tags can be added
 * tags are sortable to control the order in which they appear on cards
