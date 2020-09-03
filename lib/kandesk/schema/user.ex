@@ -1,14 +1,19 @@
 defmodule Kandesk.Schema.User do
   use Ecto.Schema
   import Ecto.Changeset
+
   use Pow.Ecto.Schema,
     password_hash_methods: {&Argon2.hash_pwd_salt/1, &Argon2.verify_pass/2},
     password_min_length: 10
+
   use Pow.Extension.Ecto.Schema,
     extensions: [PowResetPassword, PowPersistentSession]
 
+  import KandeskWeb.Gettext
+
   schema "users" do
-    pow_user_fields() #id, email, password_hash
+    # id, email, password_hash
+    pow_user_fields()
 
     field :firstname, :string
     field :lastname, :string
@@ -36,15 +41,14 @@ defmodule Kandesk.Schema.User do
   end
 
   def roles(), do: ["admin", "user"]
-  def select_roles(), do: for item <- roles(), do: {role(item), item}
-  def role("admin"), do: "Administrator"
-  def role("user"), do: "User"
+  def select_roles(), do: for(item <- roles(), do: {role(item), item})
+  def role("admin"), do: gettext("Administrator")
+  def role("user"), do: gettext("User")
   def role(_), do: ""
 
   def languages(), do: ["fr", "en"]
-  def select_languages(), do: for item <- languages(), do: {language(item), item}
-  def language("fr"), do: "French"
-  def language("en"), do: "English"
+  def select_languages(), do: for(item <- languages(), do: {language(item), item})
+  def language("fr"), do: gettext("French")
+  def language("en"), do: gettext("English")
   def language(_), do: ""
-
 end

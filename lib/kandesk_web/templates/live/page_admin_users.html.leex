@@ -91,7 +91,7 @@
               <%= label f, :language, class: "label" %>
               <div class="control">
                 <div class="select is-fullwidth">
-                  <%= select(f, :language, Kandesk.Schema.User.select_languages(), [prompt: "Select language"]) %>
+                  <%= select(f, :language, Kandesk.Schema.User.select_languages(), [prompt: gettext("Select language")]) %>
                 </div>
                 <%= error_tag f, :language %>
               </div>

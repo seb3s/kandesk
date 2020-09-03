@@ -53,7 +53,7 @@
                 </button>
                 <% end %>
                 <%= if user_rights(board, :delete_board?) do %>
-                  <button class="button" data-confirm="<%= gettext("Are you sure? %{br_tag}The deletion is permanent!", br_tag: "<br/>") %>" phx-click="delete_board" phx-value-id="<%= board.id %>" data-tippy-content="Delete board">
+                  <button class="button" data-confirm="<%= gettext("Are you sure?%{br_tag}The deletion is permanent!", br_tag: "<br/>") %>" phx-click="delete_board" phx-value-id="<%= board.id %>" data-tippy-content="Delete board">
                   <span class="icon"><i class="fas fa-trash-alt"></i></span>
                 </button>
                 <% end %>

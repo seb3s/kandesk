@@ -16,7 +16,7 @@
     </div>
     <%= if user_rights(@board, :delete_task?) do %>
       <hr class="dropdown-divider">
-      <a class="dropdown-item" data-confirm="<%= gettext("Are you sure?%{br_tag} Deleting '%{task_name}' is permanent!", br_tag: "<br/>", task_name: limit_string(@task.name, 40))%>" phx-click="delete_task" phx-value-id="<%= @task.id %>"><span class="icon"><i class="fas fa-trash-alt"></i></span><%= gettext("Delete card") %></a>
+      <a class="dropdown-item" data-confirm="<%= gettext("Are you sure?%{br_tag}Deleting '%{task_name}' is permanent!", br_tag: "<br/>", task_name: limit_string(@task.name, 40)) %>" phx-click="delete_task" phx-value-id="<%= @task.id %>"><span class="icon"><i class="fas fa-trash-alt"></i></span><%= gettext("Delete card") %></a>
     <% end %>
   </div>
   <div class="task_tags">
