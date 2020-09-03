@@ -29,40 +29,40 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## Features set
 
-**Boards:**
+### Boards:
 
-* create / update / delete
-* sharable among users with fine grain access control (edit_board?, delete_board?, create_column?, edit_column?, delete_column?, move_column?, create_task?, edit_task?, delete_task?, move_task?, admin_tags?, assoc_tags?)
-* export board content to pseudo xml data
+  * create / update / delete
+  * sharable among users with fine grain access control (edit_board?, delete_board?, create_column?, edit_column?, delete_column?, move_column?, create_task?, edit_task?, delete_task?, move_task?, admin_tags?, assoc_tags?)
+  * export board content to pseudo xml data
 
-**Columns:**
+### Columns:
 
-* create / update / delete
-* visibility: a column can be made visible to its creator only
-* columns are sortable via drag & drop
-* duplicate column
-* ability to move a column to another board
-* export column content to pseudo xml data
+  * create / update / delete
+  * visibility: a column can be made visible to its creator only
+  * columns are sortable via drag & drop
+  * duplicate column
+  * ability to move a column to another board
+  * export column content to pseudo xml data
 
-**Cards:**
+### Cards:
 
-* create / update / delete
-* tags association
+  * create / update / delete
+  * tags association
 
-**Tags:**
+### Tags:
 
-* create / update
-* two display modes: large with text or small without
-* new tags can be added
-* tags are sortable to control the order in which they appear on cards
+  * create / update
+  * two display modes: large with text or small without
+  * new tags can be added
+  * tags are sortable to control the order in which they appear on cards
 
-**Account page:**
+### Account page:
 
-* basic page to maintain your personal data (currently names & password)
+  * basic page to maintain your personal data (currently names & password)
 
-**Admin area:**
+### Admin area:
 
-* manage users : basic admin panel to be able to create / update / delete users
+  * manage users : basic admin panel to be able to create / update / delete users
 
 
 ## Learn more about elixir, phoenix & liveview
