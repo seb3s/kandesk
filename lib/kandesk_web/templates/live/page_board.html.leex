@@ -24,7 +24,7 @@
             </div>
             <div class="dropdown-menu" role="menu">
               <div class="dropdown-content thin_scroll max-h-120">
-                <a class="dropdown-item" phx-click="show_modal" phx-value-modal="board_content"><span class="icon"><i class="fas fa-file-export"></i></span>Export board content</a>
+                <a class="dropdown-item" phx-click="show_modal" phx-value-modal="board_content"><span class="icon"><i class="fas fa-file-export"></i></span><%= gettext("Export board content") %></a>
                 <hr class="dropdown-divider">
                 <%= for board <- @boards, board.id != @board.id do %>
                 <a class="dropdown-item" phx-click="view_board" phx-value-id="<%= board.id %>">
@@ -37,21 +37,21 @@
           <%= if user_rights(@board, :create_column?) do %>
           <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_column">
             <span class="icon"><i class="fas fa-plus"></i></span>
-            <span>Column</span>
+            <span><%= gettext("Column") %></span>
           </button>
           <% end %>
           <div class="is-hoverable dropdown">
             <div class="dropdown-trigger">
               <button class="button is-primary">
                 <span class="icon"><i class="fas fa-tags"></i></span>
-                <span>Tags</span>
+                <span><%= gettext("Tags") %></span>
               </button>
             </div>
             <div class="dropdown-menu" role="menu">
               <div class="dropdown-content">
-                <a class="dropdown-item" phx-click="toggle_tags_size"><span class="icon"><i class="fas fa-arrows-alt"></i></span>Toggle size</a>
+                <a class="dropdown-item" phx-click="toggle_tags_size"><span class="icon"><i class="fas fa-arrows-alt"></i></span><%= gettext("Toggle size") %></a>
                 <%= if user_rights(@board, :admin_tags?) do %>
-                  <a class="dropdown-item" phx-click="show_modal" phx-value-modal="admin_tags"><span class="icon"><i class="fas fa-cogs"></i></span>Manage tags</a>
+                  <a class="dropdown-item" phx-click="show_modal" phx-value-modal="admin_tags"><span class="icon"><i class="fas fa-cogs"></i></span><%= gettext("Manage tags") %></a>
                 <% end %>
               </div>
             </div>
@@ -59,7 +59,7 @@
           <%= if is_creator(@board, @user) do %>
           <button class="button is-primary" phx-click="show_modal" phx-value-modal="share_board">
             <span class="icon"><i class="fas fa-user-plus"></i></span>
-            <span>Share</span>
+            <span><%= gettext("Share") %></span>
           </button>
           <% end %>
         </div>

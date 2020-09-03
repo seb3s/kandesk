@@ -5,19 +5,19 @@
         <div class="header_menu field is-grouped">
           <button class="button is-primary" phx-click="show_modal" phx-value-modal="create_board">
             <span class="icon"><i class="fas fa-plus"></i></span>
-            <span>Board</span>
+            <span><%= gettext("Board") %></span>
           </button>
           <%= if @user.role == "admin" do %>
             <div class="is-hoverable dropdown is-iconless">
               <div class="dropdown-trigger">
                 <button class="button is-primary">
                   <span class="icon"><i class="fas fa-cogs"></i></span>
-                  <span>Admin area</span>
+                  <span><%= gettext("Admin area") %></span>
                 </button>
               </div>
               <div class="dropdown-menu" role="menu">
                 <div class="dropdown-content">
-                  <a class="dropdown-item" phx-click="show_page" phx-value-delegate="Page.Admin_users">Manage users</a>
+                  <a class="dropdown-item" phx-click="show_page" phx-value-delegate="Page.Admin_users"><%= gettext("Manage users") %></a>
                 </div>
               </div>
             </div>
@@ -31,7 +31,7 @@
         <div class="header_menu field is-grouped is-grouped-right">
           <button class="button is-primary" phx-click="show_page" phx-value-delegate="Page.Account">
             <span class="icon"><i class="fas fa-user-cog"></i></span>
-            <span>Account</span>
+            <span><%= gettext("Account") %></span>
           </button>
           <%= button("Logout", to: "/session", method: "delete", class: "button") %>
         </div>
@@ -53,7 +53,7 @@
                 </button>
                 <% end %>
                 <%= if user_rights(board, :delete_board?) do %>
-                <button class="button" data-confirm="Are you sure?<br>The deletion is permanent!" phx-click="delete_board" phx-value-id="<%= board.id %>" data-tippy-content="Delete board">
+                  <button class="button" data-confirm="<%= gettext("Are you sure? %{br_tag}The deletion is permanent!", br_tag: "<br/>") %>" phx-click="delete_board" phx-value-id="<%= board.id %>" data-tippy-content="Delete board">
                   <span class="icon"><i class="fas fa-trash-alt"></i></span>
                 </button>
                 <% end %>

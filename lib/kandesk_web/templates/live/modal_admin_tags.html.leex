@@ -2,7 +2,7 @@
   <div class="modal-background" data-micromodal-close></div>
   <div class="modal-card" style="<%= @modal_pos %>">
     <header class="modal-card-head has-cursor-grab">
-      <h2 class="modal-card-title">Manage tags</h2>
+      <h2 class="modal-card-title"><%= gettext("Manage tags") %></h2>
     </header>
     <section class="modal-card-body thin_scroll">
       <%= f = form_for @changeset, "#", id: "form_modal", phx_submit: "set_board_tags", phx_hook: "sortable_tags" %>
@@ -19,11 +19,11 @@
     </section>
     <footer class="modal-card-foot level">
       <div class="level-left" style="flex-grow: 1;">
-        <button class="button is-primary" form="form_modal" type="submit">Validate</button>
-        <button class="button" data-micromodal-close>Cancel</button>
+        <button class="button is-primary" form="form_modal" type="submit"><%= gettext("Save") %></button>
+        <button class="button" data-micromodal-close><%= gettext("Cancel") %></button>
       </div>
       <div class="level-right">
-        <button class="button is-primary" phx-click="add_tag">Add tag</button>
+        <button class="button is-primary" phx-click="add_tag"><%= gettext("Add tag") %></button>
       </div>
     </footer>
   </div>

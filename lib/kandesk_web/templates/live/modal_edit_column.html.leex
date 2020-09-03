@@ -2,21 +2,21 @@
   <div class="modal-background" data-micromodal-close></div>
   <div class="modal-card" style="<%= @modal_pos %>">
     <header class="modal-card-head has-cursor-grab">
-      <h2 class="modal-card-title">Edit column</h2>
+      <h2 class="modal-card-title"><%= gettext("Edit column") %></h2>
     </header>
     <section class="modal-card-body thin_scroll">
       <%= f = form_for @changeset, "#", id: "form_modal", phx_submit: "update_column" %>
         <div class="field">
           <%= label f, :name, class: "label" %>
           <div class="control">
-            <%= text_input f, :name, class: "input", placeholder: "Column name" %>
+            <%= text_input f, :name, class: "input", placeholder: gettext("Column name") %>
             <%= error_tag f, :name %>
           </div>
         </div>
         <div class="field">
-          <%= label f, :descr, "Description", class: "label" %>
+          <%= label f, :descr, gettext("Description"), class: "label" %>
           <div class="control">
-            <%= textarea f, :descr, class: "textarea", placeholder: "Column description" %>
+            <%= textarea f, :descr, class: "textarea", placeholder: gettext("Column description") %>
             <%= error_tag f, :descr %>
           </div>
         </div>
@@ -33,8 +33,8 @@
       </form>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-primary" form="form_modal" type="submit">Valider</button>
-      <button class="button" data-micromodal-close>Annuler</button>
+      <button class="button is-primary" form="form_modal" type="submit"><%= gettext("Save") %></button>
+      <button class="button" data-micromodal-close><%= gettext("Cancel") %></button>
     </footer>
   </div>
 </div>

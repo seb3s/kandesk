@@ -2,7 +2,7 @@
   <div class="modal-background" data-micromodal-close></div>
   <div class="modal-card" style="<%= @modal_pos %>">
     <header class="modal-card-head has-cursor-grab">
-      <h2 class="modal-card-title">Export content</h2>
+      <h2 class="modal-card-title"><%= gettext("Export content") %></h2>
     </header>
     <section class="modal-card-body thin_scroll">
 <textarea class="textarea" style="min-height: 20em;">
@@ -28,7 +28,7 @@
 </textarea>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-primary" data-micromodal-close>Close</button>
+      <button class="button is-primary" data-micromodal-close><%= gettext("Close") %></button>
     </footer>
   </div>
 </div>
