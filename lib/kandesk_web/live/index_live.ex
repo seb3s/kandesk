@@ -48,13 +48,15 @@ defmodule KandeskWeb.IndexLive do
 
 
   def render(%{page: "loading"} = assigns) do
-    msg = gettext("The page is loading, please wait...")
-    ~L"<div>#{msg}</div>"
+    ~L"""
+      <div><%= gettext("The page is loading, please wait...") %></div>
+      """
   end
 
   def render(%{page: "error"} = assigns) do
-    msg = gettext("An error has occurred.")
-    ~L"<div>#{msg}</div>"
+    ~L"""
+      <div><%= gettext("An error has occurred.") %></div>
+      """
   end
 
   def render(%{page: page} = assigns) do
