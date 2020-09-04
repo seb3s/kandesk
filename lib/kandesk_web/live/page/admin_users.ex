@@ -31,19 +31,24 @@ defmodule KandeskWeb.Page.Admin_users do
   def handle_event("save_user", %{"user" => form_data} = params, %{assigns: assigns} = socket) do
     edit_row = assigns.edit_row
     with "admin" <- assigns.user.role, %User{} <- edit_row do :ok else _ -> raise(@access_error) end
-    id = edit_row.id
     case edit_user(form_data, assigns, edit_row) do
       {:ok, user} ->
-        rows = get_users()
+        socket = assign(socket, edit_row: nil)
+        current_user = assigns.user
         # we could be currently updating ourselves
-        user =
-          if assigns.user.id == user.id do
+        if current_user.id == user.id do
+          socket = assign(socket, user: user)
+          if current_user.language != user.language do
             Gettext.put_locale(user.language)
-            user
+            # force page reload to refresh all translations
+            send self(), {"show_page", %{"delegate_event" => "Page.Admin_users"}}
+            {:noreply, assign(socket, page: "loading")}
           else
-            assigns.user
+            {:noreply, assign(socket, rows: get_users())}
           end
-        {:noreply, assign(socket, rows: rows, edit_row: nil, user: user)}
+        else
+          {:noreply, assign(socket, rows: get_users())}
+        end
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
