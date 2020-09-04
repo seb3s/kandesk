@@ -152,10 +152,10 @@ defmodule KandeskWeb.IndexLive do
   end
 
   def handle_event("set_modal_pos", %{"pos" => pos}, socket) do
-    # modal has already been closed, ignore
     if socket.assigns.show_modal do
       {:noreply, assign(socket, modal_pos: pos)}
     else
+      # modal has already been closed, ignore
       {:noreply, socket}
     end
   end
