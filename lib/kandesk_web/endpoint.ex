@@ -10,8 +10,7 @@ defmodule KandeskWeb.Endpoint do
     signing_salt: "mhI1X2v4"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket,
-    websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
   socket "/socket", KandeskWeb.UserSocket,
     websocket: true,

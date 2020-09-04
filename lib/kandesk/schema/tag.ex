@@ -15,5 +15,4 @@ defmodule Kandesk.Schema.Tag do
     |> cast(attrs, [:id, :color, :name])
     |> validate_required([:id, :color])
   end
-
 end

@@ -15,5 +15,4 @@ defmodule Kandesk.Schema.Comment do
     |> cast(attrs, [:comment, :task_id, :creator_id])
     |> validate_required([:comment, :task_id, :creator_id])
   end
-
 end

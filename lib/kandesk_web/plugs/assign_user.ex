@@ -9,6 +9,7 @@ defmodule KandeskWeb.AssignUser do
     case Pow.Plug.current_user(conn) do
       %User{} = user ->
         conn |> put_session("user_id", user.id)
+
       _ ->
         conn
     end

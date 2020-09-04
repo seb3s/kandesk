@@ -24,17 +24,16 @@ defmodule Kandesk.Schema.BoardUser do
   schema "boards_users" do
     belongs_to :board, Kandesk.Schema.Board, primary_key: true
     belongs_to :user, Kandesk.Schema.User, primary_key: true
-    quote do: (unquote_splicing(for right <- @rights, do: field right, :boolean))
+    quote do: (unquote_splicing(for right <- @rights, do: field(right, :boolean)))
 
     timestamps()
   end
 
   def changeset(struct, attrs) do
     struct
-    |> cast(attrs, quote do: [:board_id, :user_id, unquote_splicing(@rights)])
+    |> cast(attrs, quote(do: [:board_id, :user_id, unquote_splicing(@rights)]))
     |> validate_required([:board_id, :user_id])
   end
 
   def rights(), do: @rights
-
 end

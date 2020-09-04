@@ -10,6 +10,7 @@ defmodule Kandesk.Schema.Task do
     belongs_to :creator, Kandesk.Schema.User
     belongs_to :column, Kandesk.Schema.Column
     field :due_date, :naive_datetime
+
     embeds_many :tags, Tag, primary_key: false, on_replace: :delete do
       field :id, :integer
     end
@@ -28,5 +29,4 @@ defmodule Kandesk.Schema.Task do
     schema
     |> cast(params, [:id])
   end
-
 end

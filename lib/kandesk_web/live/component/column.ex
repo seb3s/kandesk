@@ -4,5 +4,4 @@ defmodule KandeskWeb.Component.Column do
   def render(assigns) do
     Phoenix.View.render(KandeskWeb.LiveView, "component_column.html", assigns)
   end
-
 end

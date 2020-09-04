@@ -19,5 +19,4 @@ defmodule Kandesk.Schema.Column do
     |> cast(attrs, [:name, :descr, :position, :visibility, :creator_id, :board_id])
     |> validate_required([:name, :position, :visibility, :creator_id, :board_id])
   end
-
 end

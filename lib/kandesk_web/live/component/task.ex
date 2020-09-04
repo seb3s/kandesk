@@ -4,5 +4,4 @@ defmodule KandeskWeb.Component.Task do
   def render(assigns) do
     Phoenix.View.render(KandeskWeb.LiveView, "component_task.html", assigns)
   end
-
 end

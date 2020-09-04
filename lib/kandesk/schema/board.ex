@@ -22,5 +22,4 @@ defmodule Kandesk.Schema.Board do
     |> validate_required([:name, :token, :is_active, :is_public, :creator_id])
     |> cast_embed(:tags, required: true)
   end
-
 end
