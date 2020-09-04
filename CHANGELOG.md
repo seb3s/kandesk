@@ -1,7 +1,14 @@
+## v1.7.1 - 2020-09-04
+
+  - Complete "fr" errors translations
+  - Force reload admin_users page when current user language is updated
+  - Fix interpolation failure regression when loading a page
+
+
 ## v1.7.0 - 2020-09-04
 
   - Add i18n support with gettext & cldr
-  - Add fr translation
+  - Add "fr" translation
   - Complete README.md with features set
   - Move LiveDashboard under protected area and enable "OS Data" & "Request Logger" tabs
 
