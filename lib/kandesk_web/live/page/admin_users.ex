@@ -36,7 +36,13 @@ defmodule KandeskWeb.Page.Admin_users do
       {:ok, user} ->
         rows = get_users()
         # we could be currently updating ourselves
-        user = if assigns.user.id == user.id, do: user, else: assigns.user
+        user =
+          if assigns.user.id == user.id do
+            Gettext.put_locale(user.language)
+            user
+          else
+            assigns.user
+          end
         {:noreply, assign(socket, rows: rows, edit_row: nil, user: user)}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

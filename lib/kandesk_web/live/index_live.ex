@@ -21,10 +21,12 @@ defmodule KandeskWeb.IndexLive do
   def connected_mount(_params, %{"page" => "dashboard" = page, "user_id" => user_id}, socket) do
     boards = get_user_boards(user_id)
     subscribe(@boards_topic)
+    user = Repo.get(User, user_id)
+    Gettext.put_locale(user.language)
 
     {:ok, assign(socket,
       page: page,
-      user: Repo.get(User, user_id),
+      user: user,
       changeset: nil,
       show_modal: nil,
       modal_pos: "",

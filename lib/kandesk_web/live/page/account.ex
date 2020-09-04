@@ -25,7 +25,9 @@ defmodule KandeskWeb.Page.Account do
   def handle_event("update_personal_data", %{"user" => form_data} = params, %{assigns: assigns} = socket) do
     with %User{} <- assigns.edit_row do :ok else _ -> raise(@access_error) end
     case assigns.edit_row |> User.admin_changeset(form_data) |> Repo.update do
-      {:ok, user} -> handle_event("view_dashboard", nil, assign(socket, user: user))
+      {:ok, user} ->
+        Gettext.put_locale(user.language)
+        handle_event("view_dashboard", nil, assign(socket, user: user))
       {:error, %Ecto.Changeset{} = changeset} -> {:noreply, assign(socket, changeset: changeset)}
     end
   end
