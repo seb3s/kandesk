@@ -33,7 +33,7 @@
             <span class="icon"><i class="fas fa-user-cog"></i></span>
             <span><%= gettext("Account") %></span>
           </button>
-          <%= button("Logout", to: "/session", method: "delete", class: "button") %>
+          <%= button(gettext("Logout"), to: "/session", method: "delete", class: "button") %>
         </div>
       </div>
     </div>
@@ -48,12 +48,12 @@
             <div class="card-content">
               <div class="board_actions buttons">
                 <%= if user_rights(board, :edit_board?) do %>
-                <button class="button" phx-click="edit_board" phx-value-id="<%= board.id %>" data-tippy-content="Edit board">
+                <button class="button" phx-click="edit_board" phx-value-id="<%= board.id %>" data-tippy-content="<%= gettext("Edit board") %>">
                   <span class="icon"><i class="fas fa-edit"></i></span>
                 </button>
                 <% end %>
                 <%= if user_rights(board, :delete_board?) do %>
-                  <button class="button" data-confirm="<%= gettext("Are you sure?%{br_tag}The deletion is permanent!", br_tag: "<br/>") %>" phx-click="delete_board" phx-value-id="<%= board.id %>" data-tippy-content="Delete board">
+                  <button class="button" data-confirm="<%= gettext("Are you sure?%{br_tag}The deletion is permanent!", br_tag: "<br/>") %>" phx-click="delete_board" phx-value-id="<%= board.id %>" data-tippy-content="<%= gettext("Delete board") %>">
                   <span class="icon"><i class="fas fa-trash-alt"></i></span>
                 </button>
                 <% end %>

@@ -20,7 +20,7 @@
     <div class="column is-half">
       <div class="card">
         <header class="card-header">
-          <p class="card-header-title">Users</p>
+          <p class="card-header-title"><%= gettext("Users") %></p>
           <a class="card-header-icon" phx-click="create_user" phx-value-delegate="Page.Admin_users"><i class="fas fa-user-plus"></i></a>
         </header>
         <div class="card-content max_h thin_scroll">
@@ -43,7 +43,7 @@
           <p class="card-header-title">
             <%= case @edit_mode do
               :update -> gettext("Update user")
-              :create ->gettext( "Create user")
+              :create -> gettext("Create user")
               end %>
           </p>
         </header>
@@ -51,21 +51,21 @@
           <%= f = form_for @changeset, "#", phx_submit: "save_user" %>
             <input name="delegate" type="hidden" value="Page.Admin_users">
             <div class="field">
-              <%= label f, :firstname, class: "label" %>
+              <%= label f, :firstname, gettext("Firstname"), class: "label" %>
               <div class="control">
                 <%= text_input f, :firstname, class: "input" %>
                 <%= error_tag f, :firstname %>
               </div>
             </div>
             <div class="field">
-              <%= label f, :lastname, class: "label" %>
+              <%= label f, :lastname, gettext("Lastname"), class: "label" %>
               <div class="control">
                 <%= text_input f, :lastname, class: "input" %>
                 <%= error_tag f, :lastname %>
               </div>
             </div>
             <div class="field">
-              <%= label f, :email, class: "label" %>
+              <%= label f, :email, gettext("Email"), class: "label" %>
               <div class="control">
                 <%= text_input f, :email, class: "input" %>
                 <%= error_tag f, :email %>
@@ -73,14 +73,14 @@
             </div>
             <%= if @edit_mode == :create do %>
               <div class="field">
-                <%= label f, :password, class: "label" %>
+                <%= label f, :password, gettext("Password"), class: "label" %>
                 <div class="control">
                   <%= password_input f, :password, class: "input" %>
                   <%= error_tag f, :password %>
                 </div>
               </div>
               <div class="field">
-                <%= label f, :password_confirmation, class: "label" %>
+                <%= label f, :password_confirmation, gettext("Password confirmation"), class: "label" %>
                 <div class="control">
                   <%= password_input f, :password_confirmation, class: "input" %>
                   <%= error_tag f, :password_confirmation %>
@@ -88,7 +88,7 @@
               </div>
             <% end %>
             <div class="field">
-              <%= label f, :language, class: "label" %>
+              <%= label f, :language, gettext("Language"), class: "label" %>
               <div class="control">
                 <div class="select is-fullwidth">
                   <%= select(f, :language, Kandesk.Schema.User.select_languages(), [prompt: gettext("Select language")]) %>
@@ -97,14 +97,14 @@
               </div>
             </div>
             <div class="field">
-              <%= label f, :active, class: "label" %>
+              <%= label f, :active, gettext("Active"), class: "label" %>
               <div class="control">
                 <%= checkbox f, :active, class: "checkbox" %>
                 <%= error_tag f, :active %>
               </div>
             </div>
             <div class="field">
-              <%= label f, :role, class: "label" %>
+              <%= label f, :role, gettext("Role"), class: "label" %>
               <div class="control">
                 <div class="select is-fullwidth">
                   <%= select(f, :role, Kandesk.Schema.User.select_roles(), [prompt: gettext("Select user role")]) %>

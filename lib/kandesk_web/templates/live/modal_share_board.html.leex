@@ -44,8 +44,8 @@
         </div>
       </form>
       <div class="buttons mt-3 is-centered">
-        <button class="button is-small" onclick="$('.checkbox_tag').attr('checked','checked');">All</button>
-        <button class="button is-small" onclick="$('.checkbox_tag').removeAttr('checked');">None</button>
+        <button class="button is-small" onclick="$('.checkbox_tag').attr('checked','checked');"><%= gettext("All") %></button>
+        <button class="button is-small" onclick="$('.checkbox_tag').removeAttr('checked');"><%= gettext("None") %></button>
         <button class="button is-primary is-small" form="form_modal" type="submit"><%= gettext("Save") %></button>
       </div>
       <% end %>

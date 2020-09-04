@@ -2,12 +2,12 @@
   <div class="modal-background" data-micromodal-close></div>
   <div class="modal-card" style="<%= @modal_pos %>">
     <header class="modal-card-head has-cursor-grab">
-      <h2 class="modal-card-title"><%= gettext "Create a board" %></h2>
+      <h2 class="modal-card-title"><%= gettext("Create a board") %></h2>
     </header>
     <section class="modal-card-body thin_scroll">
       <%= f = form_for @changeset, "#", id: "form_modal", phx_submit: "create_board" %>
         <div class="field">
-          <%= label f, :name, class: "label" %>
+          <%= label f, :name, gettext("Name"), class: "label" %>
           <div class="control">
             <%= text_input f, :name, class: "input", placeholder: gettext("Board name") %>
             <%= error_tag f, :name %>

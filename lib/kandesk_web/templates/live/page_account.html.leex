@@ -26,14 +26,14 @@
           <%= f = form_for @changeset, "#", phx_submit: "update_personal_data" %>
             <input name="delegate" type="hidden" value="Page.Account">
             <div class="field">
-              <%= label f, :firstname, class: "label" %>
+              <%= label f, :firstname, gettext("Firstname"), class: "label" %>
               <div class="control">
                 <%= text_input f, :firstname, class: "input" %>
                 <%= error_tag f, :firstname %>
               </div>
             </div>
             <div class="field">
-              <%= label f, :lastname, class: "label" %>
+              <%= label f, :lastname, gettext("Lastname"), class: "label" %>
               <div class="control">
                 <%= text_input f, :lastname, class: "input" %>
                 <%= error_tag f, :lastname %>
@@ -56,7 +56,7 @@
           <%= f = form_for @changeset, "#", phx_submit: "update_password" %>
             <input name="delegate" type="hidden" value="Page.Account">
             <div class="field">
-              <%= label f, :current_password, class: "label" %>
+              <%= label f, :current_password, gettext("Current password"), class: "label" %>
               <div class="control">
                 <%= password_input f, :current_password, class: "input", placeholder: gettext("Enter password") %>
                 <%= error_tag f, :current_password %>
