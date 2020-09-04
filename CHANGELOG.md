@@ -1,3 +1,11 @@
+## v1.7.0 - 2020-09-04
+
+  - Add i18n support with gettext & cldr
+  - Add fr translation
+  - Complete README.md with features set
+  - Move LiveDashboard under protected area and enable "OS Data" & "Request Logger" tabs
+
+
 ## v1.6.4 - 2020-09-01
 
   - Update README.md with first user creation details
