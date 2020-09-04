@@ -8,7 +8,7 @@ defmodule KandeskWeb.Cldr do
   """
 
   use Cldr,
-    locales: ["en"],
+    locales: ["en", "fr"],
     default_locale: "en",
     gettext: KandeskWeb.Gettext,
     precompile_number_formats: ["¤¤#,##0.##", "#,##0"],
