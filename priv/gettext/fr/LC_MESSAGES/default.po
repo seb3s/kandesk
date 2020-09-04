@@ -1,96 +1,97 @@
-## This file is a PO Template file.
+## "msgid"s in this file come from POT (.pot) files.
 ##
-## "msgid"s here are often extracted from source code.
-## Add new translations manually only if they're dynamic
-## translations that can't be statically extracted.
+## Do not add, change, or remove "msgid"s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
 ##
-## Run "mix gettext.extract" to bring this file up to
-## date. Leave "msgstr"s empty as changing them here as no
-## effect: edit them in PO (.po) files instead.
+## Use "mix gettext.extract --merge" or "mix gettext.merge"
+## to merge POT files into PO files.
 msgid ""
 msgstr ""
+"Language: fr\n"
+"Plural-Forms: nplurals=2\n"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_dashboard.html.leex:34
 msgid "Account"
-msgstr ""
+msgstr "Compte"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:100
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/component_column.html.leex:24
 #: lib/kandesk_web/templates/live/component_column.html.leex:62
 msgid "Add card"
-msgstr ""
+msgstr "Ajouter une carte"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_admin_tags.html.leex:26
 msgid "Add tag"
-msgstr ""
+msgstr "Ajouter un tag"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_dashboard.html.leex:15
 msgid "Admin area"
-msgstr ""
+msgstr "Administration"
 
 #, elixir-format
 #: lib/kandesk/schema/user.ex:45
 msgid "Administrator"
-msgstr ""
+msgstr "Administrateur"
 
 #, elixir-format
 #: lib/kandesk/util.ex:31
 #: lib/kandesk_web/templates/live/modal_share_board.html.leex:47
 msgid "All"
-msgstr ""
+msgstr "Tous"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:54
 msgid "An error has occurred."
-msgstr ""
+msgstr "Une erreur s'est produite"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/component_column.html.leex:30
 #: lib/kandesk_web/templates/live/component_column.html.leex:41 lib/kandesk_web/templates/live/modal_share_board.html.leex:29
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:31
 msgid "Are you sure?"
-msgstr ""
+msgstr "Êtes vous sûr ?"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/component_task.html.leex:19
 msgid "Are you sure?%{br_tag}Deleting '%{task_name}' is permanent!"
-msgstr ""
+msgstr "Êtes vous sûr ?%{br_tag}Supprimer '%{task_name}' est définitif !"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/component_column.html.leex:27
 #: lib/kandesk_web/templates/live/page_dashboard.html.leex:56
 msgid "Are you sure?%{br_tag}The deletion is permanent!"
-msgstr ""
+msgstr "Êtes vous sûr ?%{br_tag}La suppression est définitive !"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_dashboard.html.leex:8
 msgid "Board"
-msgstr ""
+msgstr "Tableau"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_board.html.leex:19
 #: lib/kandesk_web/templates/live/modal_edit_board.html.leex:19
 msgid "Board description"
-msgstr ""
+msgstr "Description du tableau"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_board.html.leex:12
 #: lib/kandesk_web/templates/live/modal_edit_board.html.leex:12
 msgid "Board name"
-msgstr ""
+msgstr "Nom du tableau"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:159
 msgid "Bug"
-msgstr ""
+msgstr "Bug"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_admin_tags.html.leex:23
@@ -99,108 +100,108 @@ msgstr ""
 #: lib/kandesk_web/templates/live/modal_edit_column.html.leex:37 lib/kandesk_web/templates/live/modal_edit_task.html.leex:39
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:116
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_task.html.leex:19
 #: lib/kandesk_web/templates/live/modal_edit_task.html.leex:19
 msgid "Card description"
-msgstr ""
+msgstr "Description de la carte"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_task.html.leex:12
 #: lib/kandesk_web/templates/live/modal_edit_task.html.leex:12
 msgid "Card name"
-msgstr ""
+msgstr "Nom de la carte"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_task.html.leex:24
 #: lib/kandesk_web/templates/live/modal_edit_task.html.leex:24
 msgid "Card tags"
-msgstr ""
+msgstr "Etiquettes"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_account.html.leex:53
 msgid "Change your password"
-msgstr ""
+msgstr "Changer de mot de passe"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_export_content.html.leex:31
 #: lib/kandesk_web/templates/live/modal_share_board.html.leex:55
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_board.html.leex:40
 msgid "Column"
-msgstr ""
+msgstr "Colonne"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_column.html.leex:19
 #: lib/kandesk_web/templates/live/modal_edit_column.html.leex:19
 msgid "Column description"
-msgstr ""
+msgstr "Description de colonne"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_column.html.leex:12
 #: lib/kandesk_web/templates/live/modal_edit_column.html.leex:12
 msgid "Column name"
-msgstr ""
+msgstr "Nom de colonne"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_account.html.leex:73
 msgid "Confirm password"
-msgstr ""
+msgstr "Confirmer le mot de passe"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_board.html.leex:5
 msgid "Create a board"
-msgstr ""
+msgstr "Créer un tableau"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_task.html.leex:5
 msgid "Create a card"
-msgstr ""
+msgstr "Créer une carte"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_column.html.leex:5
 msgid "Create a column"
-msgstr ""
+msgstr "Créer une colonne"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:46
 msgid "Create user"
-msgstr ""
+msgstr "Créer un utilisateur"
 
 #, elixir-format
 #: lib/kandesk/util.ex:31
 msgid "Creator"
-msgstr ""
+msgstr "Créateur"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:155
 msgid "Critical"
-msgstr ""
+msgstr "Critique"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_account.html.leex:59
 msgid "Current password"
-msgstr ""
+msgstr "Mot de passe actuel"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_dashboard.html.leex:56
 msgid "Delete board"
-msgstr ""
+msgstr "Supprimer le tableau"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/component_task.html.leex:19
 msgid "Delete card"
-msgstr ""
+msgstr "Supprimer la carte"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/component_column.html.leex:27
 msgid "Delete column"
-msgstr ""
+msgstr "Supprimer la colonne"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_board.html.leex:17
@@ -208,122 +209,122 @@ msgstr ""
 #: lib/kandesk_web/templates/live/modal_edit_board.html.leex:17 lib/kandesk_web/templates/live/modal_edit_column.html.leex:17
 #: lib/kandesk_web/templates/live/modal_edit_task.html.leex:17
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:158
 msgid "Done"
-msgstr ""
+msgstr "Fait"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/component_column.html.leex:30
 msgid "Duplicate column"
-msgstr ""
+msgstr "Dupliquer la colonne"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_edit_board.html.leex:5
 #: lib/kandesk_web/templates/live/page_dashboard.html.leex:51
 msgid "Edit board"
-msgstr ""
+msgstr "Editer le tableau"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_edit_task.html.leex:5
 msgid "Edit card"
-msgstr ""
+msgstr "Editer la carte"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_edit_column.html.leex:5
 msgid "Edit column"
-msgstr ""
+msgstr "Editer la colonne"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:68
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #, elixir-format
 #: lib/kandesk/schema/user.ex:52
 msgid "English"
-msgstr ""
+msgstr "Anglais"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:160
 msgid "Enhancement"
-msgstr ""
+msgstr "Amélioration"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_account.html.leex:61
 #: lib/kandesk_web/templates/live/page_account.html.leex:68 lib/kandesk_web/templates/live/page_account.html.leex:75
 msgid "Enter password"
-msgstr ""
+msgstr "Entrer le mot de passe"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_board.html.leex:27
 msgid "Export board content"
-msgstr ""
+msgstr "Exporter le tableau"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/component_column.html.leex:32
 msgid "Export column content"
-msgstr ""
+msgstr "Exporter la colonne"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_export_content.html.leex:5
 msgid "Export content"
-msgstr ""
+msgstr "Exporter"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_account.html.leex:29
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:54
 msgid "Firstname"
-msgstr ""
+msgstr "Prénom"
 
 #, elixir-format
 #: lib/kandesk/schema/user.ex:51
 msgid "French"
-msgstr ""
+msgstr "Français"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:157
 msgid "In progress"
-msgstr ""
+msgstr "En cours"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:91
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_account.html.leex:36
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:61
 msgid "Lastname"
-msgstr ""
+msgstr "Nom"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_dashboard.html.leex:36
 msgid "Logout"
-msgstr ""
+msgstr "Déconnexion"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_admin_tags.html.leex:5
 #: lib/kandesk_web/templates/live/page_board.html.leex:54
 msgid "Manage tags"
-msgstr ""
+msgstr "Gérer les étiquettes"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_dashboard.html.leex:20
 msgid "Manage users"
-msgstr ""
+msgstr "Gérer les utilisateurs"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/component_column.html.leex:36
 msgid "Move column to board"
-msgstr ""
+msgstr "Déplacer la colonne vers"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_account.html.leex:23
 msgid "My personal data"
-msgstr ""
+msgstr "Mes données personnelles"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_board.html.leex:10
@@ -331,47 +332,47 @@ msgstr ""
 #: lib/kandesk_web/templates/live/modal_edit_board.html.leex:10 lib/kandesk_web/templates/live/modal_edit_column.html.leex:10
 #: lib/kandesk_web/templates/live/modal_edit_task.html.leex:10
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:163
 msgid "Needs feedback"
-msgstr ""
+msgstr "Feedback demandé"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:161
 msgid "New feature"
-msgstr ""
+msgstr "Nouvelle fonction"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_account.html.leex:66
 msgid "New password"
-msgstr ""
+msgstr "Nouveau mot de passe"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_share_board.html.leex:48
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:76
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:83
 msgid "Password confirmation"
-msgstr ""
+msgstr "Confirmation du mot de passe"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:162
 msgid "Rejected"
-msgstr ""
+msgstr "Rejeté"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:107
 msgid "Role"
-msgstr ""
+msgstr "Rôle"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_admin_tags.html.leex:22
@@ -381,80 +382,80 @@ msgstr ""
 #: lib/kandesk_web/templates/live/modal_share_board.html.leex:49 lib/kandesk_web/templates/live/page_account.html.leex:43
 #: lib/kandesk_web/templates/live/page_account.html.leex:80 lib/kandesk_web/templates/live/page_admin_users.html.leex:117
 msgid "Save"
-msgstr ""
+msgstr "Sauver"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_share_board.html.leex:8
 msgid "Search a user to share with"
-msgstr ""
+msgstr "Chercher un utilisateur pour le partage"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:94
 msgid "Select language"
-msgstr ""
+msgstr "Sélectionner une langue"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:110
 msgid "Select user role"
-msgstr ""
+msgstr "Sélectionner un rôle"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_board.html.leex:62
 msgid "Share"
-msgstr ""
+msgstr "Partager"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_share_board.html.leex:5
 msgid "Share board"
-msgstr ""
+msgstr "Partager un tableau"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_admin_tags.html.leex:14
 msgid "Tag name"
-msgstr ""
+msgstr "Nom de l'étiquette"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_board.html.leex:47
 msgid "Tags"
-msgstr ""
+msgstr "Etiquettes"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:49
 msgid "The page is loading, please wait..."
-msgstr ""
+msgstr "La page est en cours de chargement, veuillez patienter..."
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_board.html.leex:52
 msgid "Toggle size"
-msgstr ""
+msgstr "Basculer la taille"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:45
 msgid "Update user"
-msgstr ""
+msgstr "Mettre à jour l'utilisateur"
 
 #, elixir-format
 #: lib/kandesk/schema/user.ex:46
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/page_admin_users.html.leex:23
 msgid "Users"
-msgstr ""
+msgstr "Utilisateurs"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:153
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #, elixir-format
 #: lib/kandesk_web/templates/live/modal_create_column.html.leex:23
 #: lib/kandesk_web/templates/live/modal_edit_column.html.leex:23
 msgid "Visibility"
-msgstr ""
+msgstr "Visibilité"
 
 #, elixir-format
 #: lib/kandesk_web/live/index_live.ex:156
 msgid "Warning"
-msgstr ""
+msgstr "Attention"

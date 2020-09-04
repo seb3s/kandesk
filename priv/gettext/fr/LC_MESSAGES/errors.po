@@ -8,38 +8,38 @@
 ## to merge POT files into PO files.
 msgid ""
 msgstr ""
-"Language: en\n"
+"Language: fr\n"
 "Plural-Forms: nplurals=2\n"
 
 msgid "can't be blank"
-msgstr ""
+msgstr "ne peut être vide"
 
 msgid "has already been taken"
-msgstr ""
+msgstr "est déjà pris"
 
 msgid "is invalid"
-msgstr ""
+msgstr "est invalide"
 
 msgid "must be accepted"
-msgstr ""
+msgstr "doit être accepté"
 
 msgid "has invalid format"
-msgstr ""
+msgstr "a un format invalide"
 
 msgid "has an invalid entry"
-msgstr ""
+msgstr "a une entrée invalide"
 
 msgid "is reserved"
-msgstr ""
+msgstr "est réservé"
 
 msgid "does not match confirmation"
-msgstr ""
+msgstr "ne correspond pas à la confirmation"
 
 msgid "is still associated with this entry"
-msgstr ""
+msgstr "est toujours associé avec cette entrée"
 
 msgid "are still associated with this entry"
-msgstr ""
+msgstr "sont toujours associés avec cette entrée"
 
 msgid "should be %{count} character(s)"
 msgid_plural "should be %{count} character(s)"
@@ -72,16 +72,16 @@ msgstr[0] ""
 msgstr[1] ""
 
 msgid "must be less than %{number}"
-msgstr ""
+msgstr "doit être inférieur à %{number}"
 
 msgid "must be greater than %{number}"
-msgstr ""
+msgstr "doit être supérieur à %{number}"
 
 msgid "must be less than or equal to %{number}"
-msgstr ""
+msgstr "doit être inférieur ou égal à %{number}"
 
 msgid "must be greater than or equal to %{number}"
-msgstr ""
+msgstr "doit être supérieur ou égal à %{number}"
 
 msgid "must be equal to %{number}"
-msgstr ""
+msgstr "doit être égal à %{number}"
