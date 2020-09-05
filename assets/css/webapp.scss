@@ -66,6 +66,11 @@ main .alert {
     margin-bottom: 0.5rem;
   }
 
+  .header .logo {
+    flex-grow: 0;
+    min-width: 190px;
+  }
+
   .header_menu > *:not(:last-child) {
     margin-right: 0.5rem;
   }
