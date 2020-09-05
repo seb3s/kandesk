@@ -1,7 +1,12 @@
+## Dev
+
+  - Fix util user_date
+
+
 ## v1.8.0 - 2020-09-05
 
   - Add timezone to user account
-  - Large code refactoring using elixir default formatting rules
+  - Large code refactoring using elixir formatting rules
 
 
 ## v1.7.1 - 2020-09-04
