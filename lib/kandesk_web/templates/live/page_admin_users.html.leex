@@ -97,6 +97,15 @@
               </div>
             </div>
             <div class="field">
+              <%= label f, :timezone, gettext("Timezone"), class: "label" %>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <%= select(f, :timezone, Kandesk.Schema.User.select_timezones(), [prompt: gettext("Select timezone")]) %>
+                </div>
+                <%= error_tag f, :timezone %>
+              </div>
+            </div>
+            <div class="field">
               <%= label f, :active, gettext("Active"), class: "label" %>
               <div class="control">
                 <%= checkbox f, :active, class: "checkbox" %>

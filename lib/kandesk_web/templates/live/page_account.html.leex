@@ -48,6 +48,15 @@
                 <%= error_tag f, :language %>
               </div>
             </div>
+            <div class="field">
+              <%= label f, :timezone, gettext("Timezone"), class: "label" %>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <%= select(f, :timezone, Kandesk.Schema.User.select_timezones(), [prompt: gettext("Select timezone")]) %>
+                </div>
+                <%= error_tag f, :timezone %>
+              </div>
+            </div>
             <div class="buttons is-right">
               <button class="button is-primary" type="submit"><%= gettext("Save") %></button>
             </div>

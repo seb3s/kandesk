@@ -296,6 +296,10 @@ msgid "Select language"
 msgstr ""
 
 #, elixir-format
+msgid "Select timezone"
+msgstr ""
+
+#, elixir-format
 msgid "Select user role"
 msgstr ""
 
@@ -317,6 +321,10 @@ msgstr ""
 
 #, elixir-format
 msgid "The page is loading, please wait..."
+msgstr ""
+
+#, elixir-format
+msgid "Timezone"
 msgstr ""
 
 #, elixir-format

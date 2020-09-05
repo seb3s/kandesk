@@ -296,6 +296,10 @@ msgid "Select language"
 msgstr "Sélectionner une langue"
 
 #, elixir-format
+msgid "Select timezone"
+msgstr "Sélectionner un fuseau horaire"
+
+#, elixir-format
 msgid "Select user role"
 msgstr "Sélectionner un rôle"
 
@@ -318,6 +322,10 @@ msgstr "Etiquettes"
 #, elixir-format
 msgid "The page is loading, please wait..."
 msgstr "La page est en cours de chargement, veuillez patienter..."
+
+#, elixir-format
+msgid "Timezone"
+msgstr "Fuseau horaire"
 
 #, elixir-format
 msgid "Toggle size"

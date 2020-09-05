@@ -11,8 +11,8 @@
   </div>
   <div id="tpl_task_<%= @task.id %>" ondragstart="event.preventDefault();event.stopPropagation();" draggable="true" onclick="webapp.close_tippy(this);">
     <div style="padding: 5px;">
-      <%= gettext("Created at:") %> <%= @task.inserted_at %><br>
-      <%= gettext("Updated at:") %> <%= @task.updated_at %>
+      <%= gettext("Created at:") %> <%= user_date(@task.inserted_at, @user) %><br>
+      <%= gettext("Updated at:") %> <%= user_date(@task.updated_at, @user) %>
     </div>
     <%= if user_rights(@board, :delete_task?) do %>
       <hr class="dropdown-divider">

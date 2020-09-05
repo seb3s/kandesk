@@ -19,6 +19,7 @@ defmodule Kandesk.Schema.User do
     field :lastname, :string
     field :avatar, :string
     field :language, :string
+    field :timezone, :string
     field :active, :boolean, default: true
     field :role, :string
 
@@ -36,8 +37,8 @@ defmodule Kandesk.Schema.User do
     |> pow_user_id_field_changeset(attrs)
     |> pow_password_changeset(attrs)
     |> pow_extension_changeset(attrs)
-    |> cast(attrs, [:firstname, :lastname, :email, :language, :active, :role])
-    |> validate_required([:firstname, :lastname, :email, :language, :active, :role])
+    |> cast(attrs, [:firstname, :lastname, :email, :language, :timezone, :active, :role])
+    |> validate_required([:firstname, :lastname, :email, :language, :timezone, :active, :role])
   end
 
   def roles(), do: ["admin", "user"]
@@ -51,4 +52,7 @@ defmodule Kandesk.Schema.User do
   def language("fr"), do: gettext("French")
   def language("en"), do: gettext("English")
   def language(_), do: ""
+
+  def timezones(), do: Tzdata.canonical_zone_list()
+  def select_timezones(), do: for(item <- timezones(), do: {item, item})
 end
