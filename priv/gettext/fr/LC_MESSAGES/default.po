@@ -25,7 +25,7 @@ msgstr "Ajouter une carte"
 
 #, elixir-format
 msgid "Add tag"
-msgstr "Ajouter un tag"
+msgstr "Ajouter une étiquette"
 
 #, elixir-format
 msgid "Admin area"
