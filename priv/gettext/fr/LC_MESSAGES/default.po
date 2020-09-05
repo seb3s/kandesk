@@ -309,7 +309,7 @@ msgstr "Partager"
 
 #, elixir-format
 msgid "Share board"
-msgstr "Partager un tableau"
+msgstr "Partager le tableau"
 
 #, elixir-format
 msgid "Tag name"

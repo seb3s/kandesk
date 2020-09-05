@@ -24,6 +24,9 @@
             </div>
             <div class="dropdown-menu" role="menu">
               <div class="dropdown-content thin_scroll max-h-120">
+                <%= if is_creator(@board, @user) do %>
+                <a class="dropdown-item" phx-click="show_modal" phx-value-modal="share_board"><span class="icon"><i class="fas fa-user-plus"></i></span><%= gettext("Share board") %></a>
+                <% end %>
                 <a class="dropdown-item" phx-click="show_modal" phx-value-modal="board_content"><span class="icon"><i class="fas fa-file-export"></i></span><%= gettext("Export board content") %></a>
                 <hr class="dropdown-divider">
                 <%= for board <- @boards, board.id != @board.id do %>
@@ -56,12 +59,6 @@
               </div>
             </div>
           </div>
-          <%= if is_creator(@board, @user) do %>
-          <button class="button is-primary" phx-click="show_modal" phx-value-modal="share_board">
-            <span class="icon"><i class="fas fa-user-plus"></i></span>
-            <span><%= gettext("Share") %></span>
-          </button>
-          <% end %>
         </div>
       </div>
       <div class="column is-paddingless is-marginless has-text-centered">
