@@ -1,3 +1,9 @@
+## v1.8.0 - 2020-09-05
+
+  - Add timezone to user account
+  - Large code refactoring using elixir default formatting rules
+
+
 ## v1.7.1 - 2020-09-04
 
   - Complete "fr" errors translations
