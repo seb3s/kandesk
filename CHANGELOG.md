@@ -1,5 +1,7 @@
 ## Dev
 
+  - Adjust css so that kandesk logo is centered most of the time
+  - Move "Share board" under the board menu
   - Fix util user_date
 
 
