@@ -14,7 +14,7 @@ defmodule KandeskWeb.Cldr do
     precompile_number_formats: ["¤¤#,##0.##", "#,##0"],
     data_dir: "./priv/cldr",
     precompile_transliterations: [],
-    providers: [Cldr.Number],
+    providers: [Cldr.Number, Cldr.Calendar, Cldr.DateTime],
     otp_app: :kandesk
 
   @doc "Returns the currently set locale for a connection"
