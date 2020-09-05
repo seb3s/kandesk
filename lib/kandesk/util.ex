@@ -44,7 +44,7 @@ defmodule Kandesk.Util do
 
   def user_date(date, user) do
     date
-    |> DateTime.from_naive!(date, "Etc/UTC")
+    |> DateTime.from_naive!("Etc/UTC")
     |> DateTime.shift_zone!(user.timezone)
     |> KandeskWeb.Cldr.DateTime.to_string!(locale: user.language)
   end
