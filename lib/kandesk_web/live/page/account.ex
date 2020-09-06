@@ -1,5 +1,5 @@
 defmodule KandeskWeb.Page.Account do
-  use Phoenix.LiveView
+  use KandeskWeb, :live_view
   alias Kandesk.Schema.{User, Board, BoardUser, Column, Task, Comment, Tag}
   alias Kandesk.Repo
   import Ecto.Query
