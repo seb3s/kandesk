@@ -5,6 +5,7 @@ import MicroModal from "../vendor/micromodal";
 import Sortable from "sortablejs";
 import Swal from 'sweetalert2';
 import tippy from 'tippy.js';
+import gettext from 'gettext.js';
 
 let webapp = (function (webapp) {
 
@@ -13,6 +14,8 @@ let webapp = (function (webapp) {
 // --------------------------------------------------------------------------------------
 let phx_hooks = {};
 
+// client hooks
+// ------------
 phx_hooks.show_modal = {
     mounted() { MicroModal.show(this.el.id, {
         disableScroll: true,
@@ -126,6 +129,12 @@ webapp.close_tippy = function(item) {
 
 phx_hooks.scroll_on_update = {
     updated() { this.el.scrollIntoView() }
+}
+
+// server hooks
+// ------------
+phx_hooks.set_locale = {
+    mounted() { this.handleEvent("set_locale", ({locale}) => webapp.i18n.setLocale(locale)) }
 }
 
 
@@ -268,14 +277,24 @@ document.body.addEventListener('phoenix.link.click', function (e) {
         title: message,
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'Cancel'
+        confirmButtonText: webapp.i18n.gettext('Yes'),
+        cancelButtonText: webapp.i18n.gettext('Cancel')
     }).then((result) => {
         if (result.value) {
             webapp.live_socket.root.pushHookEvent(null, event, meta, function(){});
         }
     })
 }, false);
+
+
+// --------------------------------------------------------------------------------------
+// js translations
+// --------------------------------------------------------------------------------------
+webapp.i18n = new gettext();
+webapp.i18n.setMessages('messages', 'fr', {
+  "Yes": "Oui",
+  "Cancel": "Annuler"
+}, 'nplurals=2; plural=n>1;');
 
 
 // --------------------------------------------------------------------------------------

@@ -48,4 +48,9 @@ defmodule Kandesk.Util do
     |> DateTime.shift_zone!(user.timezone)
     |> KandeskWeb.Cldr.DateTime.to_string!(locale: user.language)
   end
+
+  def set_locale(user) do
+    Gettext.put_locale(user.language)
+    send(self(), {"set_locale", %{}})
+  end
 end

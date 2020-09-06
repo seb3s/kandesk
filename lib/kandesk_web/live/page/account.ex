@@ -32,7 +32,7 @@ defmodule KandeskWeb.Page.Account do
 
     case row |> User.admin_changeset(form_data) |> Repo.update() do
       {:ok, user} ->
-        Gettext.put_locale(user.language)
+        set_locale(user)
         handle_event("view_dashboard", nil, assign(socket, user: user))
 
       {:error, %Ecto.Changeset{} = changeset} ->
