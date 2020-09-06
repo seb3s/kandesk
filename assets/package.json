@@ -13,7 +13,8 @@
     "phoenix_live_view": "file:../deps/phoenix_live_view",
     "sortablejs": "^1.10.2",
     "sweetalert2": "^9.17.0",
-    "tippy.js": "^6.2.5"
+    "tippy.js": "^6.2.5",
+    "gettext.js": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
