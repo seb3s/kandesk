@@ -29,6 +29,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## Features set
 
+Kandesk is now a fully multilingual application and is waiting for your contribution to submit a new translation.
+
 ### Boards:
 
   * create / update / delete
@@ -62,11 +64,11 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ### Account page:
 
-  * basic page to maintain your personal data (currently names & password)
+  * page to maintain your personal data: names, language, timezone, password
 
 ### Admin area:
 
-  * manage users : basic admin panel to be able to create / update / delete users
+  * manage users : simple admin panel to be able to create / update / delete users
 
 
 ## Learn more about elixir, phoenix & liveview
