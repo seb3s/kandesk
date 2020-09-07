@@ -1,4 +1,4 @@
-## Dev
+## v1.8.1 - 2020-09-07
 
   - Translate sweetalert2 buttons
   - Adjust css so that kandesk logo is centered most of the time
