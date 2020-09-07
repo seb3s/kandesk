@@ -1,3 +1,8 @@
+## Dev
+
+  - Add a card counter in the column title
+
+
 ## v1.8.1 - 2020-09-07
 
   - Translate sweetalert2 buttons
