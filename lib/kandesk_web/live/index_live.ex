@@ -252,20 +252,18 @@ defmodule KandeskWeb.IndexLive do
 
   def handle_event("view_board", %{"id" => id}, %{assigns: assigns} = socket) do
     id = to_integer(id)
+    board = Enum.find(assigns.boards, &(&1.id == id))
+    unless board, do: raise(@access_error)
+
     # eventually unsubscribe previous board
     assigns.board && unsubscribe(assigns.board.token)
-    board = Enum.find(assigns.boards, &(&1.id == id))
 
-    if board do
-      columns =
-        Repo.all(from(Column, where: [board_id: ^id], order_by: :position))
-        |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
+    columns =
+      Repo.all(from(Column, where: [board_id: ^id], order_by: :position))
+      |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
 
-      subscribe(board.token)
-      {:noreply, assign(socket, page: "board", board: board, columns: columns)}
-    else
-      {:noreply, socket}
-    end
+    subscribe(board.token)
+    {:noreply, assign(socket, page: "board", board: board, columns: columns)}
   end
 
   def handle_event("view_dashboard", _params, %{assigns: assigns} = socket) do
