@@ -2,6 +2,10 @@
 
 ![Kandesk board](https://raw.githubusercontent.com/seb3s/kandesk/master/assets/static/images/kandesk.board.png)
 
+## Installation & requirements
+
+[Elixir 1.10+](https://elixir-lang.org/install.html) is required to run Kandesk.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
