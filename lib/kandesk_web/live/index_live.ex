@@ -4,8 +4,10 @@ defmodule KandeskWeb.IndexLive do
   alias Kandesk.Repo
   import Ecto.Query
   import Kandesk.Util
-  import KandeskWeb.Endpoint, only: [subscribe: 1, unsubscribe: 1, broadcast_from: 4]
   import KandeskWeb.Gettext
+
+  import KandeskWeb.Endpoint,
+    only: [subscribe: 1, unsubscribe: 1, broadcast_from: 4, broadcast: 3]
 
   # require Logger #Logger.info "params: #{inspect params}"
 
@@ -90,6 +92,12 @@ defmodule KandeskWeb.IndexLive do
         order_by: :name
       )
     )
+  end
+
+  def get_columns(board_id) do
+    columns =
+      Repo.all(from(Column, where: [board_id: ^board_id], order_by: :position))
+      |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
   end
 
   ## ------------
@@ -257,11 +265,7 @@ defmodule KandeskWeb.IndexLive do
 
     # eventually unsubscribe previous board
     assigns.board && unsubscribe(assigns.board.token)
-
-    columns =
-      Repo.all(from(Column, where: [board_id: ^id], order_by: :position))
-      |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
-
+    columns = get_columns(id)
     subscribe(board.token)
     {:noreply, assign(socket, page: "board", board: board, columns: columns)}
   end
@@ -580,10 +584,7 @@ defmodule KandeskWeb.IndexLive do
 
     {:ok, _} = Repo.query("select sp_duplicate_column($1, $2);", [id, assigns.user.id])
 
-    columns =
-      Repo.all(from(Column, where: [board_id: ^assigns.board.id], order_by: :position))
-      |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
-
+    columns = get_columns(assigns.board.id)
     broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
     {:noreply, assign(socket, columns: columns)}
   end
@@ -599,6 +600,7 @@ defmodule KandeskWeb.IndexLive do
     {:ok, _} = Repo.query("select sp_move_column_to_board($1, $2);", [id, board_id])
     columns = for c <- assigns.columns, c.id != id, do: c
     broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
+    broadcast(row2.token, "set_columns", %{columns: get_columns(row2.id)})
     {:noreply, assign(socket, columns: columns)}
   end
 
@@ -745,10 +747,7 @@ defmodule KandeskWeb.IndexLive do
         new_pos
       ])
 
-    columns =
-      Repo.all(from(Column, where: [board_id: ^assigns.board.id], order_by: :position))
-      |> Repo.preload([{:tasks, from(t in Task, order_by: t.position)}])
-
+    columns = get_columns(assigns.board.id)
     broadcast_from(self(), assigns.board.token, "set_columns", %{columns: columns})
     {:noreply, assign(socket, columns: columns)}
   end
