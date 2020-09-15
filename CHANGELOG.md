@@ -1,5 +1,7 @@
-## Dev
+## v1.8.2 - 2020-09-15
 
+  - Move column to board: fix missing real time updating at destination board
+  - Fix card background color consistency on hover
   - Add a card counter in the column title
 
 
