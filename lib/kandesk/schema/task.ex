@@ -11,7 +11,7 @@ defmodule Kandesk.Schema.Task do
     belongs_to :column, Kandesk.Schema.Column
     field :due_date, :naive_datetime
 
-    embeds_many :tags, Tag, primary_key: false, on_replace: :delete do
+    embeds_many :tags, Kandesk.Schema.Tag, primary_key: false, on_replace: :delete do
       field :id, :integer
     end
 
@@ -28,5 +28,6 @@ defmodule Kandesk.Schema.Task do
   def tag_changeset(schema, params) do
     schema
     |> cast(params, [:id])
+    |> validate_required([:id])
   end
 end
