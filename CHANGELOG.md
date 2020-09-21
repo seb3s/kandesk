@@ -1,3 +1,8 @@
+## Dev
+
+  - Upgrade phoenix_live_view to 0.14.6
+
+
 ## v1.8.2 - 2020-09-15
 
   - Move column to board: fix missing real time updating at destination board
