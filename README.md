@@ -33,7 +33,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## Features set
 
-Kandesk is now a fully multilingual application and is waiting for your contribution to submit a new translation.
+Kandesk is a fully multilingual application. Please feel free to contribute to the project by submitting a new translation.
 
 ### Boards:
 
@@ -46,17 +46,17 @@ Kandesk is now a fully multilingual application and is waiting for your contribu
   * create / update / delete
   * visibility: a column can be made visible to its creator only
   * columns are sortable via drag & drop
-  * duplicate column
-  * ability to move a column to another board
+  * duplicate a column
+  * move a column to another board
   * export column content to pseudo xml data
-  * realtime updating among users viewing the same board
+  * realtime updates among users viewing the same board
 
 ### Cards:
 
   * create / update / delete
   * cards are sortable via drag & drop within and between columns
   * tags association
-  * realtime updating among users viewing the same board
+  * realtime updates among users viewing the same board
 
 ### Tags:
 
@@ -64,7 +64,7 @@ Kandesk is now a fully multilingual application and is waiting for your contribu
   * two display modes: large with text or small without
   * new tags can be added
   * tags are sortable to control the order in which they appear on cards
-  * realtime updating among users viewing the same board
+  * realtime updates among users viewing the same board
 
 ### Account page:
 
