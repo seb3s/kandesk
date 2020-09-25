@@ -25,10 +25,9 @@ defmodule KandeskWeb.IndexLive do
     boards = get_user_boards(user_id)
     subscribe(@boards_topic)
     user = Repo.get(User, user_id)
-    set_locale(user)
 
     {:ok,
-     assign(socket,
+     assign(socket |> set_locale(user),
        page: page,
        user: user,
        changeset: nil,
@@ -801,10 +800,6 @@ defmodule KandeskWeb.IndexLive do
   ## handle_info from handle_event self() cast
   ## -----------------------------------------
   def handle_info({"move_task" = event, params}, socket), do: do_event(event, params, socket)
-
-  def handle_info({"set_locale", _params}, socket) do
-    {:noreply, push_event(socket, "set_locale", %{locale: socket.assigns.user.language})}
-  end
 
   ## ---------------
   ## page delegation

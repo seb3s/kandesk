@@ -49,8 +49,8 @@ defmodule Kandesk.Util do
     |> KandeskWeb.Cldr.DateTime.to_string!(locale: user.language)
   end
 
-  def set_locale(user) do
+  def set_locale(socket, user) do
     Gettext.put_locale(user.language)
-    send(self(), {"set_locale", %{}})
+    Phoenix.LiveView.push_event(socket, "set_locale", %{locale: user.language})
   end
 end
