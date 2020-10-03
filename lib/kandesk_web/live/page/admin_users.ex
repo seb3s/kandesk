@@ -40,8 +40,9 @@ defmodule KandeskWeb.Page.Admin_users do
       {:ok, user} ->
         socket = assign(socket, edit_row: nil)
         current_user = assigns.user
-        # we could be currently updating ourselves
+
         if current_user.id == user.id do
+          # we are updating ourself
           socket = assign(socket, user: user)
 
           if current_user.language != user.language do
