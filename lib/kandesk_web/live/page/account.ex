@@ -39,6 +39,6 @@ defmodule KandeskWeb.Page.Account do
     end
   end
 
-  def handle_event(event, params, socket),
+  def handle_event("view_dashboard" = event, params, socket),
     do: KandeskWeb.IndexLive.handle_event(event, params, socket)
 end
