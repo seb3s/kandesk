@@ -1,8 +1,7 @@
 /* This file is for your main application css. */
-
 @import "./bulma.custom.scss";
 @import "./scroll.scss";
-@import "./croppie.scss";
+@import "../node_modules/croppie/croppie.css";
 @import "./micromodal.scss";
 @import "../node_modules/tippy.js/dist/tippy.css";
 @import "../node_modules/tippy.js/themes/light-border.css";

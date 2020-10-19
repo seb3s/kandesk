@@ -1,11 +1,13 @@
-import $ from "cash-dom";
-import {Socket} from "phoenix";
-import LiveSocket from "phoenix_live_view";
-import MicroModal from "../vendor/micromodal";
-import Sortable from "sortablejs";
-import Swal from 'sweetalert2';
-import tippy from 'tippy.js';
-import gettext from 'gettext.js';
+import {Socket} from "phoenix"
+import LiveSocket from "phoenix_live_view"
+
+import $ from "cash-dom"
+import MicroModal from "micromodal"
+import Sortable from "sortablejs"
+import Swal from 'sweetalert2'
+import tippy from 'tippy.js'
+import gettext from 'gettext.js'
+import croppie from 'croppie'
 
 let webapp = (function (webapp) {
 
