@@ -8,19 +8,19 @@ html body.swal2-height-auto {
 // tippy custom themes
 // -------------------
 .tippy-box[data-theme~='lightblue-bg'] {
-  background-color: #ebfeff;
+  background-color: $primary-light;
 }
 .tippy-box[data-theme~='lightblue-bg'][data-placement^='top'] > .tippy-arrow::before {
-  border-top-color: #ebfeff;
+  border-top-color: $primary-light;
 }
 .tippy-box[data-theme~='lightblue-bg'][data-placement^='bottom'] > .tippy-arrow::before {
-  border-bottom-color: #ebfeff;
+  border-bottom-color: $primary-light;
 }
 .tippy-box[data-theme~='lightblue-bg'][data-placement^='left'] > .tippy-arrow::before {
-  border-left-color: #ebfeff;
+  border-left-color: $primary-light;
 }
 .tippy-box[data-theme~='lightblue-bg'][data-placement^='right'] > .tippy-arrow::before {
-  border-right-color: #ebfeff;
+  border-right-color: $primary-light;
 }
 
 
