@@ -238,7 +238,7 @@ main .alert {
         padding: 0 0.25rem 0 0.6rem;
         border-radius: 5px 0 0 5px;
         font-size: 0.85rem;
-        background-color: #53718b;
+        background-color: #666;
       }
 
       .checkbox_tag {
@@ -253,11 +253,11 @@ main .alert {
         border-radius: 0 5px 5px 0;
         color: #fff;
         outline: none;
-        background-color: #53718b;
+        background-color: #666;
         transform: unset;
         margin-left: unset;
 
-        &:checked::before {
+        &:checked:before {
           height: 1.5rem;
           width: 1.5rem;
           content: '✔';
@@ -265,6 +265,16 @@ main .alert {
           font-size: 1.2rem;
           text-align: center;
           line-height: 1.5rem;
+        }
+      }
+    }
+
+    .field_tag.light {
+      .task_tag, .checkbox_tag {
+        opacity: 0.8;
+
+        &:checked {
+          opacity: 1;
         }
       }
     }

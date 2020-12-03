@@ -23,7 +23,7 @@
         <label class="label"><%= gettext("Visibility") %></label>
         <div class="task_tags">
           <%= for {option, option_label} <- column_visibility_options() do %>
-          <label class="field_tag">
+          <label class="field_tag light">
             <span class="task_tag"><%= option_label %></span>
             <input class="checkbox_tag" name="column[visibility]" type="radio" value="<%= option %>"
               <%= if option == @edit_row.visibility do "checked" end %> >

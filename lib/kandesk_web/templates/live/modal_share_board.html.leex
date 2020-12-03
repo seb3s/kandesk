@@ -40,7 +40,7 @@
       <%= form_for @changeset, "#", id: "form_modal", phx_submit: "update_share" %>
         <div class="task_tags mt-3">
         <%= for {right, index} <- Enum.with_index(Kandesk.Schema.BoardUser.rights()) do %>
-          <label class="field_tag">
+          <label class="field_tag light">
             <span class="task_tag"><%= right%></span>
             <input class="checkbox_tag" id="right_<%= index %>" name="boarduser[<%= right %>]" type="checkbox" value="true" <%= Map.get(@edit_row, right) && "checked" %> >
           </label>
