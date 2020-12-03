@@ -1,5 +1,7 @@
 ## v1.9.0 - 2020-12-03
 
+  - Add light option to checkboxes to better distinguished checked values
+  - Share board: fix checkboxes bug
   - Add avatar to user's profile
   - Upgrade phoenix_live_view to 0.15.0
   - Some cleaning done
