@@ -25,7 +25,7 @@ Then you can connect with "admin@admin.com" as Email and "admin" as Password. Th
 
 ## Avatars
 
-Avatars are currently saved to disk at "/srv/www/kandesk". You need to create this directory with the required rights to be able to save & user avatars with your installation.
+Avatars are currently saved to disk at "/srv/www/kandesk". You need to create this directory with the required rights to be able to save & use avatars with your installation.
 
 
 ## Access the application
