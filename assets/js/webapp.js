@@ -133,6 +133,36 @@ phx_hooks.scroll_on_update = {
     updated() { this.el.scrollIntoView() }
 }
 
+function new_croppie(shape) {
+    webapp.upload_avatar = new croppie(document.getElementById('upload_avatar'), {
+        viewport: { width: 300, height: 300, type: shape},
+        enableOrientation: true})
+}
+
+phx_hooks.upload_avatar = {
+    mounted() {
+        let delegate = this.el.getAttribute('data-hook-delegate'),
+            shape = this.el.getAttribute("data-hook-shape"),
+            that = this
+        new_croppie(shape)
+        $('#upload_crop').on('click', function(){
+            webapp.upload_avatar.result({
+                type: 'base64',
+                circle: false,
+                format: 'jpeg',
+                quality: 0.95
+            }).then(function (result) {
+                webapp.upload_avatar.destroy()
+                that.pushEvent('upload_avatar', { image : result, delegate: delegate })
+            })
+        })
+    },
+    updated() {
+        let shape = this.el.getAttribute("data-hook-shape")
+        new_croppie(shape)
+    }
+}
+
 // server hooks
 // ------------
 phx_hooks.set_locale = {
@@ -156,6 +186,30 @@ function debounce(func, wait, immediate) {
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(context, args);
     };
+};
+
+
+// --------------------------------------------------------------------------------------
+// image cropping
+// --------------------------------------------------------------------------------------
+webapp.croppie_read_file = function (input) {
+    if (input.files && input.files[0]) {
+        $('#panel_view_avatar').hide();
+        $('#panel_crop_avatar').show();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            webapp.upload_avatar.bind({ url: e.target.result }).then(function(){
+                console.log('Cropper bind complete');
+            });
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+};
+
+webapp.croppie_cancel_load = function () {
+    $('#panel_view_avatar').show();
+    $('#panel_crop_avatar').hide();
+    $('#upload_btn').val("");
 };
 
 

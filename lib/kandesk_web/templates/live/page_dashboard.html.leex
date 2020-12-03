@@ -34,6 +34,7 @@
             <span><%= gettext("Account") %></span>
           </button>
           <%= button(gettext("Logout"), to: "/session", method: "delete", class: "button") %>
+          <%= render "common/avatar.html", avatar: @user.avatar, shape: "circle", icon: "fa-user" %>
         </div>
       </div>
     </div>

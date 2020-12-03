@@ -1,0 +1,30 @@
+<div id="avatar" class="field" phx-hook="upload_avatar" data-hook-delegate="<%= @delegate %>" data-hook-shape="<%= @shape %>">
+  <div id="panel_view_avatar">
+    <%= render "common/avatar.html", avatar: @avatar, shape: @shape, icon: @icon %>
+    <input type="file" id="upload_btn" accept="image/jpeg, image/png" style="display:none"
+      onchange="webapp.croppie_read_file(this);">
+    <button id="change_avatar" class="button is-primary"
+      onclick="document.getElementById('upload_btn').click(); event.preventDefault();">
+      <%= gettext("Change avatar") %>
+    </button>
+  </div>
+  <div id="panel_crop_avatar"style="margin: 30px auto; width: 300px; display: none;">
+    <div id="upload_avatar_wrap" style="height: 354px;">
+      <div id="upload_avatar" style="height: 300px; margin-bottom: 54px;"></div>
+    </div>
+    <div class="buttons is-centered">
+      <button class="button" onclick="webapp.upload_avatar.rotate(90);">
+        <span class="icon"><i class="fas fa-undo"></i></span>
+        <span><%= gettext("Left") %></span>
+      </button>
+      <button class="button" onclick="webapp.upload_avatar.rotate(-90);">
+        <span class="icon"><i class="fas fa-redo"></i></span>
+        <span><%= gettext("Right") %></span>
+      </button>
+    </div>
+    <div class="buttons is-centered">
+      <button class="button" onclick="webapp.croppie_cancel_load();"><%= gettext("Cancel") %></button>
+      <button id="upload_crop" class="button is-primary"><%= gettext("Save") %></button>
+    </div>
+  </div>
+</div>

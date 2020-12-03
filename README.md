@@ -23,6 +23,10 @@ This is done by running:
 
 Then you can connect with "admin@admin.com" as Email and "admin" as Password. Then you will be able to change everything from within the application, password included ;-)
 
+## Avatars
+
+Avatars are currently saved to disk at "/srv/www/kandesk". You need to create this directory with the required rights to be able to save & user avatars with your installation.
+
 
 ## Access the application
 
@@ -50,6 +54,7 @@ Kandesk is a fully multilingual application. Please feel free to contribute to t
   * move a column to another board
   * export column content to pseudo xml data
   * realtime updates among users viewing the same board
+  * cards counter in header
 
 ### Cards:
 
@@ -68,7 +73,7 @@ Kandesk is a fully multilingual application. Please feel free to contribute to t
 
 ### Account page:
 
-  * page to maintain your personal data: names, language, timezone, password
+  * page to maintain your personal data: names, avatar, language, timezone, password
 
 ### Admin area:
 

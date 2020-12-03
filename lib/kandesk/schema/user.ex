@@ -41,6 +41,12 @@ defmodule Kandesk.Schema.User do
     |> validate_required([:firstname, :lastname, :email, :language, :timezone, :active, :role])
   end
 
+  def avatar_changeset(struct, attrs) do
+    struct
+    |> cast(attrs, [:avatar])
+    |> validate_required([:avatar])
+  end
+
   def roles(), do: ["admin", "user"]
   def select_roles(), do: for(item <- roles(), do: {role(item), item})
   def role("admin"), do: gettext("Administrator")

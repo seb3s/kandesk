@@ -64,7 +64,11 @@
       <div class="column is-paddingless is-marginless logo">
         <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
       </div>
-      <div class="column is-paddingless is-marginless has-text-right"></div>
+      <div class="column is-paddingless is-marginless has-text-right">
+        <div class="header_menu field is-grouped is-grouped-right">
+          <%= render "common/avatar.html", avatar: @user.avatar, shape: "circle", icon: "fa-user" %>
+        </div>
+      </div>
     </div>
   </div>
 

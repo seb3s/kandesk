@@ -1,7 +1,7 @@
 // override swal default height
 // ----------------------------
 html body.swal2-height-auto {
-    height: 100% !important;
+  height: 100% !important;
 }
 
 
@@ -21,4 +21,19 @@ html body.swal2-height-auto {
 }
 .tippy-box[data-theme~='lightblue-bg'][data-placement^='right'] > .tippy-arrow::before {
   border-right-color: #ebfeff;
+}
+
+
+// font-awesome customs
+// --------------------
+.avatar.fa-stack {
+  width: 2em;
+
+  .fa-stack-2x {
+    width: 2em;
+  }
+
+  .fa-stack-1x {
+    width: 1em;
+  }
 }

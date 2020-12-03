@@ -87,6 +87,10 @@ msgstr "Nom de la carte"
 msgid "Card tags"
 msgstr "Etiquettes"
 
+#, elixir-format, fuzzy
+msgid "Change avatar"
+msgstr "Changer l'avatar"
+
 #, elixir-format
 msgid "Change your password"
 msgstr "Changer de mot de passe"
@@ -228,6 +232,10 @@ msgid "Lastname"
 msgstr "Nom"
 
 #, elixir-format
+msgid "Left"
+msgstr "Gauche"
+
+#, elixir-format
 msgid "Logout"
 msgstr "Déconnexion"
 
@@ -280,12 +288,16 @@ msgid "Rejected"
 msgstr "Rejeté"
 
 #, elixir-format
+msgid "Right"
+msgstr "Droite"
+
+#, elixir-format
 msgid "Role"
 msgstr "Rôle"
 
 #, elixir-format
 msgid "Save"
-msgstr "Sauver"
+msgstr "Enregistrer"
 
 #, elixir-format
 msgid "Search a user to share with"
@@ -302,10 +314,6 @@ msgstr "Sélectionner un fuseau horaire"
 #, elixir-format
 msgid "Select user role"
 msgstr "Sélectionner un rôle"
-
-#, elixir-format
-msgid "Share"
-msgstr "Partager"
 
 #, elixir-format
 msgid "Share board"

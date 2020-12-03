@@ -87,6 +87,10 @@ msgstr ""
 msgid "Card tags"
 msgstr ""
 
+#, elixir-format, fuzzy
+msgid "Change avatar"
+msgstr ""
+
 #, elixir-format
 msgid "Change your password"
 msgstr ""
@@ -228,6 +232,10 @@ msgid "Lastname"
 msgstr ""
 
 #, elixir-format
+msgid "Left"
+msgstr ""
+
+#, elixir-format
 msgid "Logout"
 msgstr ""
 
@@ -280,6 +288,10 @@ msgid "Rejected"
 msgstr ""
 
 #, elixir-format
+msgid "Right"
+msgstr ""
+
+#, elixir-format
 msgid "Role"
 msgstr ""
 
@@ -301,10 +313,6 @@ msgstr ""
 
 #, elixir-format
 msgid "Select user role"
-msgstr ""
-
-#, elixir-format
-msgid "Share"
 msgstr ""
 
 #, elixir-format

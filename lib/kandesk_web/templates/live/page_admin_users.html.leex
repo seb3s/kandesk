@@ -11,6 +11,7 @@
       </div>
       <div class="column is-paddingless is-marginless">
         <div class="header_menu field is-grouped is-grouped-right">
+          <%= render "common/avatar.html", avatar: @user.avatar, shape: "circle", icon: "fa-user" %>
         </div>
       </div>
     </div>
@@ -26,7 +27,10 @@
         <div class="card-content max_h thin_scroll">
           <%= for user <- @rows do %>
           <div class="level mb-0 px-3 py-2 <%= if user == @edit_row, do: "has-background-grey-lighter", else: "bg_hover" %>" phx-click="update_user" phx-value-delegate="Page.Admin_users" phx-value-id="<%= user.id %>">
-            <div class="level-left"><%= user.firstname %> <%= user.lastname %> - <%= user.email %></div>
+            <div class="level-left">
+              <%= render "common/avatar.html", avatar: user.avatar, shape: "circle", icon: "fa-user" %>
+              <%= user.firstname %> <%= user.lastname %> - <%= user.email %>
+            </div>
             <div class="level-right">
               <i class="fas fa-trash-alt" data-confirm="<%= gettext("Are you sure?") %>" phx-click="delete_user" phx-value-delegate="Page.Admin_users" phx-value-id="<%= user.id %>"></i>
             </div>
@@ -48,6 +52,9 @@
           </p>
         </header>
         <div class="card-content max_h thin_scroll">
+          <%= if @edit_mode === :update do %>
+            <%= render "common/avatar.upload.html", delegate: "Page.Admin_users", avatar: @edit_row.avatar, shape: "circle", icon: "fa-user" %>
+          <% end %>
           <%= f = form_for @changeset, "#", phx_submit: "save_user" %>
             <input name="delegate" type="hidden" value="Page.Admin_users">
             <div class="field">

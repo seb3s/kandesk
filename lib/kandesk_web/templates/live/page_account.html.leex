@@ -11,6 +11,7 @@
       </div>
       <div class="column is-paddingless is-marginless">
         <div class="header_menu field is-grouped is-grouped-right">
+          <%= render "common/avatar.html", avatar: @user.avatar, shape: "circle", icon: "fa-user" %>
         </div>
       </div>
     </div>
@@ -23,6 +24,7 @@
           <p class="card-header-title"><%= gettext("My personal data") %></p>
         </header>
         <div class="card-content max_h thin_scroll">
+          <%= render "common/avatar.upload.html", delegate: "Page.Account", avatar: @edit_row.avatar, shape: "circle", icon: "fa-user" %>
           <%= f = form_for @changeset, "#", phx_submit: "update_personal_data" %>
             <input name="delegate" type="hidden" value="Page.Account">
             <div class="field">

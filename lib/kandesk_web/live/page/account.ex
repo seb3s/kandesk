@@ -41,4 +41,20 @@ defmodule KandeskWeb.Page.Account do
 
   def handle_event("view_dashboard" = event, params, socket),
     do: KandeskWeb.IndexLive.handle_event(event, params, socket)
+
+  def handle_event("upload_avatar", %{"image" => image}, %{assigns: assigns} = socket) do
+    row = assigns.edit_row
+    unless %User{} = row, do: raise(@access_error)
+
+    filename = avatar_filename()
+
+    case Repo.update(User.avatar_changeset(row, %{avatar: filename})) do
+      {:ok, newrow} ->
+        avatar_replace_image(image, row.avatar, filename)
+        {:noreply, assign(socket, user: newrow, edit_row: newrow)}
+
+      {:error, changeset} ->
+        {:noreply, socket}
+    end
+  end
 end

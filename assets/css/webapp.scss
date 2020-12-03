@@ -398,3 +398,54 @@ main .alert {
     max-height: calc(100vh - 145px);
     overflow-y: auto;
 }
+
+
+// avatars
+// -------
+.avatar.circle {
+  border-radius: 50%;
+}
+.avatar.square {
+  border-radius: 15%;
+}
+
+#avatar {
+  img.avatar {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 1rem;
+  }
+
+  span.avatar {
+    color: #ccc;
+    font-size: 2.5rem;
+    margin-right: 1rem;
+  }
+}
+
+.page_account #avatar {
+  img.avatar {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  span.avatar {
+    font-size: 3rem;
+  }
+}
+
+.header, .level {
+  img.avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  span.avatar {
+    color: #aaa;
+    font-size: 1.25rem;
+  }
+}
+
+.level .avatar {
+  margin-right: 0.75rem;
+}

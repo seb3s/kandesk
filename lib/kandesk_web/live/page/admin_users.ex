@@ -61,6 +61,24 @@ defmodule KandeskWeb.Page.Admin_users do
     end
   end
 
+  def handle_event("upload_avatar", %{"image" => image}, %{assigns: assigns} = socket) do
+    row = assigns.edit_row
+    unless (%User{} = row) && assigns.user.role == "admin", do: raise(@access_error)
+
+    filename = avatar_filename()
+
+    case Repo.update(User.avatar_changeset(row, %{avatar: filename})) do
+      {:ok, newrow} ->
+        avatar_replace_image(image, row.avatar, filename)
+        socket = if assigns.user.id == newrow.id, do: assign(socket, user: newrow), else: socket
+        rows = for o <- assigns.rows, do: if(o.id == newrow.id, do: newrow, else: o)
+        {:noreply, assign(socket, rows: rows, edit_row: newrow)}
+
+      {:error, changeset} ->
+        {:noreply, socket}
+    end
+  end
+
   def handle_event("delete_user", %{"id" => id}, %{assigns: assigns} = socket) do
     unless assigns.user.role == "admin", do: raise(@access_error)
 

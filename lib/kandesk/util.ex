@@ -53,4 +53,26 @@ defmodule Kandesk.Util do
     Gettext.put_locale(user.language)
     Phoenix.LiveView.push_event(socket, "set_locale", %{locale: user.language})
   end
+
+  ## ------------------------------------
+  ## avatar
+  ## ------------------------------------
+  @upload_dir "/srv/www/kandesk"
+
+  def avatar_filename() do
+    uuid = Ecto.UUID.generate()
+    dir = :binary.part(uuid, 0, 2)
+    :filename.join([<<"avatar">>, dir, <<uuid::binary, ".jpeg">>])
+  end
+
+  def avatar_replace_image(image, old_filename, filename) do
+    <<"data:image/jpeg;base64,", img64::binary>> = image
+    {:ok, img} = Base.decode64(img64)
+    destination = :filename.join([@upload_dir, filename])
+    :ok = :filelib.ensure_dir(destination)
+    {:ok, iodevice} = :file.open(destination, [:write, :raw])
+    :ok = :file.write(iodevice, img)
+    :file.close(iodevice)
+    :file.delete(:filename.join([@upload_dir, old_filename]))
+  end
 end
