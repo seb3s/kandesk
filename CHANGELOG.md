@@ -1,3 +1,8 @@
+## dev
+
+  - Fix slide scroll when mouseup event occurs outside of viewport
+
+
 ## v1.9.0 - 2020-12-03
 
   - Add light option to checkboxes to better distinguished checked values

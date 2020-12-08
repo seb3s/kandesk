@@ -270,30 +270,29 @@ function set_draggable(caller, draggable, handler) {
 // board scrolling
 // --------------------------------------------------------------------------------------
 function slide_scroll(handler, slider) {
-    let isDown = false;
     let startX;
     let scrollLeft;
 
     handler.addEventListener('mousedown', (e) => {
-      if(e.target !== e.currentTarget) return;
-      isDown = true;
-      slider.classList.add('active');
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    });
+        if (e.which !== 1) return;
+        if (e.target !== e.currentTarget) return;
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+        window.addEventListener('mousemove', elementDrag);
+        window.addEventListener('mouseup', endDrag);
+    })
 
-    slider.addEventListener('mouseup', () => {
-      isDown = false;
-      slider.classList.remove('active');
-    });
+    function elementDrag(e) {
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX);
+        slider.scrollLeft = scrollLeft - walk;
+    }
 
-    slider.addEventListener('mousemove', (e) => {
-      if(!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX);
-      slider.scrollLeft = scrollLeft - walk;
-    });
+    function endDrag() {
+        window.removeEventListener('mousemove', elementDrag);
+        window.removeEventListener('mouseup', endDrag);
+    }
 };
 
 
