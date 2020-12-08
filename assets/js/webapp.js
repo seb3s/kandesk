@@ -218,27 +218,25 @@ webapp.croppie_cancel_load = function () {
 // --------------------------------------------------------------------------------------
 function set_draggable(caller, draggable, handler) {
     let x1 = 0, y1 = 0, x2 = 0, y2 = 0;
-    // get viewport size to stop dragging to far
+    // get viewport size to stop dragging too far
     let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
-    if (handler) { handler.onmousedown = dragMouseDown; }
+    if (handler) { handler.addEventListener('mousedown', dragMouseDown); }
 
     function dragMouseDown(e) {
-        e = e || window.event;
         e.preventDefault();
+        if (e.which !== 1) return;
         // get the mouse cursor position at startup
         x2 = e.clientX;
         y2 = e.clientY;
-        document.onmouseup = closeDragElement;
-        // call a function whenever the cursor moves
-        document.onmousemove = elementDrag;
+        window.addEventListener('mousemove', elementDrag);
+        window.addEventListener('mouseup', endDrag);
     }
 
     let push_modal_pos_fn = debounce(function(pos) { caller.pushEvent('set_modal_pos', {pos: pos}) }, 500);
 
     function elementDrag(e) {
-        e = e || window.event;
         e.preventDefault();
         // prevent modal handler from going outside viewport
         if (e.clientX <= w && e.clientX >= 0 && e.clientY <= h && e.clientY >= 0) {
@@ -258,10 +256,9 @@ function set_draggable(caller, draggable, handler) {
         }
     }
 
-    function closeDragElement() {
-        // stop moving when mouse button is released:
-        document.onmouseup = null;
-        document.onmousemove = null;
+    function endDrag() {
+        window.removeEventListener('mousemove', elementDrag);
+        window.removeEventListener('mouseup', endDrag);
     }
 };
 

@@ -1,5 +1,6 @@
 ## dev
 
+  - Fix mouse right click triggering modal dragging
   - Fix slide scroll when mouseup event occurs outside of viewport
 
 
