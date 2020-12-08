@@ -1,5 +1,7 @@
 # Kandesk
 
+Kandesk is a simple trello-like app that I created for my own needs and for learning elixir & liveview. It has a simple set of features. I use it every day (hosting it on a small raspberry pi3) and it is suitable for individuals or small teams.
+
 ![Kandesk board](https://raw.githubusercontent.com/seb3s/kandesk/master/assets/static/images/kandesk.board.png)
 
 ## Installation & requirements
