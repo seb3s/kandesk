@@ -5,6 +5,9 @@ defmodule KandeskWeb.Router do
   use Pow.Extension.Phoenix.Router,
     extensions: [PowResetPassword, PowPersistentSession]
 
+  # Force the compiler to process this module now
+  require KandeskWeb.Cldr
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -12,8 +15,8 @@ defmodule KandeskWeb.Router do
     plug :put_root_layout, {KandeskWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug(Cldr.Plug.SetLocale, apps: [:cldr, :gettext], cldr: KandeskWeb.Cldr)
-    plug(Cldr.Plug.AcceptLanguage, cldr_backend: KandeskWeb.Cldr)
+    plug Cldr.Plug.SetLocale, apps: [:cldr, :gettext], cldr: KandeskWeb.Cldr
+    plug Cldr.Plug.AcceptLanguage, cldr_backend: KandeskWeb.Cldr
   end
 
   pipeline :api do
