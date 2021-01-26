@@ -1,5 +1,6 @@
 ## dev
 
+  - Fix logo sizing on all pages
   - Upgrade phoenix_live_view to 0.15.3
   - Fix mouse right click triggering modal dragging
   - Fix slide scroll when mouseup event occurs outside of viewport
