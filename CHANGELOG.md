@@ -1,4 +1,4 @@
-## dev
+## v1.9.1 - 2021-01-27
 
   - Fix logo sizing on all pages
   - Upgrade phoenix_live_view to 0.15.3
