@@ -40,7 +40,7 @@ defmodule KandeskWeb.Router do
   scope "/", KandeskWeb do
     pipe_through [:browser, :protected]
 
-    live "/", IndexLive, session: %{"page" => "dashboard"}
+    live "/", IndexLive
   end
 
   # Other scopes may use custom stacks.

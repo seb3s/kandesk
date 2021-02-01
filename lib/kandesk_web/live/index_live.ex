@@ -21,14 +21,14 @@ defmodule KandeskWeb.IndexLive do
     end
   end
 
-  def connected_mount(_params, %{"page" => "dashboard" = page, "user_id" => user_id}, socket) do
+  def connected_mount(_params, %{"user_id" => user_id}, socket) do
     boards = get_user_boards(user_id)
     subscribe(@boards_topic)
     user = Repo.get(User, user_id)
 
     {:ok,
      assign(socket |> set_locale(user),
-       page: page,
+       page: "dashboard",
        user: user,
        changeset: nil,
        show_modal: nil,
@@ -45,19 +45,9 @@ defmodule KandeskWeb.IndexLive do
      )}
   end
 
-  def connected_mount(_params, _session, socket) do
-    {:ok, assign(socket, page: "error")}
-  end
-
   def render(%{page: "loading"} = assigns) do
     ~L"""
     <div><%= gettext("The page is loading, please wait...") %></div>
-    """
-  end
-
-  def render(%{page: "error"} = assigns) do
-    ~L"""
-    <div><%= gettext("An error has occurred.") %></div>
     """
   end
 
