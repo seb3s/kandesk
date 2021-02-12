@@ -431,14 +431,13 @@ defmodule KandeskWeb.IndexLive do
     users =
       Repo.all(
         from u in User,
+          left_join: b in BoardUser,
+          on: u.id == b.user_id and b.board_id == ^board_id,
           where:
-            (ilike(u.firstname, ^search) or
-               ilike(u.lastname, ^search) or
-               ilike(u.email, ^search)) and
-              fragment(
-                "not exists (select 'X' from boards_users zz where board_id=? and user_id=u0.id)",
-                ^board_id
-              ),
+            is_nil(b.user_id) and
+              (ilike(u.firstname, ^search) or
+                 ilike(u.lastname, ^search) or
+                 ilike(u.email, ^search)),
           order_by: [:lastname, :firstname],
           limit: 10
       )
