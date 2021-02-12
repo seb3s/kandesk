@@ -426,14 +426,15 @@ defmodule KandeskWeb.IndexLive do
   def handle_event("search_user", %{"value" => search}, %{assigns: assigns} = socket)
       when byte_size(search) <= 100 do
     board_id = assigns.board.id
+    search = "#{search}%"
 
     users =
       Repo.all(
         from u in User,
           where:
-            (ilike(u.firstname, ^"#{search}%") or
-               ilike(u.lastname, ^"#{search}%") or
-               ilike(u.email, ^"#{search}%")) and
+            (ilike(u.firstname, ^search) or
+               ilike(u.lastname, ^search) or
+               ilike(u.email, ^search)) and
               fragment(
                 "not exists (select 'X' from boards_users zz where board_id=? and user_id=u0.id)",
                 ^board_id
