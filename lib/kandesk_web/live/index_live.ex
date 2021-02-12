@@ -78,7 +78,7 @@ defmodule KandeskWeb.IndexLive do
         on: bu.board_id == b.id and bu.user_id == ^user_id,
         where: b.id in ^ids,
         select_merge: %{board_user: bu},
-        order_by: :name
+        order_by: [:name, :id]
       )
     )
   end
@@ -359,7 +359,7 @@ defmodule KandeskWeb.IndexLive do
         join: u in User,
         on: u.id == bu.user_id,
         where: [board_id: ^board_id],
-        order_by: [u.lastname, u.firstname]
+        order_by: [u.lastname, u.firstname, u.email]
     )
     |> Repo.preload(:user)
   end
@@ -438,7 +438,7 @@ defmodule KandeskWeb.IndexLive do
               (ilike(u.firstname, ^search) or
                  ilike(u.lastname, ^search) or
                  ilike(u.email, ^search)),
-          order_by: [:lastname, :firstname],
+          order_by: [:lastname, :firstname, :email],
           limit: 10
       )
 
