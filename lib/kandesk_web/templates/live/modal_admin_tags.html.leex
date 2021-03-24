@@ -13,7 +13,7 @@
           <%= color_input fp, :color, class: "input_color", tabindex: "-1" %>
           <%= text_input fp, :name, class: "input input_tag", placeholder: gettext("Tag name") %>
         </div>
-      <% end %>
+        <% end %>
       </form>
       <div id="<%= temp_id() %>" phx-hook="scroll_on_update" data-scroll-count="<%= @scroll_count %>"></div>
     </section>
