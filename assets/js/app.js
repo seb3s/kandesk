@@ -1,24 +1,24 @@
 // We need to import the CSS so that webpack will load it.
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
-import "../css/app.scss"
+import '../css/app.scss'
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
-// in "webpack.config.js".
+// in 'webpack.config.js'.
 //
 // Import deps with the dep name or local files with a relative path, for example:
 //
-//     import {Socket} from "phoenix"
-//     import socket from "./socket"
+//     import {Socket} from 'phoenix'
+//     import socket from './socket'
 //
 import 'phoenix_html'
-import {Socket} from "phoenix"
-import {LiveSocket} from "phoenix_live_view"
+import {Socket} from 'phoenix'
+import {LiveSocket} from 'phoenix_live_view'
 
-import $ from "cash-dom"
-import MicroModal from "micromodal"
-import Sortable from "sortablejs"
+import $ from 'cash-dom'
+import MicroModal from 'micromodal'
+import Sortable from 'sortablejs'
 import Swal from 'sweetalert2'
 import tippy from 'tippy.js'
 import gettext from 'gettext.js'
@@ -46,12 +46,12 @@ phx_hooks.show_modal = {
 };
 
 phx_hooks.slide_scroll = {
-    mounted() { slide_scroll(this.el, document.getElementById(this.el.getAttribute("data-slider_id"))) }
+    mounted() { slide_scroll(this.el, document.getElementById(this.el.getAttribute('data-slider_id'))) }
 };
 
 phx_hooks.sortable_columns = {
     mounted() { Sortable.create(this.el, {
-        group: this.el.getAttribute("data-sortable_group"),
+        group: this.el.getAttribute('data-sortable_group'),
         handle: '.column_header',
         onEnd: (Evt) => {
             let old_pos = Evt.oldIndex + 1,
@@ -67,7 +67,7 @@ phx_hooks.sortable_columns = {
 
 phx_hooks.sortable_tasks = {
     mounted() { Sortable.create(this.el, {
-        group: this.el.getAttribute("data-sortable_group"),
+        group: this.el.getAttribute('data-sortable_group'),
         delay: 1, // let tippy time to get closed before dragging
         onEnd: (Evt) => {
             let task_id = parseInt(Evt.item.getAttribute('phx-value-id')),
@@ -89,7 +89,7 @@ phx_hooks.sortable_tasks = {
 
 phx_hooks.sortable_tags = {
     mounted() { Sortable.create(this.el, {
-        group: this.el.getAttribute("data-sortable_group"),
+        group: this.el.getAttribute('data-sortable_group'),
         handle: '.tag_handle',
         onEnd: (Evt) => {
             let old_pos = Evt.oldIndex + 1,
@@ -106,15 +106,15 @@ phx_hooks.sortable_tags = {
 phx_hooks.tippy = {
     mounted() {
         let options = {delay: [300, 0]}
-        if (this.el.getAttribute("data-tippy-content")) {
+        if (this.el.getAttribute('data-tippy-content')) {
             tippy(this.el, options)
         } else {
-            tippy(this.el.querySelectorAll("[data-tippy-content]"), options)
+            tippy(this.el.querySelectorAll('[data-tippy-content]'), options)
         }
     },
     updated() {
         // only update content for tippy that have hook & content on the same tag
-        let content = this.el.getAttribute("data-tippy-content")
+        let content = this.el.getAttribute('data-tippy-content')
         if (content) {
             this.el._tippy.setContent(content)
         }
@@ -157,7 +157,7 @@ function new_croppie(shape) {
 phx_hooks.upload_avatar = {
     mounted() {
         let delegate = this.el.getAttribute('data-hook-delegate'),
-            shape = this.el.getAttribute("data-hook-shape"),
+            shape = this.el.getAttribute('data-hook-shape'),
             that = this
         new_croppie(shape)
         $('#upload_crop').on('click', function(){
@@ -173,7 +173,7 @@ phx_hooks.upload_avatar = {
         })
     },
     updated() {
-        let shape = this.el.getAttribute("data-hook-shape")
+        let shape = this.el.getAttribute('data-hook-shape')
         new_croppie(shape)
     }
 }
@@ -181,7 +181,7 @@ phx_hooks.upload_avatar = {
 // server hooks
 // ------------
 phx_hooks.set_locale = {
-    mounted() { this.handleEvent("set_locale", ({locale}) => webapp.i18n.setLocale(locale)) }
+    mounted() { this.handleEvent('set_locale', ({locale}) => webapp.i18n.setLocale(locale)) }
 }
 
 
@@ -224,7 +224,7 @@ webapp.croppie_read_file = function (input) {
 webapp.croppie_cancel_load = function () {
     $('#panel_view_avatar').show();
     $('#panel_crop_avatar').hide();
-    $('#upload_btn').val("");
+    $('#upload_btn').val('');
 };
 
 
@@ -261,11 +261,11 @@ function set_draggable(caller, draggable, handler) {
             x2 = e.clientX;
             y2 = e.clientY;
             // set the element's new position
-            draggable.style.left = (draggable.offsetLeft - x1) + "px";
-            draggable.style.top = (draggable.offsetTop - y1) + "px";
-            draggable.style.right = "unset";
-            draggable.style.bottom = "unset";
-            draggable.style.position = "fixed";
+            draggable.style.left = (draggable.offsetLeft - x1) + 'px';
+            draggable.style.top = (draggable.offsetTop - y1) + 'px';
+            draggable.style.right = 'unset';
+            draggable.style.bottom = 'unset';
+            draggable.style.position = 'fixed';
             // debounce update of liveview state to keep modal pos on subsequent liveview updates
             push_modal_pos_fn(draggable.style.cssText);
         }
@@ -311,8 +311,8 @@ function slide_scroll(handler, slider) {
 // --------------------------------------------------------------------------------------
 // live_view live_socket
 // --------------------------------------------------------------------------------------
-let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-webapp.live_socket = new LiveSocket("/live", Socket, {
+let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+webapp.live_socket = new LiveSocket('/live', Socket, {
     params: {_csrf_token: csrfToken},
     hooks: phx_hooks});
 webapp.live_socket.connect();
@@ -322,17 +322,17 @@ webapp.live_socket.connect();
 // overrides default data confirmation to use swal
 // --------------------------------------------------------------------------------------
 function extractPhxValue(el, meta) {
-    let prefix = "phx-value-";
+    let prefix = 'phx-value-';
     for (let i = 0; i < el.attributes.length; i++) {
       let name = el.attributes[i].name;
-      if(name.startsWith(prefix)){ meta[name.replace(prefix, "")] = el.getAttribute(name) };
+      if(name.startsWith(prefix)){ meta[name.replace(prefix, '')] = el.getAttribute(name) };
     }
     return meta;
 };
 
 document.body.addEventListener('phoenix.link.click', function (e) {
     e.stopPropagation();
-    let message = e.target.getAttribute("data-confirm");
+    let message = e.target.getAttribute('data-confirm');
     if(!message) { return true; };
     e.preventDefault();
 
@@ -359,8 +359,8 @@ document.body.addEventListener('phoenix.link.click', function (e) {
 // --------------------------------------------------------------------------------------
 webapp.i18n = new gettext();
 webapp.i18n.setMessages('messages', 'fr', {
-  "Yes": "Oui",
-  "Cancel": "Annuler"
+  'Yes': 'Oui',
+  'Cancel': 'Annuler'
 }, 'nplurals=2; plural=n>1;');
 
 
