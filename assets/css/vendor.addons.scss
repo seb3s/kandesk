@@ -37,3 +37,14 @@ html body.swal2-height-auto {
     width: 1em;
   }
 }
+
+
+// micromodal Basic Modal Styles
+// -----------------------------
+.modal {
+  display: none;
+}
+
+.modal.is-open {
+  display: flex;
+}
