@@ -59,27 +59,13 @@ defmodule KandeskWeb.IndexLive do
   # get_user_boards
   # ---------------
   def get_user_boards(user_id) do
-    q1 =
-      from b in Board,
-        where: [creator_id: ^user_id],
-        select: b.id
-
-    q2 =
-      from b in Board,
-        join: bu in BoardUser,
-        on: bu.board_id == b.id and bu.user_id == ^user_id,
-        select: b.id
-
-    ids = Repo.all(union_all(q1, ^q2))
-
     Repo.all(
-      from(b in Board,
+      from b in Board,
         left_join: bu in BoardUser,
         on: bu.board_id == b.id and bu.user_id == ^user_id,
-        where: b.id in ^ids,
+        where: b.creator_id == ^user_id or bu.user_id == ^user_id,
         select_merge: %{board_user: bu},
         order_by: [b.name, b.id]
-      )
     )
   end
 
