@@ -10,12 +10,14 @@ defmodule KandeskWeb.Cldr do
   use Cldr,
     locales: ["en", "fr"],
     default_locale: "en",
+    add_fallback_locales: false,
     gettext: KandeskWeb.Gettext,
-    precompile_number_formats: ["¤¤#,##0.##", "#,##0"],
     data_dir: "./priv/cldr",
+    otp_app: :kandesk,
     precompile_transliterations: [],
+    precompile_number_formats: ["¤¤#,##0.##", "#,##0"],
     providers: [Cldr.Number, Cldr.Calendar, Cldr.DateTime],
-    otp_app: :kandesk
+    force_locale_download: true
 
   @doc "Returns the currently set locale for a connection"
   @spec locale(Plug.Conn.t()) :: String.t()
