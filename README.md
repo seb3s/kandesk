@@ -6,7 +6,7 @@ Kandesk is a simple trello-like app that I created for my own needs and for lear
 
 ## Installation & requirements
 
-[Elixir 1.10+](https://elixir-lang.org/install.html) is required to run Kandesk.
+[Elixir 1.12+](https://elixir-lang.org/install.html) is required to run Kandesk.
 
 To start your Phoenix server:
 
