@@ -1,6 +1,7 @@
-## DEV
+## v1.10.0 - 2021-09-01
 
-  - Upgrade phoenix_live_view to 0.15.4
+  - Migrate template files to new heex engine
+  - Upgrade phoenix_live_view to 0.16.1
 
 
 ## v1.9.1 - 2021-01-27
