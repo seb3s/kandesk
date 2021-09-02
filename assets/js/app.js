@@ -178,10 +178,14 @@ phx_hooks.upload_avatar = {
     }
 }
 
-// server hooks
-// ------------
-phx_hooks.set_locale = {
-    mounted() { this.handleEvent('set_locale', ({locale}) => webapp.i18n.setLocale(locale)) }
+phx_hooks.utilities = {
+    mounted() {
+        // server hooks
+        this.handleEvent('set_locale', ({locale}) => webapp.i18n.setLocale(locale))
+
+        // push hook to be able to call push_event from js code (alpine, ...)
+        webapp.push_hook = this
+    }
 }
 
 
@@ -348,7 +352,7 @@ document.body.addEventListener('phoenix.link.click', function (e) {
         cancelButtonText: webapp.i18n.gettext('Cancel')
     }).then((result) => {
         if (result.value) {
-            webapp.live_socket.root.pushHookEvent(null, event, meta, function(){});
+            webapp.push_hook.pushEvent(event, meta);
         }
     })
 }, false);
