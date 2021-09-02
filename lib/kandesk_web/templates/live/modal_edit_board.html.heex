@@ -1,11 +1,11 @@
 <div class="modal is-open" id="kmodal" phx-hook="show_modal">
   <div class="modal-background" data-micromodal-close></div>
-  <div class="modal-card" style="<%= @modal_pos %>">
+  <div class="modal-card" style={@modal_pos}>
     <header class="modal-card-head has-cursor-grab">
-      <h2 class="modal-card-title"><%= gettext("Create a board") %></h2>
+      <h2 class="modal-card-title"><%= gettext("Edit board") %></h2>
     </header>
     <section class="modal-card-body thin_scroll">
-      <%= f = form_for @changeset, "#", id: "form_modal", phx_submit: "create_board" %>
+      <.form let={f} for={@changeset} id="form_modal" phx-submit="update_board">
         <div class="field">
           <%= label f, :name, gettext("Name"), class: "label" %>
           <div class="control">
@@ -20,7 +20,7 @@
             <%= error_tag f, :descr %>
           </div>
         </div>
-      </form>
+      </.form>
     </section>
     <footer class="modal-card-foot">
       <button class="button is-primary" form="form_modal" type="submit"><%= gettext("Save") %></button>

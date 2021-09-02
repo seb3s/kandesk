@@ -1,16 +1,16 @@
 <div class="modal is-open" id="modal_share_board" phx-hook="show_modal">
   <div class="modal-background" data-micromodal-close></div>
-  <div class="modal-card" style="<%= @modal_pos %>">
+  <div class="modal-card" style={@modal_pos}>
     <header class="modal-card-head has-cursor-grab">
       <h2 class="modal-card-title"><%= gettext("Share board") %></h2>
     </header>
     <section class="modal-card-body thin_scroll">
-      <input class="input" type="text" name="searchtext" placeholder="<%= gettext("Search a user to share with") %>" autocomplete="off" phx-keyup="search_user" phx-debounce="500">
+      <input class="input" type="text" name="searchtext" placeholder={gettext("Search a user to share with")} autocomplete="off" phx-keyup="search_user" phx-debounce="500">
 
       <%= if @searches != [] do %>
       <div class="mt-3">
         <%= for match <- @searches do %>
-        <div class="level level-left mb-0 px-3 py-2 bg_hover" phx-click="add_share" phx-value-id="<%= match.id %>">
+        <div class="level level-left mb-0 px-3 py-2 bg_hover" phx-click="add_share" phx-value-id={match.id}>
           <%= render "common/avatar.html", avatar: match.avatar, shape: "circle", icon: "fa-user" %>
           <%= match.firstname %> <%= match.lastname %> - <%= match.email %>
         </div>
@@ -24,25 +24,25 @@
       <%= if @boardusers != [] do %>
       <div class="mt-3">
         <%= for bu <- @boardusers do %>
-        <div class="level mb-0 px-3 py-2 <%= if bu == @edit_row, do: "has-background-grey-lighter", else: "bg_hover" %>" phx-click="view_share" phx-value-id="<%= bu.user.id %>">
+        <div class={"level mb-0 px-3 py-2 #{if bu == @edit_row, do: "has-background-grey-lighter", else: "bg_hover"}"} phx-click="view_share" phx-value-id={bu.user.id}>
           <div class="level-left">
             <%= render "common/avatar.html", avatar: bu.user.avatar, shape: "circle", icon: "fa-user" %>
             <%= bu.user.firstname %> <%= bu.user.lastname %> - <%= bu.user.email %>
           </div>
           <div class="level-right">
-            <i class="fas fa-trash-alt" data-confirm="<%= gettext("Are you sure?") %>" phx-click="delete_share" phx-value-id="<%= bu.user_id %>"></i>
+            <i class="fas fa-trash-alt" data-confirm={gettext("Are you sure?")} phx-click="delete_share" phx-value-id={bu.user_id}></i>
           </div>
         </div>
         <% end %>
       <% end %>
 
       <%= if @edit_row do %>
-      <%= form_for @changeset, "#", id: "form_modal", phx_submit: "update_share" %>
+      <form id="form_modal" phx-submit="update_share">
         <div class="task_tags mt-3">
         <%= for {right, index} <- Enum.with_index(Kandesk.Schema.BoardUser.rights()) do %>
           <label class="field_tag light">
             <span class="task_tag"><%= right %></span>
-            <input class="checkbox_tag" id="right_<%= index %>" name="boarduser[<%= right %>]" type="checkbox" value="true" <%= Map.get(@edit_row, right) && "checked" %> >
+            <input class="checkbox_tag" id={"right_#{index}"} name={"boarduser[#{right}]"} type="checkbox" value="true" checked={Map.get(@edit_row, right) && ""}>
           </label>
         <% end %>
         </div>

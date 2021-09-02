@@ -15,7 +15,7 @@
           <button class="button is-primary" phx-click="view_dashboard">
             <span class="icon"><i class="fas fa-home"></i></span>
           </button>
-          <div class="is-hoverable dropdown is-iconless" id=<%= "board_dropdown_#{@board.id}" %>>
+          <div class="is-hoverable dropdown is-iconless" id={"board_dropdown_#{@board.id}"}>
             <div class="dropdown-trigger">
               <button class="button is-primary">
                 <span><%= limit_string(@board.name, 20) %></span>
@@ -30,7 +30,7 @@
                 <a class="dropdown-item" phx-click="show_modal" phx-value-modal="board_content"><span class="icon"><i class="fas fa-file-export"></i></span><%= gettext("Export board content") %></a>
                 <hr class="dropdown-divider">
                 <%= for board <- @boards, board.id != @board.id do %>
-                <a class="dropdown-item" phx-click="view_board" phx-value-id="<%= board.id %>">
+                <a class="dropdown-item" phx-click="view_board" phx-value-id={board.id}>
                   <%= limit_string(board.name, 30) %>
                 </a>
                 <% end %>
@@ -62,7 +62,7 @@
         </div>
       </div>
       <div class="column is-paddingless is-marginless logo">
-        <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
+        <img src={Routes.static_path(@socket, "/images/kandesk.logo.png")} alt="Kandesk Logo">
       </div>
       <div class="column is-paddingless is-marginless has-text-right">
         <div class="header_menu field is-grouped is-grouped-right">
@@ -72,10 +72,15 @@
     </div>
   </div>
 
-  <div class="board_content <%= @settings.tags_size %>">
-    <div class="board_columns thin_scroll" id="board_columns_<%= @board.id %>" <%= if user_rights(@board, :move_column?) do %>phx-hook="sortable_columns"<% end %>>
+  <div class={"board_content #{@settings.tags_size}"}>
+    <div class="board_columns thin_scroll" id={"board_columns_#{@board.id}"} {if user_rights(@board, :move_column?), do: [{"phx-hook", "sortable_columns"}], else: []}>
       <%= for column <- @columns do %>
-        <%= live_component(@socket, KandeskWeb.Component.Column, id: "column_#{column.id}", column: column, user: @user, board: @board, boards: @boards) %>
+        <%= if column_visible?(column, @user) do %>
+          <%= live_component KandeskWeb.Component.Column, id: "column_#{column.id}", column: column, user: @user, board: @board, boards: @boards %>
+        <% else %>
+          <%# invisible column: insert blank container for column sorting to work properly %>
+          <div></div>
+        <% end %>
       <% end %>
     </div>
   </div>

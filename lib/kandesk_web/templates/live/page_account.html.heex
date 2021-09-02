@@ -7,7 +7,7 @@
         </button>
       </div>
       <div class="column is-paddingless is-marginless logo">
-        <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
+        <img src={Routes.static_path(@socket, "/images/kandesk.logo.png")} alt="Kandesk Logo">
       </div>
       <div class="column is-paddingless is-marginless">
         <div class="header_menu field is-grouped is-grouped-right">
@@ -25,7 +25,7 @@
         </header>
         <div class="card-content max_h thin_scroll">
           <%= render "common/avatar.upload.html", delegate: "Page.Account", avatar: @edit_row.avatar, shape: "circle", icon: "fa-user" %>
-          <%= f = form_for @changeset, "#", phx_submit: "update_personal_data" %>
+          <.form let={f} for={@changeset} phx-submit="update_personal_data">
             <input name="delegate" type="hidden" value="Page.Account">
             <div class="field">
               <%= label f, :firstname, gettext("Firstname"), class: "label" %>
@@ -62,7 +62,7 @@
             <div class="buttons is-right">
               <button class="button is-primary" type="submit"><%= gettext("Save") %></button>
             </div>
-          </form>
+          </.form>
         </div>
       </div>
     </div>
@@ -73,7 +73,7 @@
           <p class="card-header-title"><%= gettext("Change your password") %></p>
         </header>
         <div class="card-content max_h thin_scroll">
-          <%= f = form_for @changeset, "#", phx_submit: "update_password" %>
+          <.form let={f} for={@changeset} phx-submit="update_password">
             <input name="delegate" type="hidden" value="Page.Account">
             <div class="field">
               <%= label f, :current_password, gettext("Current password"), class: "label" %>
@@ -99,7 +99,7 @@
             <div class="buttons is-right">
               <button class="button is-primary" type="submit"><%= gettext("Save") %></button>
             </div>
-          </form>
+          </.form>
         </div>
       </div>
     </div>

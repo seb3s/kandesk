@@ -1,4 +1,4 @@
-<div id="avatar" class="field" phx-hook="upload_avatar" data-hook-delegate="<%= @delegate %>" data-hook-shape="<%= @shape %>">
+<div id="avatar" class="field" phx-hook="upload_avatar" data-hook-delegate={@delegate} data-hook-shape={@shape}>
   <div id="panel_view_avatar">
     <%= render "common/avatar.html", avatar: @avatar, shape: @shape, icon: @icon %>
     <input type="file" id="upload_btn" accept="image/jpeg, image/png" style="display:none"

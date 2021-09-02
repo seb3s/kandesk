@@ -1,6 +1,6 @@
 <div class="modal is-open" id="kmodal" phx-hook="show_modal">
   <div class="modal-background" data-micromodal-close></div>
-  <div class="modal-card" style="<%= @modal_pos %>">
+  <div class="modal-card" style={@modal_pos}>
     <header class="modal-card-head has-cursor-grab">
       <h2 class="modal-card-title"><%= gettext("Export content") %></h2>
     </header>
@@ -8,22 +8,16 @@
 <textarea class="textarea" style="min-height: 20em;">
 <board>
   <name><%= @board.name %></name><%= if @board.descr do %>
-  <descr><%= @board.descr %></descr><% end %>
-  <%= for column <- if @column_id, do: Enum.filter(@columns, & &1.id == @column_id), else: @columns do %>
+  <descr><%= @board.descr %></descr><% end %><%= for column <- if @column_id, do: Enum.filter(@columns, & &1.id == @column_id), else: @columns do %>
   <column>
     <name><%= column.name %></name><%= if column.descr do %>
-    <descr><%= column.descr %></descr><% end %>
-    <%= for task <- column.tasks do %>
+    <descr><%= column.descr %></descr><% end %><%= for task <- column.tasks do %>
     <card>
       <name><%= task.name %></name><%= if task.descr do %>
-      <descr><%= task.descr %></descr><% end %>
-      <%= for tag <- Enum.filter(@board.tags, fn tag -> Enum.find(task.tags, & &1.id == tag.id) end) do %>
-      <tag><%= tag.name %></tag>
-      <% end %>
-    </card>
-    <% end %>
-  </column>
-  <% end %>
+      <descr><%= task.descr %></descr><% end %><%= for tag <- Enum.filter(@board.tags, fn tag -> Enum.find(task.tags, & &1.id == tag.id) end) do %>
+      <tag><%= tag.name %></tag><% end %>
+    </card><% end %>
+  </column><% end %>
 </board>
 </textarea>
     </section>

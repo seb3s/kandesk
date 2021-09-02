@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="column is-paddingless is-marginless logo">
-        <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
+        <img src={Routes.static_path(@socket, "/images/kandesk.logo.png")} alt="Kandesk Logo">
       </div>
       <div class="column is-paddingless is-marginless">
         <div class="header_menu field is-grouped is-grouped-right">
@@ -42,19 +42,19 @@
 
   <div class="page_content">
     <div class="page_overflow thin_scroll">
-      <div class="columns is-multiline is-marginless" id="<%= temp_id() %>" phx-hook="tippy">
+      <div class="columns is-multiline is-marginless" id={temp_id()} phx-hook="tippy">
         <%= for board <- @boards do %>
         <div class="column is-one-third">
-          <div class="card card_board" phx-click="view_board" phx-value-id="<%= board.id %>">
+          <div class="card card_board" phx-click="view_board" phx-value-id={board.id}>
             <div class="card-content">
               <div class="board_actions buttons">
                 <%= if user_rights(board, :edit_board?) do %>
-                <button class="button" phx-click="edit_board" phx-value-id="<%= board.id %>" data-tippy-content="<%= gettext("Edit board") %>">
+                <button class="button" phx-click="edit_board" phx-value-id={board.id} data-tippy-content={ gettext("Edit board")}>
                   <span class="icon"><i class="fas fa-edit"></i></span>
                 </button>
                 <% end %>
                 <%= if user_rights(board, :delete_board?) do %>
-                  <button class="button" data-confirm="<%= gettext("Are you sure?%{br_tag}The deletion is permanent!", br_tag: "<br/>") %>" phx-click="delete_board" phx-value-id="<%= board.id %>" data-tippy-content="<%= gettext("Delete board") %>">
+                  <button class="button" data-confirm={gettext("Are you sure?%{br_tag}The deletion is permanent!", br_tag: "<br/>")} phx-click="delete_board" phx-value-id={board.id} data-tippy-content={gettext("Delete board")}>
                   <span class="icon"><i class="fas fa-trash-alt"></i></span>
                 </button>
                 <% end %>

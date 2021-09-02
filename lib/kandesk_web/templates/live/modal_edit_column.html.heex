@@ -1,11 +1,11 @@
 <div class="modal is-open" id="kmodal" phx-hook="show_modal">
   <div class="modal-background" data-micromodal-close></div>
-  <div class="modal-card" style="<%= @modal_pos %>">
+  <div class="modal-card" style={@modal_pos}>
     <header class="modal-card-head has-cursor-grab">
       <h2 class="modal-card-title"><%= gettext("Edit column") %></h2>
     </header>
     <section class="modal-card-body thin_scroll">
-      <%= f = form_for @changeset, "#", id: "form_modal", phx_submit: "update_column" %>
+      <.form let={f} for={@changeset} id="form_modal" phx-submit="update_column">
         <div class="field">
           <%= label f, :name, gettext("Name"), class: "label" %>
           <div class="control">
@@ -25,12 +25,12 @@
           <%= for {option, option_label} <- column_visibility_options() do %>
           <label class="field_tag light">
             <span class="task_tag"><%= option_label %></span>
-            <input class="checkbox_tag" name="column[visibility]" type="radio" value="<%= option %>"
-              <%= if option == @edit_row.visibility do "checked" end %> >
+            <input class="checkbox_tag" name="column[visibility]" type="radio" value={option}
+              checked={option == @edit_row.visibility && ""}>
           </label>
           <% end %>
         </div>
-      </form>
+      </.form>
     </section>
     <footer class="modal-card-foot">
       <button class="button is-primary" form="form_modal" type="submit"><%= gettext("Save") %></button>

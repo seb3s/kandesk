@@ -7,7 +7,7 @@
         </button>
       </div>
       <div class="column is-paddingless is-marginless logo">
-        <img src="<%= Routes.static_path(@socket, "/images/kandesk.logo.png") %>" alt="Kandesk Logo">
+        <img src={Routes.static_path(@socket, "/images/kandesk.logo.png")} alt="Kandesk Logo">
       </div>
       <div class="column is-paddingless is-marginless">
         <div class="header_menu field is-grouped is-grouped-right">
@@ -26,13 +26,13 @@
         </header>
         <div class="card-content max_h thin_scroll">
           <%= for user <- @rows do %>
-          <div class="level mb-0 px-3 py-2 <%= if user == @edit_row, do: "has-background-grey-lighter", else: "bg_hover" %>" phx-click="update_user" phx-value-delegate="Page.Admin_users" phx-value-id="<%= user.id %>">
+          <div class={"level mb-0 px-3 py-2 #{if user == @edit_row, do: "has-background-grey-lighter", else: "bg_hover"}"} phx-click="update_user" phx-value-delegate="Page.Admin_users" phx-value-id={user.id}>
             <div class="level-left">
               <%= render "common/avatar.html", avatar: user.avatar, shape: "circle", icon: "fa-user" %>
               <%= user.firstname %> <%= user.lastname %> - <%= user.email %>
             </div>
             <div class="level-right">
-              <i class="fas fa-trash-alt" data-confirm="<%= gettext("Are you sure?") %>" phx-click="delete_user" phx-value-delegate="Page.Admin_users" phx-value-id="<%= user.id %>"></i>
+              <i class="fas fa-trash-alt" data-confirm={gettext("Are you sure?")} phx-click="delete_user" phx-value-delegate="Page.Admin_users" phx-value-id={user.id}></i>
             </div>
           </div>
           <% end %>
@@ -55,7 +55,7 @@
           <%= if @edit_mode === :update do %>
             <%= render "common/avatar.upload.html", delegate: "Page.Admin_users", avatar: @edit_row.avatar, shape: "circle", icon: "fa-user" %>
           <% end %>
-          <%= f = form_for @changeset, "#", phx_submit: "save_user" %>
+          <.form let={f} for={@changeset} phx-submit="save_user">
             <input name="delegate" type="hidden" value="Page.Admin_users">
             <div class="field">
               <%= label f, :firstname, gettext("Firstname"), class: "label" %>
@@ -132,7 +132,7 @@
               <button class="button" type="button" phx-click="cancel" phx-value-delegate="Page.Admin_users" phx-value-panel="admin_edit_user"><%= gettext("Cancel") %></button>
               <button class="button is-primary" type="submit"><%= gettext("Save") %></button>
             </div>
-          </form>
+          </.form>
         </div>
       </div>
     </div>

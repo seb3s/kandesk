@@ -1,11 +1,11 @@
 <div class="modal is-open" id="kmodal" phx-hook="show_modal">
   <div class="modal-background" data-micromodal-close></div>
-  <div class="modal-card" style="<%= @modal_pos %>">
+  <div class="modal-card" style={@modal_pos}>
     <header class="modal-card-head has-cursor-grab">
       <h2 class="modal-card-title"><%= gettext("Create a card") %></h2>
     </header>
     <section class="modal-card-body thin_scroll">
-      <%= f = form_for @changeset, "#", id: "form_modal", phx_submit: "create_task" %>
+      <.form let={f} for={@changeset} id="form_modal" phx-submit="create_task">
         <div class="field">
           <%= label f, :name, gettext("Name"), class: "label" %>
           <div class="control">
@@ -25,14 +25,14 @@
         <div class="task_tags">
           <%= for {tag, index} <- Enum.with_index(@board.tags) do %>
           <label class="field_tag">
-            <span class="task_tag" style="background-color: <%= tag.color %>;"><%= tag.name%></span>
-            <input class="checkbox_tag" style="background-color: <%= tag.color %>;"
-              id="tag_<%= index %>" name="task[tags][][id]" type="checkbox" value="<%= tag.id %>">
+            <span class="task_tag" style={"background-color: #{tag.color};"}><%= tag.name%></span>
+            <input class="checkbox_tag" style={"background-color: #{tag.color};"}
+              id={"tag_#{index}"} name="task[tags][][id]" type="checkbox" value={tag.id}>
           </label>
           <% end %>
         </div>
         <% end %>
-      </form>
+      </.form>
     </section>
     <footer class="modal-card-foot">
       <button class="button is-primary" form="form_modal" type="submit"><%= gettext("Save") %></button>
