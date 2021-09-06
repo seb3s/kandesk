@@ -1,7 +1,6 @@
 <div class="column_task" id={@id}
-    {if user_rights(@board, :edit_task?), do:
-      [{"phx-click", "edit_task"}, {"phx-value-id", @task.id}
-      ], else: []}>
+    {if_attrs user_rights(@board, :edit_task?), do:
+      [{"phx-click", "edit_task"}, {"phx-value-id", @task.id}]}>
   <%= if @task.descr do %>
   <div id={temp_id()} phx-hook="tippy_template" data-template={"tpl_descr_#{@task.id}"} data-tippy-placement="right-start" data-tippy-delay="[300, 0]" data-tippy-theme="light-border lightblue-bg">
     <div id={"tpl_descr_#{@task.id}"} ondragstart="event.preventDefault();event.stopPropagation();" draggable="true" onclick="webapp.close_tippy(this);">

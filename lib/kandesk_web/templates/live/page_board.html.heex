@@ -73,7 +73,7 @@
   </div>
 
   <div class={"board_content #{@settings.tags_size}"}>
-    <div class="board_columns thin_scroll" id={"board_columns_#{@board.id}"} {if user_rights(@board, :move_column?), do: [{"phx-hook", "sortable_columns"}], else: []}>
+    <div class="board_columns thin_scroll" id={"board_columns_#{@board.id}"} {if_attrs user_rights(@board, :move_column?), do: [{"phx-hook", "sortable_columns"}]}>
       <%= for column <- @columns do %>
         <%= if column_visible?(column, @user) do %>
           <%= live_component KandeskWeb.Component.Column, id: "column_#{column.id}", column: column, user: @user, board: @board, boards: @boards %>

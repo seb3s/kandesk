@@ -19,6 +19,14 @@ defmodule Kandesk.Util do
 
   def tag_checked?(id, tags), do: Enum.any?(tags, &(&1.id == id)) and "checked"
 
+  ## if_attrs overcomes heex limitation with dynamic attributes that returns nil
+  ## by returning [] instead
+  defmacro if_attrs(clause, do: expression) do
+    quote do
+      if unquote(clause), do: unquote(expression), else: []
+    end
+  end
+
   def limit_string(nil, _size), do: nil
 
   def limit_string(string, size) when size > 1 do

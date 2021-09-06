@@ -2,18 +2,16 @@
   <div class="column_content">
     <div class="column_header level is-marginless has-cursor-pointer">
       <div class="level-left"
-        {if user_rights(@board, :edit_column?), do:
-          [{"phx-click", "edit_column"}, {"phx-value-id", @column.id}
-          ], else: []}
-        {if @column.descr, do:
+        {if_attrs user_rights(@board, :edit_column?), do:
+          [{"phx-click", "edit_column"}, {"phx-value-id", @column.id}]}
+        {if_attrs @column.descr, do:
           [{"id", temp_id()}, {"phx-hook", "tippy"},
            {"data-tippy-placement", "bottom-start"},
            {"data-tippy-allowhtml", "true"},
            {"data-tippy-theme", "light-border lightblue-bg"},
            {"data-tippy-offset", "[0, 4]"},
            {"data-tippy-maxwidth", "282"},
-           {"data-tippy-content", text_to_html(@column.descr)}
-          ], else: []}
+           {"data-tippy-content", text_to_html(@column.descr)}]}
       >
         <%= @column.name %>
         <div class="tag is-primary"><%= length(@column.tasks) %></div>
@@ -58,11 +56,10 @@
       <% end %>
     </div>
     <div class="column_tasks thin_scroll" id={"column_tasks_#{@column.id}"}
-      {if user_rights(@board, :move_task?), do:
+      {if_attrs user_rights(@board, :move_task?), do:
         [{"phx-hook", "sortable_tasks"},
          {"data-sortable_group", "board"},
-         {"data-column_id", @column.id}
-        ], else: []}
+         {"data-column_id", @column.id}]}
     >
       <%= for task <- @column.tasks do %>
         <%= live_component KandeskWeb.Component.Task, id: "task_#{task.id}", task: task, board: @board, user: @user %>
