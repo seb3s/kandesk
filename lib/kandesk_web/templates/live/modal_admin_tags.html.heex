@@ -15,11 +15,7 @@
         </div>
         <% end %>
       </.form>
-      <!--div id={temp_id()} phx-hook="scroll_on_update" data-scroll-count={@scroll_count}></div-->
-      <!--div {[id: temp_id()]} phx-hook="scroll_on_update" data-scroll-count={@scroll_count}></div-->
-      <!--div {[id: temp_id()]} phx-hook="scroll_on_update" {[data_scroll_count: @scroll_count]}></div-->
-      <!--div {[id: temp_id(), data_scroll_count: @scroll_count]} phx-hook="scroll_on_update"></div-->
-      <div id="scroll_on_update" phx-hook="scroll_on_update" data-scroll-count={@scroll_count}></div>
+      <div id={temp_id()} phx-hook="scroll_on_update" data-scroll-count={@scroll_count}></div>
     </section>
     <footer class="modal-card-foot level">
       <div class="level-left" style="flex-grow: 1;">
