@@ -40,7 +40,7 @@ defmodule Kandesk.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:floki, ">= 0.0.0", only: :test},
       {:phoenix_html, "~> 3.0"},
-      {:phoenix_live_view, "~> 0.16.1"},
+      {:phoenix_live_view, "~> 0.16.4"},
       {:phoenix_live_dashboard, "~> 0.5.0"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:telemetry_metrics, "~> 0.6"},
