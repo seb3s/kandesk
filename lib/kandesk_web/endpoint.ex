@@ -24,7 +24,7 @@ defmodule KandeskWeb.Endpoint do
     at: "/",
     from: :kandesk,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(assets images favicon.ico robots.txt)
 
   plug Plug.Static,
     at: "/",

@@ -21,11 +21,12 @@ config :kandesk, KandeskWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [
+    node: ["esbuild.js", "--watch", cd: Path.expand("../assets", __DIR__)],
     node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
+      "./node_modules/.bin/cpx",
+      "static/**/*",
+      "../priv/static",
+      "--watch",
       cd: Path.expand("../assets", __DIR__)
     ]
   ]

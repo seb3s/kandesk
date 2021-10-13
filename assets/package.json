@@ -2,8 +2,9 @@
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "deploy": "webpack --mode production",
-    "watch": "webpack --mode development --watch"
+    "build": "node esbuild.js",
+    "deploy": "node esbuild.js --deploy",
+    "watch": "node esbuild.js --watch"
   },
   "dependencies": {
     "bulma": "^0.9.3",
