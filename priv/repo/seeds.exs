@@ -11,10 +11,12 @@
 # and so on) as they will fail if something goes wrong.
 
 Kandesk.Repo.insert!(%Kandesk.Schema.User{
-    email: "admin@admin.com",
-    password_hash: "$argon2id$v=19$m=131072,t=8,p=4$dpwcC7pR+VFv5UKNpd9bgQ$mc9rWpZqILOpxkEsAhKP0WG3kA6Jjn3C0kBWGU+ctuw",
-    firstname: "Firstname",
-    lastname: "Lastname",
-    language: "en",
-    role: "admin"
-    })
+  email: "admin@admin.com",
+  password_hash:
+    "$argon2id$v=19$m=131072,t=8,p=4$dpwcC7pR+VFv5UKNpd9bgQ$mc9rWpZqILOpxkEsAhKP0WG3kA6Jjn3C0kBWGU+ctuw",
+  firstname: "Firstname",
+  lastname: "Lastname",
+  language: "en",
+  timezone: 'Europe/Paris',
+  role: "admin"
+})
