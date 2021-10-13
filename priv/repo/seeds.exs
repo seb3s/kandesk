@@ -17,6 +17,6 @@ Kandesk.Repo.insert!(%Kandesk.Schema.User{
   firstname: "Firstname",
   lastname: "Lastname",
   language: "en",
-  timezone: 'Europe/Paris',
+  timezone: "Europe/Paris",
   role: "admin"
 })
