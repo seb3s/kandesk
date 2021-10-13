@@ -1,3 +1,8 @@
+## DEV
+
+  - Fix missing timezone in seeds
+
+
 ## v1.10.1 - 2021-10-13
 
   - Upgrade to phoenix 1.6.0 and to esbuild bundler in replacement of webpack
