@@ -1,3 +1,9 @@
+## v1.10.1 - 2021-10-13
+
+  - Upgrade to phoenix 1.6.0 and to esbuild bundler in replacement of webpack
+  - Upgrade phoenix_live_view to 0.16.4
+
+
 ## v1.10.0 - 2021-09-01
 
   - Migrate template files to new heex engine
