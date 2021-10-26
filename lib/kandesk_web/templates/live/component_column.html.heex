@@ -62,7 +62,7 @@
          {"data-column_id", @column.id}]}
     >
       <%= for task <- @column.tasks do %>
-        <%= live_component KandeskWeb.Component.Task, id: "task_#{task.id}", task: task, board: @board, user: @user %>
+        <.live_component module={KandeskWeb.Component.Task} id={"task_#{task.id}"} task={task} board={@board} user={@user} />
       <% end %>
     </div>
     <div class="column_footer">
