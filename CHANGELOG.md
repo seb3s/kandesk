@@ -1,5 +1,6 @@
-## DEV
+## v1.10.2 - 2021-10-26
 
+  - Upgrade phoenix_live_view to 0.17.2
   - Fix missing timezone in seeds
 
 
