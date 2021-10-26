@@ -6,25 +6,9 @@
     <div id={"tpl_descr_#{@task.id}"} ondragstart="event.preventDefault();event.stopPropagation();" draggable="true" onclick="webapp.close_tippy(this);">
       <%= text_to_html(@task.descr) %>
     </div>
+    <%= render "component_task_content.html", assigns %>
+  </div>
+  <% else %>
+  <%= render "component_task_content.html", assigns %>
   <% end %>
-  <div class="task_action" id={temp_id()} phx-hook="tippy_template" data-template={"tpl_task_#{@task.id}"}>
-    <span class="icon"><i class="fas fa-ellipsis-v"></i></span>
-  </div>
-  <div id={"tpl_task_#{@task.id}"} ondragstart="event.preventDefault();event.stopPropagation();" draggable="true" onclick="webapp.close_tippy(this);">
-    <div style="padding: 5px;">
-      <%= gettext("Created at:") %> <%= user_date(@task.inserted_at, @user) %><br>
-      <%= gettext("Updated at:") %> <%= user_date(@task.updated_at, @user) %>
-    </div>
-    <%= if user_rights(@board, :delete_task?) do %>
-      <hr class="dropdown-divider">
-      <a class="dropdown-item" data-confirm={gettext("Are you sure?%{br_tag}Deleting '%{task_name}' is permanent!", br_tag: "<br/>", task_name: limit_string(@task.name, 40))} phx-click="delete_task" phx-value-id={@task.id}><span class="icon"><i class="fas fa-trash-alt"></i></span><%= gettext("Delete card") %></a>
-    <% end %>
-  </div>
-  <div class="task_tags">
-    <%= for tag <- Enum.filter(@board.tags, fn tag -> Enum.find(@task.tags, & &1.id == tag.id) end) do %>
-    <span class="task_tag" style={"background-color: #{tag.color};"}><%= tag.name %></span>
-    <% end %>
-  </div>
-  <%= @task.name %>
-  <%= if @task.descr do %></div><% end %>
 </div>
