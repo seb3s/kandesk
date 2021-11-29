@@ -119,7 +119,7 @@ phx_hooks.tippy_template = {
     mounted() {
         tippy(this.el, {
             content: document.getElementById(this.el.getAttribute('data-template')),
-            allowHTML:true,
+            allowHTML: true,
             interactive: true,
             interactiveBorder: 10,
             theme: 'light-border',
