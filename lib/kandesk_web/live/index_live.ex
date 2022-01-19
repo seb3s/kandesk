@@ -32,7 +32,6 @@ defmodule KandeskWeb.IndexLive do
        user: user,
        changeset: nil,
        show_modal: nil,
-       modal_pos: "",
        boards: boards,
        board: nil,
        columns: [],
@@ -79,7 +78,7 @@ defmodule KandeskWeb.IndexLive do
   ## handle_event
   ## ------------
   def handle_event("close_modal", _params, socket) do
-    {:noreply, assign(socket, show_modal: nil, modal_pos: "")}
+    {:noreply, assign(socket, show_modal: nil)}
   end
 
   def handle_event("show_modal", %{"modal" => "create_board" = modal}, socket) do
@@ -132,15 +131,6 @@ defmodule KandeskWeb.IndexLive do
     unless Enum.find(socket.assigns.columns, &(&1.id == id)), do: raise(@access_error)
 
     {:noreply, assign(socket, show_modal: "export_content", column_id: id)}
-  end
-
-  def handle_event("set_modal_pos", %{"pos" => pos}, socket) do
-    if socket.assigns.show_modal do
-      {:noreply, assign(socket, modal_pos: pos)}
-    else
-      # modal has already been closed, ignore
-      {:noreply, socket}
-    end
   end
 
   ## ------

@@ -30,7 +30,7 @@ let phx_hooks = {};
 phx_hooks.show_modal = {
     mounted() { MicroModal.show(this.el.id, {
         disableScroll: true,
-        onShow: () => { set_draggable(this,
+        onShow: () => { set_draggable(
             this.el.querySelector('.modal-card'),
             this.el.querySelector('.modal-card-head')); },
         onClose: () => { this.pushEvent('close_modal'); }
@@ -229,7 +229,7 @@ webapp.croppie_cancel_load = function () {
 // --------------------------------------------------------------------------------------
 // draggable modals
 // --------------------------------------------------------------------------------------
-function set_draggable(caller, draggable, handler) {
+function set_draggable(draggable, handler) {
     let x1 = 0, y1 = 0, x2 = 0, y2 = 0;
     // get viewport size to stop dragging too far
     let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -247,7 +247,11 @@ function set_draggable(caller, draggable, handler) {
         window.addEventListener('mouseup', endDrag);
     }
 
-    let push_modal_pos_fn = debounce(function(pos) { caller.pushEvent('set_modal_pos', {pos: pos}) }, 500);
+    let set_sticky_style_fn = debounce(function(style) {
+        webapp.live_socket.execJS(draggable,
+            `[["remove_attr", {"attr": "style"}],
+            ["set_attr", {"attr": ["style", "${style}"]}]]`)
+    }, 300);
 
     function elementDrag(e) {
         e.preventDefault();
@@ -264,8 +268,8 @@ function set_draggable(caller, draggable, handler) {
             draggable.style.right = 'unset';
             draggable.style.bottom = 'unset';
             draggable.style.position = 'fixed';
-            // debounce update of liveview state to keep modal pos on subsequent liveview updates
-            push_modal_pos_fn(draggable.style.cssText);
+            // debounce update of liveview style attr to keep modal pos on subsequent liveview updates
+            set_sticky_style_fn(draggable.style.cssText);
         }
     }
 
