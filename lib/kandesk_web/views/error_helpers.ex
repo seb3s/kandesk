@@ -10,7 +10,10 @@ defmodule KandeskWeb.ErrorHelpers do
   """
   def error_tag(form, field) do
     Enum.map(Keyword.get_values(form.errors, field), fn error ->
-      content_tag(:p, translate_error(error), class: "help")
+      content_tag(:p, translate_error(error),
+        class: "help invalid-feedback",
+        phx_feedback_for: input_id(form, field)
+      )
     end)
   end
 
@@ -47,8 +50,11 @@ defmodule KandeskWeb.ErrorHelpers do
   """
   def show_flash(conn), do: Phoenix.Controller.get_flash(conn) |> flash_msg
 
-  def flash_msg(%{"info"  => msg}) when msg != nil, do: ~E"<div class='alert alert-info'><%= msg %></div>"
-  def flash_msg(%{"error" => msg}) when msg != nil, do: ~E"<div class='alert alert-danger'><%= msg %></div>"
-  def flash_msg(_), do: nil
+  def flash_msg(%{"info" => msg}) when msg != nil,
+    do: ~E"<div class='alert alert-info'><%= msg %></div>"
 
+  def flash_msg(%{"error" => msg}) when msg != nil,
+    do: ~E"<div class='alert alert-danger'><%= msg %></div>"
+
+  def flash_msg(_), do: nil
 end
