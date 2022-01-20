@@ -777,10 +777,6 @@ defmodule KandeskWeb.IndexLive do
     apply(module, :handle_event, [event, params, socket])
   end
 
-  def handle_info({event, %{"delegate_event" => delegate} = params}, socket) do
-    valid_delegates = ["Page.Account", "Page.Admin_users"]
-    unless Enum.any?(valid_delegates, &(&1 == delegate)), do: raise(@access_error)
-    module = String.to_existing_atom("Elixir.KandeskWeb." <> delegate)
-    apply(module, :handle_event, [event, params, socket])
-  end
+  def handle_info({event, %{"delegate" => delegate} = params}, socket),
+    do: handle_event(event, params, socket)
 end

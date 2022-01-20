@@ -47,7 +47,7 @@ defmodule KandeskWeb.Page.Admin_users do
 
           if current_user.language != user.language do
             # force page reload to refresh all translations
-            send(self(), {"show_page", %{"delegate_event" => "Page.Admin_users"}})
+            send(self(), {"show_page", %{"delegate" => "Page.Admin_users"}})
             {:noreply, assign(socket |> set_locale(user), page: "loading")}
           else
             {:noreply, assign(socket, rows: get_users())}
