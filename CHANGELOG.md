@@ -1,5 +1,6 @@
 ## v1.10.3 - DEV
 
+  - Use a new function component for modals
   - Fix issue #8 "Moving modal resets form"
   - Upgrade phoenix_live_view to 0.17.6
 

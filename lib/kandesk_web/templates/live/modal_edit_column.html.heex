@@ -1,40 +1,35 @@
-<div class="modal is-open" id="hook_modal" phx-hook="show_modal">
-  <div class="modal-background" data-micromodal-close></div>
-  <div class="modal-card">
-    <header class="modal-card-head has-cursor-grab">
-      <h2 class="modal-card-title"><%= gettext("Edit column") %></h2>
-    </header>
-    <section class="modal-card-body thin_scroll">
-      <.form let={f} for={@changeset} id="form_modal" phx-submit="update_column">
-        <div class="field">
-          <%= label f, :name, gettext("Name"), class: "label" %>
-          <div class="control">
-            <%= text_input f, :name, class: "input", placeholder: gettext("Column name") %>
-            <%= error_tag f, :name %>
-          </div>
+<.modal>
+  <:title><%= gettext("Edit column") %></:title>
+  <:body>
+    <.form let={f} for={@changeset} id="form_modal" phx-submit="update_column">
+      <div class="field">
+        <%= label f, :name, gettext("Name"), class: "label" %>
+        <div class="control">
+          <%= text_input f, :name, class: "input", placeholder: gettext("Column name") %>
+          <%= error_tag f, :name %>
         </div>
-        <div class="field">
-          <%= label f, :descr, gettext("Description"), class: "label" %>
-          <div class="control">
-            <%= textarea f, :descr, class: "textarea", placeholder: gettext("Column description") %>
-            <%= error_tag f, :descr %>
-          </div>
+      </div>
+      <div class="field">
+        <%= label f, :descr, gettext("Description"), class: "label" %>
+        <div class="control">
+          <%= textarea f, :descr, class: "textarea", placeholder: gettext("Column description") %>
+          <%= error_tag f, :descr %>
         </div>
-        <label class="label"><%= gettext("Visibility") %></label>
-        <div class="task_tags">
-          <%= for {option, option_label} <- column_visibility_options() do %>
-          <label class="field_tag light">
-            <span class="task_tag"><%= option_label %></span>
-            <input class="checkbox_tag" name="column[visibility]" type="radio" value={option}
-              checked={option == @edit_row.visibility && ""}>
-          </label>
-          <% end %>
-        </div>
-      </.form>
-    </section>
-    <footer class="modal-card-foot">
-      <button class="button is-primary" form="form_modal" type="submit"><%= gettext("Save") %></button>
-      <button class="button" data-micromodal-close><%= gettext("Cancel") %></button>
-    </footer>
-  </div>
-</div>
+      </div>
+      <label class="label"><%= gettext("Visibility") %></label>
+      <div class="task_tags">
+        <%= for {option, option_label} <- column_visibility_options() do %>
+        <label class="field_tag light">
+          <span class="task_tag"><%= option_label %></span>
+          <input class="checkbox_tag" name="column[visibility]" type="radio" value={option}
+            checked={option == @edit_row.visibility && ""}>
+        </label>
+        <% end %>
+      </div>
+    </.form>
+  </:body>
+  <:footer>
+    <button class="button is-primary" form="form_modal" type="submit"><%= gettext("Save") %></button>
+    <button class="button" data-micromodal-close><%= gettext("Cancel") %></button>
+  </:footer>
+</.modal>

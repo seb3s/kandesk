@@ -1,10 +1,6 @@
-<div class="modal is-open" id="hook_modal" phx-hook="show_modal">
-  <div class="modal-background" data-micromodal-close></div>
-  <div class="modal-card">
-    <header class="modal-card-head has-cursor-grab">
-      <h2 class="modal-card-title"><%= gettext("Export content") %></h2>
-    </header>
-    <section class="modal-card-body thin_scroll">
+<.modal>
+  <:title><%= gettext("Export content") %></:title>
+  <:body>
 <textarea class="textarea" style="min-height: 20em;">
 <board>
   <name><%= @board.name %></name><%= if @board.descr do %>
@@ -20,9 +16,8 @@
   </column><% end %>
 </board>
 </textarea>
-    </section>
-    <footer class="modal-card-foot">
-      <button class="button is-primary" data-micromodal-close><%= gettext("Close") %></button>
-    </footer>
-  </div>
-</div>
+  </:body>
+  <:footer>
+    <button class="button is-primary" data-micromodal-close><%= gettext("Close") %></button>
+  </:footer>
+</.modal>

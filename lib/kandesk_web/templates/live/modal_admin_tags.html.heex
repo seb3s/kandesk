@@ -1,30 +1,25 @@
-<div class="modal is-open" id="hook_modal" phx-hook="show_modal">
-  <div class="modal-background" data-micromodal-close></div>
-  <div class="modal-card">
-    <header class="modal-card-head has-cursor-grab">
-      <h2 class="modal-card-title"><%= gettext("Manage tags") %></h2>
-    </header>
-    <section class="modal-card-body thin_scroll">
-      <.form let={f} for={@changeset} phx-submit="set_board_tags" id="form_modal" phx-hook="sortable_tags">
-        <%= inputs_for f, :tags, fn fp -> %>
-        <div class="field is-horizontal">
-          <%= text_input fp, :id, type: "hidden" %>
-          <div class="tag_handle"></div>
-          <%= color_input fp, :color, class: "input_color", tabindex: "-1" %>
-          <%= text_input fp, :name, class: "input input_tag", placeholder: gettext("Tag name") %>
-        </div>
-        <% end %>
-      </.form>
-      <div id={temp_id()} phx-hook="scroll_on_update" data-scroll-count={@scroll_count}></div>
-    </section>
-    <footer class="modal-card-foot level">
-      <div class="level-left" style="flex-grow: 1;">
-        <button class="button is-primary" form="form_modal" type="submit"><%= gettext("Save") %></button>
-        <button class="button" data-micromodal-close><%= gettext("Cancel") %></button>
+<.modal>
+  <:title><%= gettext("Manage tags") %></:title>
+  <:body>
+    <.form let={f} for={@changeset} phx-submit="set_board_tags" id="form_modal" phx-hook="sortable_tags">
+      <%= inputs_for f, :tags, fn fp -> %>
+      <div class="field is-horizontal">
+        <%= text_input fp, :id, type: "hidden" %>
+        <div class="tag_handle"></div>
+        <%= color_input fp, :color, class: "input_color", tabindex: "-1" %>
+        <%= text_input fp, :name, class: "input input_tag", placeholder: gettext("Tag name") %>
       </div>
-      <div class="level-right">
-        <button class="button is-primary" phx-click="add_tag"><%= gettext("Add tag") %></button>
-      </div>
-    </footer>
-  </div>
-</div>
+      <% end %>
+    </.form>
+    <div id={temp_id()} phx-hook="scroll_on_update" data-scroll-count={@scroll_count}></div>
+  </:body>
+  <:footer>
+    <div class="level-left" style="flex-grow: 1;">
+      <button class="button is-primary" form="form_modal" type="submit"><%= gettext("Save") %></button>
+      <button class="button" data-micromodal-close><%= gettext("Cancel") %></button>
+    </div>
+    <div class="level-right">
+      <button class="button is-primary" phx-click="add_tag"><%= gettext("Add tag") %></button>
+    </div>
+  </:footer>
+</.modal>
