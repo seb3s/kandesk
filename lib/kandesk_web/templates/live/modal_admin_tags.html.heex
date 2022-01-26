@@ -14,12 +14,14 @@
     <div id={temp_id()} phx-hook="scroll_on_update" data-scroll-count={@scroll_count}></div>
   </:body>
   <:footer>
-    <div class="level-left" style="flex-grow: 1;">
-      <button class="button is-primary" form="form_modal" type="submit"><%= gettext("Save") %></button>
-      <button class="button" data-micromodal-close><%= gettext("Cancel") %></button>
-    </div>
-    <div class="level-right">
-      <button class="button is-primary" phx-click="add_tag"><%= gettext("Add tag") %></button>
+    <div class="level is-flex-grow-1">
+      <div class="level-left">
+        <button class="button is-primary" form="form_modal" type="submit"><%= gettext("Save") %></button>
+        <button class="button" data-micromodal-close><%= gettext("Cancel") %></button>
+      </div>
+      <div class="level-right">
+        <button class="button is-primary" phx-click="add_tag"><%= gettext("Add tag") %></button>
+      </div>
     </div>
   </:footer>
 </.modal>

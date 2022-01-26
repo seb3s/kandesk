@@ -15,7 +15,7 @@ defmodule KandeskWeb.Component do
         <section class="modal-card-body thin_scroll">
           <%= render_slot(@body) %>
         </section>
-        <footer class="modal-card-foot level">
+        <footer class="modal-card-foot">
           <%= render_slot(@footer) %>
         </footer>
       </div>
